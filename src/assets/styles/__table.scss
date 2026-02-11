@@ -1,0 +1,48 @@
+.table__wrapper {
+  .ant-pagination {
+    position: relative;
+
+    .ant-pagination-options {
+      position: absolute;
+      left: 0;
+    }
+  }
+}
+.ant-table-cell {
+  user-select: text;
+}
+.layout__main {
+  .ant-table-container {
+    .ant-table-thead {
+      .ant-table-cell {
+        background-color: #1ea8e7;
+        color: white;
+        &:hover {
+          background-color: #1ea8e7bb;
+        }
+      }
+    }
+  }
+}
+.dark {
+  .layout__main {
+    .ant-table-container {
+      .ant-table-thead {
+        .ant-table-cell {
+          background-color: #001529;
+          color: white;
+        }
+      }
+    }
+  }
+}
+
+.table_head_center {
+  .ant-table-thead > tr > th {
+    text-align: center;
+  }
+
+  .ant-table-tbody > tr > td {
+    white-space: nowrap;
+  }
+}

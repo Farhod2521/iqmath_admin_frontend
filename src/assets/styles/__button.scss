@@ -1,0 +1,34 @@
+.btn {
+  white-space: nowrap;
+  vertical-align: middle;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  border: 1px solid transparent;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out,
+    box-shadow 0.15s ease-in-out;
+}
+.btn-primary {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+}
+
+.btn-success {
+  background-color: #28a745 !important;
+  border-color: #28a745 !important;
+  &:hover {
+    background-color: #218838 !important;
+    border-color: #1e7e34 !important;
+  }
+  &:disabled {
+    background-color: rgba(0, 0, 0, 0.04) !important;
+    border-color: #d9d9d9 !important;
+  }
+  &:focus {
+    background-color: #218838 !important;
+    border-color: #1e7e34 !important;
+    box-shadow: 0 0 0 2px rgba(40, 167, 69, 0.2) !important;
+  }
+}

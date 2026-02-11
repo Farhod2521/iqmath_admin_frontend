@@ -1,0 +1,32 @@
+.table__plangrafic {
+  .ant-table-thead {
+    .ant-table-cell {
+      text-wrap: nowrap;
+      text-align: center;
+    }
+  }
+  .ant-table-tbody {
+    .ant-table-cell {
+      padding: 0 !important;
+
+      .ant-form-item-control-input {
+        min-height: auto;
+      }
+
+      .date_line {
+        padding: 2px 4px;
+        background-color: #0077ff20;
+      }
+
+      &:nth-child(1),
+      &:nth-child(2) {
+        padding: 2px 4px !important;
+        width: 10px;
+      }
+
+      &:nth-child(2) {
+        white-space: nowrap;
+      }
+    }
+  }
+}

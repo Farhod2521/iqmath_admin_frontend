@@ -1,0 +1,60 @@
+.eimzo__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  border: 1px solid #00000010;
+  padding: 12px 8px;
+  background-color: rgb(223, 247, 239);
+  max-height: 500px;
+  overflow-y: auto;
+  border-radius: 0 0 4px 4px;
+
+  .eimzo__option {
+    background-color: white;
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    &.disabled__option {
+      opacity: 1;
+      position: relative;
+
+      &::before {
+        content: 'Kalit amal qish muddatini tekshiring.';
+        position: absolute;
+        border-radius: 4px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: larger;
+        font-weight: 500;
+        color: white;
+        text-shadow: 1px;
+        inset: 0;
+        cursor: auto;
+        background-color: rgba(248, 82, 82, 0.8);
+      }
+    }
+  }
+}
+
+:where(.css-dev-only-do-not-override-1htoz2s).ant-tree-select-dropdown .ant-select-tree .ant-select-tree-switcher {
+  margin-inline-end: 0.01px;
+  width: 11px;
+}
+
+/* PARENT element (Childlari bor va ochilgan) */
+.ant-select-tree-treenode.ant-select-tree-treenode-switcher-open {
+  border-top: 1px solid #c2bcbc99 !important; /* Parent uchun ko‘k border */
+}
+
+/* PARENT element (Childlari bor, lekin hali ochilmagan) */
+.ant-select-tree-treenode.ant-select-tree-treenode-switcher-close {
+  border-top: 1px solid #c2bcbc99;
+}
+
+/* CHILD element  */
+.ant-select-tree-treenode.ant-select-tree-treenode-switcher-close.ant-select-tree-treenode-leaf {
+  border-bottom: 1px solid #c2bcbc30 !important;
+  border-top: none !important;
+}

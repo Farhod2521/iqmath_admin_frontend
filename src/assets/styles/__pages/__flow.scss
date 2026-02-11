@@ -1,0 +1,333 @@
+.react-flow__node-question,
+.react-flow__node-text,
+.react-flow__node-radio,
+.react-flow__node-checkbox,
+.react-flow__node-number {
+  display: block;
+  min-width: 300px;
+  max-width: 600px;
+  padding: 0 !important;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  border-radius: 6px;
+  cursor: pointer !important;
+  .wrapper {
+    padding: 32px;
+  }
+}
+.react-flow__node {
+  .react-flow__handle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 24px;
+    height: 24px;
+    border: none;
+    background: rgb(7, 145, 229) !important;
+    cursor: pointer !important;
+    svg {
+      font-size: 18px;
+      fill: #fff;
+      pointer-events: none;
+    }
+    &.react-flow__handle-right:not(.linked):not(.multiple):hover {
+      transform: scale(1.2) translateY(-50%);
+      transition: all 0.2s ease-in-out;
+    }
+    &.react-flow__handle-top:not(.linked):hover {
+      transform: scale(1.2) translate(-50%);
+      transition: all 0.2s ease-in-out;
+    }
+    &.react-flow__handle-bottom:not(.linked):hover {
+      transform: scale(1.2) translate(-50%);
+      transition: all 0.2s ease-in-out;
+    }
+    &.source.linked {
+      width: 5px;
+      height: 24px;
+      border-radius: 0;
+    }
+    &.source.linked-horizontal {
+      width: 26px;
+      height: 5px;
+      border-radius: 0;
+    }
+    &.multiple.react-flow__handle-right {
+      width: 5px;
+      height: 24px;
+      top: auto;
+      bottom: 25%;
+      border-radius: 0;
+    }
+  }
+}
+.question {
+  .question_number {
+    display: inline-block;
+    padding: 4px;
+    margin-right: 8px;
+    font-size: 24px;
+    line-height: 22px;
+    font-weight: 500;
+    color: var(--primary-color);
+    border-radius: 4px;
+    background: rgba(0, 122, 255, 0.1);
+  }
+  h3 {
+    margin: 0;
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: normal;
+  }
+  .desc {
+    margin: 0;
+    padding: 0 4px;
+    font-size: 13px;
+    line-height: 22px;
+    color: #8d8d8d;
+  }
+  .answer_list {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    margin-top: 24px;
+    list-style-type: none;
+    li {
+      position: relative;
+      min-height: 40px;
+      padding: 9px 12px;
+      margin-bottom: 12px;
+      border: 1px solid #d9d9d9;
+      border-radius: 6px;
+      background-color: #fff;
+      font-size: 17px;
+      line-height: 22px;
+      .shape {
+        position: absolute;
+        top: 50%;
+        right: 32px;
+        z-index: 10;
+        width: 16px;
+        height: 16px;
+        border: 2px solid rgba($color: #000000, $alpha: 0.6);
+        background-color: #fff;
+        transform: translateY(-50%);
+        &.circle {
+          border-radius: 50%;
+        }
+        &.rectangle {
+          border-radius: 0;
+        }
+      }
+    }
+  }
+}
+
+.ant-drawer.question-modal .ant-drawer-mask {
+  opacity: 0;
+  animation: none;
+}
+.ant-drawer-title {
+  text-transform: capitalize;
+}
+.react-flow__edge-path {
+  stroke: rgb(7, 145, 229) !important;
+  stroke-width: 5 !important;
+  cursor: pointer;
+}
+
+.popover {
+  padding: 16px 24px;
+  h3 {
+    font-size: 18px;
+    line-height: 22px;
+    font-weight: normal;
+  }
+  button,
+  .button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    color: #000;
+    background-color: #fff;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    border-bottom: 1px solid #ebebeb;
+    &:last-of-type {
+      border-bottom: none;
+    }
+    .imgWrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 56px;
+      height: 56px;
+      margin-right: 16px;
+      border: 1px solid #ebebeb;
+      border-radius: 3px;
+    }
+    .text {
+      text-align: left;
+      .title {
+        display: block;
+        font-size: 14px;
+        line-height: 22px;
+        color: #000;
+      }
+      p {
+        margin: 0;
+        font-size: 12px;
+        line-height: 22px;
+        color: rgba($color: #000000, $alpha: 0.5);
+      }
+    }
+  }
+}
+
+.react-flow__node-start {
+  display: block;
+  width: 64px;
+  height: 64px;
+  background: #00c853;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer !important;
+  .start_node {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    svg {
+      font-size: 48px;
+      fill: #fff;
+    }
+  }
+  .react-flow__handle {
+    &.source.linked {
+      width: 26px;
+      height: 5px;
+    }
+  }
+}
+.react-flow__node-finish {
+  display: block;
+  width: 64px;
+  height: 64px;
+  background: #f5644a;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.1);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer !important;
+  .finish_node {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    svg {
+      font-size: 48px;
+      fill: #fff;
+    }
+  }
+  .react-flow__handle {
+    &.target {
+      width: 26px;
+      height: 5px;
+      border-radius: 0;
+    }
+  }
+}
+
+.condition {
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  h3 {
+    margin: 0;
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: normal;
+    text-align: center;
+    color: rgba(0, 0, 0, 0.7);
+  }
+  p {
+    margin: 0;
+    font-size: 8px;
+    line-height: 22px;
+    color: rgba(0, 0, 0, 0.5);
+  }
+  .answer_list {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    margin-top: 8px;
+    list-style-type: none;
+    li {
+      position: relative;
+      padding: 9px 12px;
+      margin-bottom: 12px;
+      border: 1px solid #b9b9b9;
+      border-radius: 4px;
+      background-color: #fff;
+      font-size: 12px;
+      line-height: 22px;
+      color: rgba(0, 0, 0, 0.7);
+      p {
+        font-size: inherit;
+        text-align: center;
+      }
+      .condition_item:nth-child(2) {
+        .condition_type {
+          display: none;
+        }
+      }
+    }
+  }
+  .react-flow__handle-left {
+    width: 24px;
+    height: 24px;
+    left: -25px;
+  }
+  .react-flow__handle-right {
+    width: 24px;
+    height: 24px;
+    right: -10px;
+  }
+}
+.react-flow__node-condition {
+  display: block;
+  min-width: 160px;
+  max-width: 300px;
+  padding: 16px 12px !important;
+  background: #ffcc80;
+  border: 1px solid #ffbd5a;
+  border-radius: 6px;
+  cursor: pointer !important;
+  .react-flow__handle.target {
+    background-color: #f5644a !important;
+  }
+}
+.condition-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  p {
+    margin: 0 10px;
+    margin-bottom: 12px;
+  }
+}
+.condition-edge {
+  .react-flow__edge-path {
+    stroke: #ffbd5a !important;
+  }
+}
+
+.flow_values * {
+  user-select: none;
+}
