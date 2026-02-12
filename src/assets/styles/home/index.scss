@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+.layout_home {
+  font-family: Inter, sans-serif;
+}
+
+.container {
+  max-width: 1232px;
+  margin: 0 auto;
+  background: transparent;
+  width: 100%;
+  border-radius: 0;
+  padding: 0 16px;
+
+  @media (min-width: 768px) {
+    padding-left: 24px;
+    padding-right: 24px;
+  }
+
+  @media (min-width: 1280px) {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.create_applications {
+  .ant-tabs-nav-wrap {
+    .ant-tabs-nav-list {
+      width: 100%;
+
+      .ant-tabs-tab {
+        width: 100%;
+        .ant-tabs-tab-btn {
+          width: 100%;
+          background: rgb(255, 255, 255);
+          font-style: normal;
+          font-weight: 600;
+          font-size: 18px;
+          line-height: 24px;
+          text-align: center;
+          text-transform: none;
+          padding: 0px;
+          transition: 0.3s;
+          // color: rgb(14, 115, 246);
+          margin-right: 32px;
+        }
+      }
+    }
+  }
+}
+
+.table__application {
+  .ant-table {
+    .ant-table-thead > tr > th,
+    .ant-table-tbody > tr > td {
+      font-family: Inter, sans-serif !important;
+      color: #5b6871;
+      font-size: 16px !important;
+      font-weight: 500 !important;
+      line-height: 1.5 !important;
+    }
+  }
+
+  .ant-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    border-top: 1px solid #e9ecef;
+    padding-top: 12px; // <-- YANGI
+    padding-bottom: 10px;
+
+    .ant-pagination-total-text {
+      margin-right: auto;
+      font-size: 14px;
+      padding-left: 16px;
+      letter-spacing: 0.05em;
+      color: #212529;
+      font-weight: 500;
+
+      b {
+        font-weight: 600;
+      }
+    }
+  }
+}

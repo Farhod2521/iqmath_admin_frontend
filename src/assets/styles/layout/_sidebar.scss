@@ -1,0 +1,172 @@
+.sidebar {
+  transition-property: width;
+  transition-timing-function: linear;
+  transition-duration: 0.3s;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+
+  .sidebar_blok {
+    overflow-y: auto;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    :where(.css-dev-only-do-not-override-36gkoj).ant-avatar > img {
+      display: block;
+      width: 84%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    border-radius: 2px;
+    background: #6e8bb7;
+  }
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+}
+
+.sidebar_menu {
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff;
+  border-right: 1px solid #f0f0f0;
+  font-size: 14px;
+
+  .ant-menu-item,
+  .ant-menu-submenu-title {
+    display: flex;
+    align-items: center;
+    min-height: 44px;
+    width: 100%;
+    border-radius: 8px;
+    margin: 6px 0;
+    padding: 12px !important;
+    color: #6e8bb7;
+    font-weight: 500;
+    cursor: pointer;
+
+    svg {
+      color: inherit;
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      flex-shrink: 0;
+    }
+
+    .ant-menu-title-content {
+      line-height: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    /* 🔹 Hover effekti */
+    &:hover {
+      background-color: #e6f4ff;
+      color: #1677ff;
+
+      svg,
+      .ant-menu-title-content {
+        color: #1677ff;
+      }
+    }
+  }
+
+  /* 🔹 Active/Selected effekti */
+  .ant-menu-item-selected {
+    background-color: #4094f7;
+    color: #fff;
+    font-weight: 600;
+
+    svg,
+    .ant-menu-title-content {
+      color: #fff;
+    }
+
+    /* Selected bo‘lsa hover qilganda ham oq qoladi */
+    &:hover {
+      background-color: #1677ff;
+      color: #fff;
+
+      svg,
+      .ant-menu-title-content {
+        color: #fff;
+      }
+    }
+  }
+
+  .ant-menu-submenu-selected > .ant-menu-submenu-title {
+    background-color: #e6f4ff;
+    color: #1677ff;
+    font-weight: 600;
+  }
+
+  .ant-menu-sub {
+    background: #f3f7fd;
+    padding: 8px 0;
+    border-radius: 8px;
+    margin: 0 6px 6px;
+
+    .ant-menu-item {
+      padding: 10px 12px !important;
+      border-radius: 6px;
+      margin-bottom: 4px;
+      color: #6e8bb7;
+      font-weight: 500;
+
+      /* Sub-menu hover */
+      &:hover {
+        background-color: #e6f4ff;
+        color: #1677ff;
+
+        svg,
+        .ant-menu-title-content {
+          color: #1677ff;
+        }
+      }
+
+      /* Sub-menu active/selected */
+      &.ant-menu-item-selected {
+        background-color: #4094f7;
+        color: #fff;
+
+        svg,
+        .ant-menu-title-content {
+          color: #fff;
+        }
+
+        &:hover {
+          background-color: #1677ff;
+        }
+      }
+    }
+
+    /* Nested sub */
+    .ant-menu-sub {
+      border-radius: 6px;
+      background: #e6f4ff;
+
+      .ant-menu-item {
+        color: #1677ff;
+
+        &.ant-menu-item-selected {
+          background-color: #4094f7;
+          color: #fff;
+
+          svg,
+          .ant-menu-title-content {
+            color: #fff;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+// Ranglar
+$primary-color: #007bff;
+$secondary-color: #6c757d;
+// $background-color: #15172a;
+$background-color: rgb(20, 20, 20);
+
+$background-color-hover: rgb(34, 34, 34);
+$text-color: #f8f9fa;
+
+//border
+$boder-style: 1px solid rgba(255, 255, 255, 0.1);
+
+// Fontlar
+$font-primary: 'Roboto', sans-serif;
+$font-size-base: 16px;
+
+// Breakpoints
+$breakpoint-sm: 576px;
+$breakpoint-md: 768px;
+$breakpoint-lg: 992px;
+$breakpoint-xl: 1200px;

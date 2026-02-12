@@ -1,9 +1,10 @@
-import { getLocalStorage } from '@/utils/localStorge'
+import { getCookie } from '@/configs/cookies'
 import { MenuTheme } from 'antd'
+
 export const MENU__OPTION = '@yeraksiyamenu'
 export const THEME__OPTION = '@theme'
 
-interface ThemeInitialState {
+export interface ThemeInitialState {
   currentTheme: MenuTheme
   collapsed: boolean
   menu: {
@@ -12,8 +13,10 @@ interface ThemeInitialState {
   }
 }
 
+const DEFAULT_MENU: ThemeInitialState['menu'] = { select: [], open: [] }
+
 export const initialState: ThemeInitialState = {
-  currentTheme: getLocalStorage(THEME__OPTION) || 'light',
+  currentTheme: (getCookie(THEME__OPTION) as MenuTheme) || 'light',
   collapsed: false,
-  menu: getLocalStorage(MENU__OPTION)
+  menu: (getCookie(MENU__OPTION) as ThemeInitialState['menu']) || DEFAULT_MENU
 }

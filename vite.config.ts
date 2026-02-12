@@ -1,31 +1,31 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import path from "path";
+import { fileURLToPath } from "url";
+import tailwindcss from "@tailwindcss/vite";
 
-import { join } from "path";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// https://vite.dev/config/
 
-// Vite config for migrating a Next.js (app router) project to a client-side SPA.
-// We alias a few Next-only imports to lightweight shims so most existing components keep compiling.
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), tailwindcss()],
   css: {
     preprocessorOptions: {
-      scss: {
-        sourceMap: true,
-      },
+      scss: {},
     },
+  },
+  resolve: {
+    alias: {
+      "@": path.resolve(__dirname, "src"),
+    },
+  },
+  build: {
+    outDir: "build",
   },
   server: {
     open: true,
     port: 3002,
     strictPort: true,
-    https: false,
-  },
-  resolve: {
-    alias: {
-      "@": join(__dirname, "src"),
-    },
-  },
-  build: {
-    outDir: "build",
   },
 });

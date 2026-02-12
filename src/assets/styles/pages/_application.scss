@@ -1,0 +1,31 @@
+.application {
+  &_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 16px 0 16px;
+    background-color: white;
+    border-radius: 8px 8px 0 0;
+    h1 {
+      font-size: 20px;
+      color: #5b6871;
+      font-weight: 400;
+    }
+  }
+  &_tab {
+    .ant-tabs {
+      &-nav {
+        margin-bottom: 8px;
+        padding: 0 16px;
+        background-color: white;
+        border-radius: 0 0 8px 8px;
+        &-list {
+          gap: 16px;
+        }
+      }
+      &-tab {
+        font-weight: 500;
+      }
+    }
+  }
+}

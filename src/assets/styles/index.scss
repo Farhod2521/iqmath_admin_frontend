@@ -1,14 +1,15 @@
-@import "./__main.scss";
-@import "./__layout.scss";
-@import "./__button.scss";
-@import "./__table";
-@import "./__select";
-@import "./__pages/_user.scss";
-@import "./__pages/_faqs";
-@import "./__pages/_flow";
-@import "./__pages/__application";
-@import "./__pages/__plangrafic";
-@import "./__pages/__dashboard";
-@import "./__pages/__setting";
-@import "./__pages/__reports.scss";
-@import "./__pages/__offer.scss";
+// @use './base/global';
+@use "tailwindcss" as tailwind;
+@use "./layout" as layout;
+@use "./pages" as pages;
+@use "./components" as components;
+@use "./home" as home;
+
+:where(.css-dev-only-do-not-override-36gkoj).ant-layout.ant-layout-has-sider
+  > .ant-layout {
+  background-color: rgba(220, 233, 249, 1) !important;
+
+  .ant-layout-content {
+    background: rgba(220, 233, 249, 1) !important;
+  }
+}

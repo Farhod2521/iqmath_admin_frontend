@@ -1,0 +1,51 @@
+.table_wrapper {
+  .ant-table-thead {
+    .ant-table-cell {
+      color: #5b6871;
+    }
+  }
+  .ant-table-tbody {
+    .ant-table-cell {
+      color: #5b6871;
+    }
+  }
+
+  .ant-pagination {
+    position: relative;
+
+    .ant-pagination-total-text {
+      position: absolute;
+      left: 0;
+    }
+    .ant-pagination-item {
+      a {
+        color: #5b6871;
+      }
+    }
+    .ant-pagination-options {
+      .ant-select-selection-item {
+        color: #5b6871;
+      }
+    }
+  }
+}
+
+.dashboard_overdue_table {
+  thead.ant-table-thead > tr > th {
+    background-color: #f0f2f5 !important; /* och kulrang */
+    font-weight: 600;
+  }
+  tfoot.ant-table-summary > tr > td {
+    background-color: #fafafa !important; /* biroz boshqacha kulrang */
+    font-weight: 600;
+  }
+}
+
+.pagination_tag {
+  background-color: #e0efff;
+  color: #2196f3;
+  border-radius: 6;
+  border: none;
+  font-size: 14px;
+  padding: 5px 14px;
+}

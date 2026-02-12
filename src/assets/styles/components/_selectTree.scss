@@ -1,0 +1,22 @@
+.tree_select_popup {
+  .ant-select-tree-treenode {
+    display: flex !important;
+    align-items: center;
+  }
+
+  .ant-select-tree-switcher {
+    order: 2 !important;
+    margin-left: auto !important;
+    transform: rotate(180deg) !important;
+  }
+
+  .ant-select-tree-node-content-wrapper {
+    order: 1;
+  }
+
+  .ant-select-tree-switcher.ant-select-tree-switcher_open {
+    .ant-select-tree-switcher-icon {
+      transform: rotate(-180deg) !important;
+    }
+  }
+}
