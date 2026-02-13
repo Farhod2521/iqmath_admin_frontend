@@ -2,7 +2,7 @@
 import { Menu, MenuProps } from "antd";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useMemo, useState } from "react";
-import menus, { MenuItem } from "@/shared/layout/libs/menus";
+import { getMenus, MenuItem } from "@/shared/layout/libs/menus";
 import { useMenuTransformer } from "../../hooks/useMenuTransformer";
 import {
   findActiveMenuKey,
@@ -11,16 +11,19 @@ import {
 } from "../../utils/menuUtils";
 import { getModules } from "@/services";
 // import { useStoreAuth, useStoreUsers } from "@/store";
-import Loading from "@/shared/components/Loading";
+
 import { PermissionsCode } from "@/shared/utils/menuPermissions";
 import { useSettingStore } from "@/store/settings/useSettingStore";
+import { useTranslation } from "react-i18next";
 
 const TARGET_PARENT_KEY = PermissionsCode.PROPERTY.MENU;
 
 const SidebarMenu = () => {
   // const { userData } = useStoreUsers();
+  const { t, i18n } = useTranslation(); // ✅ i18n ham olamiz
 
-  const { sidebarOpenKeys, setSidebarOpenKeys } = useSettingStore();
+  const menus = useMemo(() => getMenus(t), [i18n.language]);
+
   const navigate = useNavigate();
   const location = useLocation();
   const transformMenuData = useMenuTransformer(navigate);
@@ -29,6 +32,9 @@ const SidebarMenu = () => {
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
 
+  useEffect(() => {
+    setBaseMenus(menus);
+  }, [menus]);
   // API'dan kelgan modullarni "menu:property" childreniga qo'shish
   useEffect(() => {
     let cancelled = false;

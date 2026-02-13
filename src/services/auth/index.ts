@@ -1,5 +1,7 @@
 import { axiosApi } from "@/configs/api";
 import { AuthDataType } from "@/configs/auth";
+import { BASE_URL } from "@/libs/env";
+import axios from "axios";
 
 export type AuthLoginFormData = {
   phone: number;
@@ -16,5 +18,8 @@ export const postAuthLogin = (data: AuthLoginFormData) => {
   formData.append("redirect", String(data.redirect));
   formData.append("remember", String(data.remember));
 
-  return axiosApi.post<AuthDataType>("/auth/student/login/", formData);
+  return axios.post<AuthDataType>(
+    `${BASE_URL}/api/v1/auth/student/login/`,
+    formData,
+  );
 };

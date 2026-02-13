@@ -10,6 +10,7 @@ import AuthRoutes from "@/modules/auth/routes";
 import CommonRoutes from "@/modules/common/routes";
 import DashboardRoutes from "@/modules/dashboard/routes";
 import StatisticsRoutes from "@/modules/statistics/routes";
+import PricesRoutes from "./modules/prices/routes";
 
 // Pages
 
@@ -27,6 +28,7 @@ const AppRoutes = () => {
           <Route element={<MainLayout />}>
             {DashboardRoutes}
             {StatisticsRoutes}
+            {PricesRoutes}
             {/*  */}
           </Route>
         </Route>

@@ -1,18 +1,28 @@
-import i18n from 'i18next'
-import { initReactI18next } from 'react-i18next'
-import uz from './uz/common.json'
-import ru from './ru/common.json'
-import uzc from './uzc/common.json'
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
 
-i18n.use(initReactI18next).init({
-  resources: {
-    uz: { translation: uz },
-    ru: { translation: ru },
-    uzc: { translation: uzc }
-  },
-  lng: 'uz',
-  fallbackLng: 'uz',
-  interpolation: { escapeValue: false }
-})
+import uz from "./translations/uz.json";
+import ru from "./translations/ru.json";
+import en from "./translations/en.json";
 
-export default i18n
+i18n
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    // lng: "uz",
+    fallbackLng: "uz",
+    resources: {
+      uz: { translation: uz },
+      ru: { translation: ru },
+      en: { translation: en },
+    },
+    detection: {
+      order: ["cookie"], //  cookie orqali o‘qiydi
+      caches: ["cookie"], //   cookie ga saqlaydi
+      cookieMinutes: 60 * 24 * 30, // 30 kun
+    },
+    interpolation: { escapeValue: false },
+  });
+
+export default i18n;

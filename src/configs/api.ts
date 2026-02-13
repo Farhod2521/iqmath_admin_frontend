@@ -81,10 +81,10 @@ class AxiosConfig {
           try {
             const refreshToken = getTokenRefreshToken();
 
-            const response = await axios.get(
-              `${BASE_URL}/auth/token/refresh/`,
+            const response = await axios.post(
+              `${BASE_URL}/api/v1/auth/token/refresh/`,
               {
-                headers: { Authorization: `Bearer ${refreshToken}` },
+                refresh: refreshToken,
               },
             );
             const { accessToken } = response.data;

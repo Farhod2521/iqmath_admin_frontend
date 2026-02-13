@@ -53,8 +53,8 @@ export default function IQmathLogin() {
       });
 
       setTimeout(() => {
-        saveAuthData(res);
-        setAuth(res);
+        saveAuthData(res?.data);
+        setAuth(res?.data);
         getMe();
         navigate("/dashboard");
       }, 1000);
