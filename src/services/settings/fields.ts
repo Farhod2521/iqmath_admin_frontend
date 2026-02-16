@@ -1,5 +1,4 @@
 import { axiosApi } from '@/configs/api'
-import { FIELD_TYPE, FILE_TYPES } from '@/modules/settings/fields/libs/fieldTypes'
 import { OptionType } from '@/types/option'
 import { ApiParams, ApiResponse } from '@/types/response'
 
@@ -16,7 +15,7 @@ export type FieldDetail = {
 }
 
 export type FieldFormData = {
-  fieldType: FIELD_TYPE
+  fieldType: any
   code: string
   details: FieldDetail[]
 }
@@ -31,7 +30,7 @@ export type FieldDataType = {
   name: string
   code: string
   label: string
-  fieldType: FIELD_TYPE
+  fieldType: any
   createdAt: string
 }
 
