@@ -1,5 +1,6 @@
 export * from "./auth";
 export * from "./managment";
+export * from "./dashboard";
 
 export * from "./modules/modules";
 export * from "./settings";

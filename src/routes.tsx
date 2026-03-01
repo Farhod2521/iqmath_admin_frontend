@@ -9,8 +9,9 @@ import MainLayout from "@/shared/layout";
 import AuthRoutes from "@/modules/auth/routes";
 import CommonRoutes from "@/modules/common/routes";
 import DashboardRoutes from "@/modules/dashboard/routes";
-import StatisticsRoutes from "@/modules/statistics/routes";
 import PricesRoutes from "./modules/prices/routes";
+import GroupsRoutes from "./modules/groups/routes";
+import PaymentsRoutes from "./modules/payments/routes";
 
 // Pages
 
@@ -27,8 +28,9 @@ const AppRoutes = () => {
         <Route element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>
             {DashboardRoutes}
-            {StatisticsRoutes}
             {PricesRoutes}
+            {GroupsRoutes}
+            {PaymentsRoutes}
             {/*  */}
           </Route>
         </Route>

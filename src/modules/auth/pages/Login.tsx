@@ -9,13 +9,14 @@ import { useNavigate } from "react-router-dom";
 import { getAuthUserMe, postAuthLogin } from "@/services";
 import { handleApiError } from "@/shared/utils/handleApiError";
 import Brand from "@/shared/components/brand";
-import { saveAuthData } from "@/configs/auth";
+import { saveAuthData, removeAuthData } from "@/configs/auth";
 import {
   selectedSetAuth,
   selectedSetUserData,
   useStoreAuth,
   useStoreUsers,
 } from "@/store";
+import { ROLES } from "@/configs/constants";
 
 const { Title, Text } = Typography;
 
@@ -31,10 +32,10 @@ export default function IQmathLogin() {
   const [loading, setLoading] = useState(false);
   const setUserData = useStoreUsers(selectedSetUserData);
 
-  const getMe = () => {
-    getAuthUserMe().then((res) => {
-      setUserData(res);
-    });
+  const getMe = async () => {
+    const res = await getAuthUserMe();
+    setUserData(res);
+    return res;
   };
 
   const onFinish = async (values: any) => {
@@ -48,14 +49,22 @@ export default function IQmathLogin() {
       const res = await postAuthLogin({
         phone: formattedPhone,
         password: values.password,
-        redirect: false,
-        remember: values.remember,
+        // redirect: false,
+        // remember: values.remember,
       });
 
-      setTimeout(() => {
+      setTimeout(async () => {
         saveAuthData(res?.data);
         setAuth(res?.data);
-        getMe();
+        const userData = await getMe();
+        if (userData?.role !== ROLES.SUPERADMIN) {
+          // Remove auth data and redirect or show error
+          removeAuthData();
+          setAuth(null);
+          setUserData(null);
+          handleApiError({ message: "Faqat superadmin kirishi mumkin" });
+          return;
+        }
         navigate("/dashboard");
       }, 1000);
     } catch (err: any) {
@@ -253,7 +262,7 @@ export default function IQmathLogin() {
             </Form.Item>
 
             {/* Remember & Forgot */}
-            <div className="flex items-center justify-between mb-8">
+            {/* <div className="flex items-center justify-between mb-8">
               <Form.Item name="remember" valuePropName="checked" noStyle>
                 <Checkbox className="modern-checkbox">
                   <span className="text-gray-600 text-sm">Eslab qolish</span>
@@ -267,7 +276,7 @@ export default function IQmathLogin() {
               >
                 Parolni unutdingizmi?
               </button>
-            </div>
+            </div> */}
 
             {/* Submit Button */}
             <Button

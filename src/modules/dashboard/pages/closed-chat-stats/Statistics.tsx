@@ -2,7 +2,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, Table, Tag, Rate, Skeleton, Empty } from "antd";
 import type { ColumnsType } from "antd/es/table";
-import { getClosedChatsStats, ClosedChatsStatsData } from "../services";
+import { getClosedChatsStats, ClosedChatsStatsData } from "@/services";
 
 const RatingCell = ({
   count,

@@ -95,9 +95,12 @@ class AxiosConfig {
             return this.instance(originalRequest);
           } catch (err: any) {
             this.processQueue(err, null);
-            if (err?.response?.status === 401) {
-              removeAuthData();
+            if (
+              err?.response?.status === 401 ||
+              err?.response?.status === 400
+            ) {
               location.href = "/";
+              removeAuthData();
             }
             return Promise.reject(err);
           } finally {

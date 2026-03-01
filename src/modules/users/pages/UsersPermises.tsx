@@ -47,7 +47,7 @@ const UsersPermises = () => {
   const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
   const userDataMe = useStoreUsers(selectedUserData);
-  const userRole = userDataMe?.role?.code;
+  const userRole = userDataMe?.role;
   const [data, setData] = useState<UserData[]>([]);
   const [status, setStatus] = useState<UserStatus>(UserStatus.ACTIVE_STAFF);
   const [pagination, setPagination] = useState<{

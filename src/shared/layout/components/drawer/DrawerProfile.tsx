@@ -1,13 +1,32 @@
-import logoMini from '@/assets/svg/logo-mini.svg'
+import logoMini from "@/assets/svg/logo-mini.svg";
+import Brand from "@/shared/components/brand";
+import { useThemeStore } from "@/store";
+import { AiOutlineMenuUnfold } from "react-icons/ai";
+import { MdMenuOpen } from "react-icons/md";
+import { useNavigate } from "react-router-dom";
 
 function DrawerProfile() {
+  const { collapsed, toggleCollapsed } = useThemeStore();
+  const navigate = useNavigate();
+
   return (
-    <div className="h-16 mt-2 text-4xl font-bold text-center cursor-pointer overflow-hidden px-2 py-2 sm:px-6 bg-white">
-      <div className="flex items-center">
-        <span className="text-2xl font-bold text-nowrap uppercase	">YERELEKTRON</span>
+    <div className="flex justify-between items-center border-b border-gray-200 bg-white px-4 pt-4 pb-2">
+      <div
+        className="flex items-center gap-1 cursor-pointer"
+        onClick={() => navigate("/")}
+      >
+        <div className="flex items-center justify-center">
+          <Brand />
+        </div>
+      </div>
+      <div
+        className="flex items-center justify-center cursor-pointer"
+        onClick={toggleCollapsed}
+      >
+        <AiOutlineMenuUnfold size={20} color="#6e8bb8" />
       </div>
     </div>
-  )
+  );
 }
 
-export default DrawerProfile
+export default DrawerProfile;

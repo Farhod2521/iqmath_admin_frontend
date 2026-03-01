@@ -9,19 +9,17 @@ import {
   findParentKeys,
   insertChildrenByKey,
 } from "../../utils/menuUtils";
-import { getModules } from "@/services";
-// import { useStoreAuth, useStoreUsers } from "@/store";
-
 import { PermissionsCode } from "@/shared/utils/menuPermissions";
-import { useSettingStore } from "@/store/settings/useSettingStore";
 import { useTranslation } from "react-i18next";
 
 const TARGET_PARENT_KEY = PermissionsCode.PROPERTY.MENU;
 
-const SidebarMenu = () => {
-  // const { userData } = useStoreUsers();
-  const { t, i18n } = useTranslation(); // ✅ i18n ham olamiz
+type Props = {
+  collapsed: boolean;
+};
 
+const SidebarMenu = ({ collapsed }: Props) => {
+  const { t, i18n } = useTranslation();
   const menus = useMemo(() => getMenus(t), [i18n.language]);
 
   const navigate = useNavigate();
@@ -32,50 +30,32 @@ const SidebarMenu = () => {
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const [openKeys, setOpenKeys] = useState<string[]>([]);
 
-  useEffect(() => {
-    setBaseMenus(menus);
-  }, [menus]);
-  // API'dan kelgan modullarni "menu:property" childreniga qo'shish
-  useEffect(() => {
-    let cancelled = false;
+  useEffect(() => setBaseMenus(menus), [menus]);
 
-    const loadAndMergeModules = async () => {
-      try {
-        setBaseMenus(
-          (prev) => insertChildrenByKey(prev, TARGET_PARENT_KEY) as MenuItem[],
-        );
-      } catch (err) {
-        // ixtiyoriy: logger/toast
-        console.error("Failed to load modules for sidebar:", err);
-      }
-    };
-
-    loadAndMergeModules();
-    return () => {
-      cancelled = true;
-    };
+  useEffect(() => {
+    setBaseMenus(
+      (prev) => insertChildrenByKey(prev, TARGET_PARENT_KEY) as MenuItem[],
+    );
   }, []);
 
-  // Route o'zgarganda active hamda open keys ni yangilash
+  // collapsed bo‘lsa openKeys ni yopib qo‘yamiz (label ko‘rinishini ham kamaytiradi)
+  useEffect(() => {
+    if (collapsed) setOpenKeys([]);
+  }, [collapsed]);
+
   useEffect(() => {
     const activeKey = findActiveMenuKey(baseMenus as any, location.pathname);
     if (activeKey) {
       setSelectedKeys([activeKey]);
       const parents = findParentKeys(baseMenus as any, activeKey);
-      setOpenKeys(parents);
+      setOpenKeys(collapsed ? [] : parents);
     } else {
       setSelectedKeys([]);
     }
-  }, [location.pathname, baseMenus]);
+  }, [location.pathname, baseMenus, collapsed]);
 
-  // AntD'ga mos "items"
   const menuData: MenuProps["items"] = useMemo(() => {
-    // const filterDataList = baseMenus.filter((i) =>
-    //   userData?.permissions.includes(i.key),
-    // );
-    const filterDataList = baseMenus;
-
-    return transformMenuData(filterDataList as any);
+    return transformMenuData(baseMenus as any);
   }, [baseMenus, transformMenuData]);
 
   return (
@@ -83,10 +63,9 @@ const SidebarMenu = () => {
       mode="inline"
       className="sidebar_menu"
       selectedKeys={selectedKeys}
-      openKeys={openKeys}
-      // openKeys={sidebarOpenKeys}
-      // onOpenChange={setSidebarOpenKeys}
-      onOpenChange={setOpenKeys}
+      openKeys={collapsed ? [] : openKeys}
+      onOpenChange={(keys) => !collapsed && setOpenKeys(keys)}
+      inlineCollapsed={collapsed}
       style={{ borderRight: 0 }}
       items={menuData}
     />

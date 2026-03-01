@@ -34,7 +34,7 @@
 }
 
 .sidebar_menu {
-  font-family: 'Segoe UI', sans-serif;
+  font-family: "Segoe UI", sans-serif;
   background-color: #fff;
   border-right: 1px solid #f0f0f0;
   font-size: 14px;
@@ -44,7 +44,7 @@
     display: flex;
     align-items: center;
     min-height: 44px;
-    width: 100%;
+    // width: 100%;
     border-radius: 8px;
     margin: 6px 0;
     padding: 12px !important;
@@ -66,6 +66,10 @@
       font-weight: 600;
       white-space: normal;
       word-break: break-word;
+    }
+
+    .ant-menu-submenu-arrow {
+      padding-left: 10px;
     }
 
     /* 🔹 Hover effekti */
@@ -169,4 +173,33 @@
       }
     }
   }
+}
+
+@media (max-width: 768px) {
+  .sidebar_menu {
+    .ant-menu-item,
+    .ant-menu-submenu-title {
+      padding: 8px !important;
+      font-size: 13px;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      .ant-menu-title-content {
+        font-size: 13px;
+      }
+    }
+  }
+}
+
+:where(.css-dev-only-do-not-override-36gkoj).ant-menu-submenu-popup
+  .ant-menu-vertical
+  > .ant-menu-item,
+:where(.css-dev-only-do-not-override-36gkoj).ant-menu-submenu-popup
+  .ant-menu-vertical
+  > .ant-menu-submenu
+  > .ant-menu-submenu-title {
+  line-height: 20px;
 }
