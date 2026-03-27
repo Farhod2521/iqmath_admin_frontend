@@ -12,6 +12,7 @@ import DashboardRoutes from "@/modules/dashboard/routes";
 import PricesRoutes from "./modules/prices/routes";
 import GroupsRoutes from "./modules/groups/routes";
 import PaymentsRoutes from "./modules/payments/routes";
+import ChatsRoutes from "./modules/chats/routes";
 
 // Pages
 
@@ -31,6 +32,7 @@ const AppRoutes = () => {
             {PricesRoutes}
             {GroupsRoutes}
             {PaymentsRoutes}
+            {ChatsRoutes}
             {/*  */}
           </Route>
         </Route>

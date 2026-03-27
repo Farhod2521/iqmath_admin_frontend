@@ -7,6 +7,8 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import { PermissionsCode } from "@/shared/utils/menuPermissions";
+import { BiChat } from "react-icons/bi";
+import { SettingOutlined } from "@ant-design/icons";
 export * from "./index.d";
 
 export const getMenus = (t: (key: string) => string) => [
@@ -15,6 +17,12 @@ export const getMenus = (t: (key: string) => string) => [
     path: "/dashboard",
     label: t("dashboard"), // yoki "Boshqaruv paneli"
     icon: MdDashboard,
+  },
+  {
+    key: "mentor",
+    path: "/mentors",
+    label: t("mentor"),
+    icon: () => <BiChat size={22} />,
   },
   {
     key: "prices",
@@ -48,6 +56,24 @@ export const getMenus = (t: (key: string) => string) => [
     icon: () => <FaUsers size={22} />,
   },
   {
+    key: "chats",
+    path: "/chats",
+    label: t("chat"),
+    icon: () => <BiChat size={22} />,
+  },
+  {
+    key: "settings",
+    label: t("settings"),
+    icon: () => <SettingOutlined size={22} />,
+    children: [
+      {
+        key: "settings",
+        path: "/setting/coversion",
+        label: t("coversion"),
+      },
+    ],
+  },
+  {
     key: "payments",
     path: "/payments/payment",
     label: t("payments"),
@@ -60,3 +86,8 @@ export const getMenuKeys = (t: (key: string) => string) =>
   getMenus(t)
     .map((item) => item.key)
     .filter(Boolean);
+
+
+
+
+
