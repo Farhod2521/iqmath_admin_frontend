@@ -12,6 +12,7 @@ import DashboardRoutes from "@/modules/dashboard/routes";
 import PricesRoutes from "./modules/prices/routes";
 import GroupsRoutes from "./modules/groups/routes";
 import PaymentsRoutes from "./modules/payments/routes";
+
 import UsersRoutes from "./modules/users/routes";
 import SettingsRoutes from "./modules/settings/routes";
 
