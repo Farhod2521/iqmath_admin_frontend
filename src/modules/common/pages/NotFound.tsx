@@ -6,7 +6,7 @@ function NotFound() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const backHome = () => {
-    navigate("/home/dashboard", { replace: true });
+    navigate("/statistics", { replace: true });
   };
 
   return (

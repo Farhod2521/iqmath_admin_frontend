@@ -1,42 +1,73 @@
+import React, { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Button, Card, Form, Table } from "antd";
-import React, { useState } from "react";
+import {
+  Button,
+  Card,
+  Checkbox,
+  Col,
+  Form,
+  Input,
+  InputNumber,
+  Modal,
+  Row,
+  Select,
+} from "antd";
+import { PlusOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+
 import {
   deleteSubscriptionPlan,
   getSubscriptionPlans,
   postSubscriptionPlan,
   putSubscriptionPlan,
   SubscriptionPlanFormData,
+  SubscriptionPlansData,
 } from "../services";
-import { useTranslation } from "react-i18next";
-import { toast } from "react-toastify";
 import { handleApiError } from "@/shared/utils/handleApiError";
 import SubscriptionPlansContent from "../components/plan/SubscriptionPlansContent";
-import { PlusOutlined } from "@ant-design/icons";
+import ModalSubcriptionPlans from "../components/plan/ModalSubcriptionPlans";
+
+type Mode = "create" | "edit";
+
+type PlanForm = SubscriptionPlanFormData & {
+  category?: string; // editda ixtiyoriy
+  benefits?: number[]; // editda checkboxlardan keladi
+};
 
 const SubscriptionPlans = () => {
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
+
+  const [mode, setMode] = useState<Mode>("create");
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [editingPlan, setEditingPlan] = useState(null);
-  const [form] = Form.useForm();
-  const [dataId, setDataId] = useState<number>();
-  const { t, i18n } = useTranslation();
+  const [dataId, setDataId] = useState<number | undefined>(undefined);
+  const [editingPlan, setEditingPlan] = useState<SubscriptionPlansData | null>(
+    null,
+  );
 
-  const handleShow = () => {
-    setIsModalOpen(true);
-    form.resetFields();
-  };
-  const handleClose = () => {
-    setIsModalOpen(false);
-    setDataId(undefined);
-    form.resetFields();
-  };
+  const [form] = Form.useForm<PlanForm>();
 
-  const { data, isLoading } = useQuery({
+  const { data: plansRes } = useQuery({
     queryKey: ["subscription-plans-data"],
     queryFn: getSubscriptionPlans,
   });
 
+  const plans = useMemo(() => plansRes ?? [], [plansRes]);
+
+  // kategoriyalarni existing planlardan yig'ib olamiz
+  const categoryOptions = useMemo(() => {
+    const map = new Map<number, string>();
+    plans.forEach((p) => {
+      if (p.category?.id) map.set(p.category.id, p.category.title);
+    });
+    return Array.from(map.entries()).map(([id, title]) => ({
+      label: title,
+      value: String(id),
+    }));
+  }, [plans]);
+
+  // ===== Mutations =====
   const createMutation = useMutation({
     mutationFn: postSubscriptionPlan,
     onSuccess: () => {
@@ -48,13 +79,8 @@ const SubscriptionPlans = () => {
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({
-      id,
-      data,
-    }: {
-      id: number;
-      data: SubscriptionPlanFormData;
-    }) => putSubscriptionPlan(id, data),
+    mutationFn: ({ id, data }: { id: number; data: any }) =>
+      putSubscriptionPlan(id, data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["subscription-plans-data"] });
       toast.success(t("updatedSuccessfully") || "Yangilandi");
@@ -72,40 +98,99 @@ const SubscriptionPlans = () => {
     onError: (err: any) => handleApiError(err),
   });
 
-  const openEditModal = () => {
-    //
+  // ===== Modal open/close =====
+  const openCreateModal = () => {
+    setMode("create");
+    setIsModalOpen(true);
+    setDataId(undefined);
+    setEditingPlan(null);
+
+    form.resetFields();
+    form.setFieldsValue({
+      is_active: true,
+      discount_percent: 0,
+      months: 1,
+    } as any);
   };
 
-  function handleDelete(id: number) {
-    if (window.confirm("Haqiqatan ham o'chirmoqchimisiz?")) {
-      deleteMutation.mutate(id);
-    }
-  }
+  const openEditModal = (plan: SubscriptionPlansData) => {
+    setMode("edit");
+    setIsModalOpen(true);
+    setDataId(plan.id);
+    setEditingPlan(plan);
 
+    const selectedBenefits = (plan.benefits || [])
+      .filter((b) => b.is_selected)
+      .map((b) => b.id);
+
+    form.setFieldsValue({
+      name: plan.name,
+      months: plan.months,
+      price_per_month: String(plan.price_per_month ?? ""),
+      discount_percent: Number(plan.discount_percent || 0),
+      is_active: Boolean(plan.is_active),
+
+      // editda ixtiyoriy
+      category: plan.category?.id ? String(plan.category.id) : undefined,
+      benefits: selectedBenefits,
+    } as any);
+  };
+
+  const handleClose = () => {
+    setIsModalOpen(false);
+    setDataId(undefined);
+    setEditingPlan(null);
+    form.resetFields();
+  };
+
+  const handleDelete = (id: number) => deleteMutation.mutate(id);
+
+  // ===== Submit =====
   const handleSubmit = async () => {
     const values = await form.validateFields();
 
-    if (dataId) {
-      updateMutation.mutate({ id: dataId, data: values });
-    } else {
-      createMutation.mutate(values);
+    // payload base
+    const basePayload: any = {
+      name: String(values.name),
+      months: Number(values.months),
+      price_per_month: String(values.price_per_month),
+      discount_percent: Number(values.discount_percent || 0),
+      is_active: Boolean(values.is_active),
+    };
+
+    if (mode === "create") {
+      //  create’da category/benefits yubormaymiz (UI ham ko‘rsatmaymiz)
+      createMutation.mutate(basePayload);
+      return;
     }
+
+    //  edit’da category ixtiyoriy, benefits optional
+    const editPayload: any = { ...basePayload };
+
+    // category bo‘sh bo‘lsa umuman yubormaymiz
+    if (values.category) editPayload.category = String(values.category);
+
+    // benefits: [id, id, ...]
+    if (Array.isArray(values.benefits)) editPayload.benefits = values.benefits;
+
+    updateMutation.mutate({ id: dataId!, data: editPayload });
   };
 
-  const isDeleting = deleteMutation.isPending;
+  const isSubmitting = createMutation.isPending || updateMutation.isPending;
 
   return (
     <Card title="" className="container border-none!">
       {/* Header */}
-      <div className="flex justify-between items-start mb-6">
+      <div className="flex justify-between items-start mb-4">
         <div>
           <div className="flex items-center gap-3 mb-2">
             <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-              {t("subscriptionPlans")}
+              {t("subscriptionPlans") || "Obuna rejalari"}
             </h1>
           </div>
           <p className="text-sm text-gray-600 sm:text-base">
-            {t("manageSubscriptionPlans")}
+            {t("manageSubscriptionPlans") ||
+              "Barcha obuna rejalarini boshqaring"}
           </p>
         </div>
 
@@ -114,17 +199,29 @@ const SubscriptionPlans = () => {
           icon={<PlusOutlined />}
           size="large"
           className="rounded-xl px-6"
-          onClick={handleShow}
+          onClick={openCreateModal}
         >
-          {t("newPlans")}
+          {t("newPlans") || "Yangi reja"}
         </Button>
       </div>
 
       <SubscriptionPlansContent
-        plans={data}
+        plans={plans}
         onEdit={openEditModal}
         onDelete={handleDelete}
-        isDeleting={isDeleting}
+        isDeleting={deleteMutation.isPending}
+      />
+
+      {/* MODAL */}
+      <ModalSubcriptionPlans
+        isSubmitting={isSubmitting}
+        mode={mode}
+        handleSubmit={handleSubmit}
+        categoryOptions={categoryOptions}
+        isModalOpen={isModalOpen}
+        handleClose={handleClose}
+        form={form}
+        editingPlan={editingPlan}
       />
     </Card>
   );

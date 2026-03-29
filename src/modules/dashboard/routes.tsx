@@ -5,7 +5,7 @@ const Dashboard = lazy(() => import("./Dashboard"));
 
 const DashboardRoutes = (
   <>
-    <Route path="/dashboard" element={<Dashboard />} />
+    <Route path="/statistics" element={<Dashboard />} />
   </>
 );
 

@@ -1,22 +1,38 @@
-import { Select, SelectProps } from 'antd'
-import { useInfiniteQuery } from '@tanstack/react-query'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
-import debounce from 'lodash/debounce'
-import { OptionType } from '@/types/option'
+import { Select, SelectProps } from "antd";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
+import debounce from "lodash/debounce";
+import { OptionType } from "@/types/option";
 
 type SelectInfiniteProps<TData> = {
-  queryKey: (search: string) => any[]
-  queryFn: (params: { search: string; page: number; limit: number }) => Promise<TData>
-  getOptions: (data: TData | undefined) => OptionType[]
-  getTotal: (data: TData | undefined) => number // optional, for custom total count
-  pageSize?: number
-  debounceMs?: number
-  enabled?: boolean
-  selectedOptions?: OptionType[]
+  queryKey: (search: string) => any[];
+  queryFn: (params: {
+    search: string;
+    page: number;
+    size: number;
+  }) => Promise<TData>;
+  getOptions: (data: TData | undefined) => OptionType[];
+  getTotal: (data: TData | undefined) => number; // optional, for custom total count
+  pageSize?: number;
+  debounceMs?: number;
+  enabled?: boolean;
+  selectedOptions?: OptionType[];
 } & Omit<
   SelectProps,
-  'options' | 'onSearch' | 'showSearch' | 'loading' | 'filterOption' | 'searchValue' | 'onPopupScroll'
->
+  | "options"
+  | "onSearch"
+  | "showSearch"
+  | "loading"
+  | "filterOption"
+  | "searchValue"
+  | "onPopupScroll"
+>;
 
 function SelectInfinite<TData>({
   queryKey,
@@ -29,34 +45,46 @@ function SelectInfinite<TData>({
   enabled = true,
   ...selectProps
 }: SelectInfiniteProps<TData>) {
-  const [search, setSearch] = useState('')
-  const [searchInput, setSearchInput] = useState('')
+  const [search, setSearch] = useState("");
+  const [searchInput, setSearchInput] = useState("");
 
   const debouncedSetSearch = useCallback(
     debounce((val) => setSearch(val), debounceMs),
-    [debounceMs]
-  )
+    [debounceMs],
+  );
 
-  useEffect(() => () => debouncedSetSearch.cancel(), [debouncedSetSearch])
+  useEffect(() => () => debouncedSetSearch.cancel(), [debouncedSetSearch]);
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, refetch, isRefetching } = useInfiniteQuery({
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    refetch,
+    isRefetching,
+  } = useInfiniteQuery({
     queryKey: queryKey(search),
-    queryFn: ({ pageParam = 1 }) => queryFn({ search, page: pageParam, limit: pageSize }),
+    queryFn: ({ pageParam = 1 }) =>
+      queryFn({ search, page: pageParam, size: pageSize }),
     initialPageParam: 1,
     enabled,
     getNextPageParam: (lastPage, allPages) => {
-      const total = getTotal(lastPage) || 0
+      const total = getTotal(lastPage) || 0;
 
       // if (total === pageSize) {
       //   return allPages.length + 1
       // }
-      const loaded = allPages.reduce((sum, page) => sum + (getOptions(page)?.length || 0), 0)
+      const loaded = allPages.reduce(
+        (sum, page) => sum + (getOptions(page)?.length || 0),
+        0,
+      );
 
-      if (loaded < total) return (allPages?.length || 0) + 1
-      return undefined
+      if (loaded < total) return (allPages?.length || 0) + 1;
+      return undefined;
     },
-    refetchOnWindowFocus: false
-  })
+    refetchOnWindowFocus: false,
+  });
 
   // Clear options & search page when searchInput o‘zgarsa (yangi so‘rov uchun)
   // useEffect(() => {
@@ -64,24 +92,27 @@ function SelectInfinite<TData>({
   // }, [search, enabled])
 
   // Aggregated options from all pages
-  const allOptions = useMemo(() => (data?.pages || []).flatMap((page) => getOptions(page)), [data, getOptions])
+  const allOptions = useMemo(
+    () => (data?.pages || []).flatMap((page) => getOptions(page)),
+    [data, getOptions],
+  );
   const uniqueOptions = useMemo(() => {
-    if (!selectedOptions?.length) return allOptions
-    const ids = new Set(allOptions.map((o) => o.value))
-    return [...selectedOptions.filter((o) => !ids.has(o.value)), ...allOptions]
-  }, [allOptions, selectedOptions])
+    if (!selectedOptions?.length) return allOptions;
+    const ids = new Set(allOptions.map((o) => o.value));
+    return [...selectedOptions.filter((o) => !ids.has(o.value)), ...allOptions];
+  }, [allOptions, selectedOptions]);
 
   // Popup scroll handler for infinity scroll
   const handlePopupScroll = (e: React.UIEvent<HTMLDivElement, UIEvent>) => {
-    const target = e.target as HTMLDivElement
+    const target = e.target as HTMLDivElement;
     if (
       hasNextPage &&
       !isFetchingNextPage &&
       target.scrollTop + target.offsetHeight >= target.scrollHeight - 64 // 64px buffer
     ) {
-      fetchNextPage()
+      fetchNextPage();
     }
-  }
+  };
 
   return (
     <Select
@@ -91,14 +122,14 @@ function SelectInfinite<TData>({
       loading={isLoading || isFetchingNextPage || isRefetching}
       options={uniqueOptions}
       searchValue={searchInput}
-      notFoundContent={isLoading ? 'Yuklanmoqda...' : 'Topilmadi'}
+      notFoundContent={isLoading ? "Yuklanmoqda..." : "Topilmadi"}
       onSearch={(val) => {
-        setSearchInput(val)
-        debouncedSetSearch(val)
+        setSearchInput(val);
+        debouncedSetSearch(val);
       }}
       onPopupScroll={handlePopupScroll}
     />
-  )
+  );
 }
 
-export default SelectInfinite
+export default SelectInfinite;

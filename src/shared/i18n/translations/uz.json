@@ -871,6 +871,7 @@
   "selectCategory": "Kategoriyani tanlang yoki bo'sh qoldiring",
   "numberMonths": "Oylar soni",
   "monthlyPrice": "Oylik narx (so'm)",
+  "enterPrice": "Narxni kiriting",
   "benefits": "Imtiyozlar",
   "selectedBenefits": "Tanlangan imtiyozlar soni",
   "totalPrice": "Jami narx",
@@ -1105,5 +1106,14 @@
       "transferring": "O'tkazish",
       "select_teacher_to_transfer": "O'tkazishga o'qituvchini tanlang"
     }
-  }
+  },
+  "chatsResponded": "Mentor javob bergan chatlar",
+  "closedStatistics": "Yopilgan chatlar statistikasi",
+  "today": "Bugun",
+  "week": "Haftalik",
+  "year": "Yillik",
+  "total": "Jami",
+  "registerLanguage": "Ro'yxatdan o'tgan tili",
+  "annoucements": "E'lonlar",
+  "role": "Roli"
 }

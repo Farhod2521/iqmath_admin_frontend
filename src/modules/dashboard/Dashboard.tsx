@@ -1,11 +1,15 @@
 import { Card } from "antd";
-import Statistics from "./pages/closed-chat-stats/Statistics";
+import Statistics from "./pages/Statistics";
+import ManagmentStatistics from "./pages/ManagmentStatistics";
 
 function Dashboard() {
   return (
-    <Card title="Dashboard" className="flex flex-col gap-2">
-      <Statistics />
-    </Card>
+    <div className="p-4 md:p-6">
+      <ManagmentStatistics />
+      <div className="px-8 pt-4 pb-8 md:px-10 md:pb-10">
+        <Statistics />
+      </div>
+    </div>
   );
 }
 

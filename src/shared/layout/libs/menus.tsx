@@ -7,14 +7,23 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import { PermissionsCode } from "@/shared/utils/menuPermissions";
+import { BiSolidBarChartAlt2 } from "react-icons/bi";
+import { PiUsers } from "react-icons/pi";
+import { SettingOutlined } from "@ant-design/icons";
 export * from "./index.d";
 
 export const getMenus = (t: (key: string) => string) => [
   {
     key: PermissionsCode.DASHBOARD.MENU,
-    path: "/dashboard",
-    label: t("dashboard"), // yoki "Boshqaruv paneli"
-    icon: MdDashboard,
+    path: "/statistics",
+    label: t("statistics"), // yoki "Boshqaruv paneli"
+    icon: (isActive: boolean) => <BiSolidBarChartAlt2 size={26} />,
+  },
+  {
+    key: "users",
+    path: "/users/pupils",
+    label: t("users"),
+    icon: (isActive: boolean) => <PiUsers size={26} />,
   },
   {
     key: "prices",
@@ -25,19 +34,19 @@ export const getMenus = (t: (key: string) => string) => [
         key: "subscriptionPlans",
         path: "/prices/subscriptionPlans",
         label: t("subscriptionPlans"),
-        icon: (isActive: boolean) => <FaMoneyBillWave size={18} />,
+        // icon: (isActive: boolean) => <FaMoneyBillWave size={18} />,
       },
       {
         key: "category",
         path: "/prices/category",
         label: t("category"),
-        icon: (isActive: boolean) => <FaClipboardList size={18} />,
+        // icon: (isActive: boolean) => <FaClipboardList size={18} />,
       },
       {
         key: "benifits",
         path: "/prices/benifits",
         label: t("benifits"),
-        icon: (isActive: boolean) => <FaTags size={18} />,
+        // icon: (isActive: boolean) => <FaTags size={18} />,
       },
     ],
   },
@@ -52,6 +61,23 @@ export const getMenus = (t: (key: string) => string) => [
     path: "/payments/payment",
     label: t("payments"),
     icon: () => <MdOutlinePayments size={22} />,
+  },
+  {
+    key: "settings",
+    label: t("settings"),
+    icon: (isActive: boolean) => <SettingOutlined size={26} />,
+    children: [
+      {
+        key: "annoucements",
+        path: "/settings/annoucements",
+        label: t("annoucements"),
+      },
+      {
+        key: "motivation",
+        path: "/settings/motivation",
+        label: t("motivation"),
+      },
+    ],
   },
 ];
 

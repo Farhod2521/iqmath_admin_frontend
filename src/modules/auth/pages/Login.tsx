@@ -57,15 +57,15 @@ export default function IQmathLogin() {
         saveAuthData(res?.data);
         setAuth(res?.data);
         const userData = await getMe();
-        if (userData?.role !== ROLES.SUPERADMIN) {
-          // Remove auth data and redirect or show error
-          removeAuthData();
-          setAuth(null);
-          setUserData(null);
-          handleApiError({ message: "Faqat superadmin kirishi mumkin" });
-          return;
-        }
-        navigate("/dashboard");
+        // if (userData?.role !== ROLES.SUPERADMIN) {
+        //   // Remove auth data and redirect or show error
+        //   removeAuthData();
+        //   setAuth(null);
+        //   setUserData(null);
+        //   handleApiError({ message: "Faqat superadmin kirishi mumkin" });
+        //   return;
+        // }
+        navigate("/statistics");
       }, 1000);
     } catch (err: any) {
       handleApiError(err);

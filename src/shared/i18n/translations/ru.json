@@ -790,10 +790,10 @@
   "exampleUz": "Например: Best Value",
   "exampleRu": "Например: Самый выгодный",
   "exampleSlug": "best-value",
-
   "selectCategory": "Выберите категорию или оставьте поле пустым",
   "numberMonths": "Количество месяцев",
   "monthlyPrice": "Ежемесячная цена (сумма)",
+  "enterPrice": "Введите цену",
   "benefits": "Преимущества",
   "selectedBenefits": "Количество выбранных преимуществ",
   "totalPrice": "Общая цена",
@@ -1011,5 +1011,15 @@
       "transferring": "Передача...",
       "select_teacher_to_transfer": "Выберите преподавателя для передачи"
     }
-  }
+  },
+  "chatsResponded": "Чаты, в которых отвечал наставник.",
+  "closedStatistics": "Статистика закрытых чатов",
+  "today": "Сегодня",
+  "week": "За неделю",
+  "dashMonth": "За месяц",
+  "year": "За год",
+  "total": "Всего",
+  "registerLanguage": "Зарегистрированный язык",
+  "annoucements": "Э'лоны",
+  "role": "Роль"
 }

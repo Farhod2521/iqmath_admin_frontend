@@ -32,6 +32,16 @@ export type SubscriptionPlanFormData = {
   discount_percent: number;
   price_per_month: string;
   is_active: boolean;
+  benefits: number[];
+};
+
+export type SubscriptionPlanUpdateFormData = {
+  name: string;
+  months: number;
+  category: string;
+  discount_percent: number;
+  price_per_month: string;
+  is_active: boolean;
 };
 
 export const getSubscriptionPlans = () =>
@@ -44,8 +54,8 @@ export const postSubscriptionPlan = (data: SubscriptionPlanFormData) =>
 
 export const putSubscriptionPlan = (
   id: number,
-  data: SubscriptionPlanFormData,
-) => axiosApi.put(`/payments/superadmin/subscription-plan/${id}`, data);
+  data: SubscriptionPlanUpdateFormData,
+) => axiosApi.put(`/payments/superadmin/subscription-plan/${id}/`, data);
 
 export const deleteSubscriptionPlan = (id: number) =>
-  axiosApi.delete(`/payments/superadmin/subscription-plan/${id}`);
+  axiosApi.delete(`/payments/superadmin/subscription-plan/${id}/`);
