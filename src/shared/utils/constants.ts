@@ -5,10 +5,10 @@ export enum UserStatus {
 }
 
 export enum RoleLabel {
-  student = "O'quvchi",
-  teacher = "O'qituvchi",
+  Student = "O'quvchi",
+  teacher = "Mentor",
   parent = "Ota-ona",
-  tutor = "Tutor",
+  tutor = "O'qituvchi",
 }
 
 export enum QuestionType {

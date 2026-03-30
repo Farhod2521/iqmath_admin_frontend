@@ -15,6 +15,9 @@ import PaymentsRoutes from "./modules/payments/routes";
 
 import UsersRoutes from "./modules/users/routes";
 import SettingsRoutes from "./modules/settings/routes";
+import ChatsRoutes from "./modules/chats/routes";
+import RatingRoutes from "./modules/ratings/routes";
+import MentorsRoutes from "./modules/mentors/routes";
 
 // Pages
 
@@ -36,6 +39,9 @@ const AppRoutes = () => {
             {PricesRoutes}
             {GroupsRoutes}
             {PaymentsRoutes}
+            {ChatsRoutes}
+            {RatingRoutes}
+            {MentorsRoutes}
             {/*  */}
           </Route>
         </Route>

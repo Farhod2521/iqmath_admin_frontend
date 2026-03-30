@@ -2,6 +2,7 @@ export * from "./auth";
 export * from "./managment";
 export * from "./dashboard";
 export * from "./student";
+export * from "./ratings";
 
 export * from "./modules/modules";
 export * from "./settings";

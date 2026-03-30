@@ -14,7 +14,7 @@ const SiderMenu = () => {
   const hasRegionAndDistrict = !!(userData?.region && userData?.districts);
   const sidebarHeight = hasRegionAndDistrict
     ? "h-[calc(-305px+100vh)]"
-    : "h-[calc(-255px+100vh)]";
+    : "h-[calc(-105px+100vh)]";
 
   return (
     <Sider

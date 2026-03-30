@@ -185,12 +185,11 @@ const SubscriptionPlans = () => {
         <div>
           <div className="flex items-center gap-3 mb-2">
             <h1 className="text-2xl font-bold text-gray-900 sm:text-3xl">
-              {t("subscriptionPlans") || "Obuna rejalari"}
+              {t("subscriptionPlans")}
             </h1>
           </div>
           <p className="text-sm text-gray-600 sm:text-base">
-            {t("manageSubscriptionPlans") ||
-              "Barcha obuna rejalarini boshqaring"}
+            {t("manageSubscriptionPlans")}
           </p>
         </div>
 

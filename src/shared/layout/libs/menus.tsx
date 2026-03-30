@@ -7,7 +7,12 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import { PermissionsCode } from "@/shared/utils/menuPermissions";
-import { BiChat, BiSolidBarChartAlt2 } from "react-icons/bi";
+import {
+  BiChat,
+  BiSolidBarChartAlt2,
+  BiSolidGraduation,
+  BiTrophy,
+} from "react-icons/bi";
 import { PiUsers } from "react-icons/pi";
 
 import { SettingOutlined } from "@ant-design/icons";
@@ -29,8 +34,8 @@ export const getMenus = (t: (key: string) => string) => [
   {
     key: "mentor",
     path: "/mentors",
-    label: t("mentor"),
-    icon: () => <BiChat size={22} />,
+    label: t("teachers"),
+    icon: () => <BiSolidGraduation size={22} />,
   },
   {
     key: "prices",
@@ -70,6 +75,12 @@ export const getMenus = (t: (key: string) => string) => [
     icon: () => <BiChat size={22} />,
   },
   {
+    key: "ratings",
+    path: "/ratings",
+    label: t("ratings"),
+    icon: (isActive: boolean) => <BiTrophy size={26} />,
+  },
+  {
     key: "payments",
     path: "/payments/payment",
     label: t("payments"),
@@ -94,6 +105,11 @@ export const getMenus = (t: (key: string) => string) => [
         key: "settings",
         path: "/settings/conversion",
         label: t("conversion"),
+      },
+      {
+        key: "daily-coin",
+        path: "/settings/daily-coin",
+        label: t("dailyCoin"),
       },
     ],
   },

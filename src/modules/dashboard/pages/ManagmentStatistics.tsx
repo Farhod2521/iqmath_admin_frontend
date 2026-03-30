@@ -15,7 +15,7 @@ const ManagmentStatistics = () => {
   });
 
   return (
-    <div className="px-8 pt-8 pb-4 md:px-10 md:pt-10 md:pb-5">
+    <div className="px-8 pt-2 pb-4 md:px-10 md:pt-4 md:pb-5">
       <StatsCards data={data} isLoading={isLoading} />
       <div className="my-8">
         <MentorClosedChatsStats />

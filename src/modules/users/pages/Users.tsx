@@ -94,8 +94,8 @@ const Users = () => {
           title: t("class"),
           dataIndex: "class_num",
           key: "class_num",
-
           align: "center",
+          width: "80px",
           render: (value: string) => {
             const classText = value || "";
             const classNumber = classText.split(" ")[0];
@@ -103,12 +103,44 @@ const Users = () => {
           },
         },
         {
+          title: t("diagnosticsStatus"),
+          dataIndex: "has_diagnost",
+          key: "has_diagnost",
+          align: "center",
+          render: (value: string) => {
+            return value ? t("submitted") : t("doNotSubmit");
+          },
+        },
+
+        {
           title: t("subject"),
           dataIndex: "subject_name_uz",
           key: "subject_name_uz",
 
           align: "center",
           render: (value: string) => value || "-",
+        },
+        {
+          title: t("subject"),
+          key: "remaining_days",
+          align: "center",
+          render: (data: StudentData) => {
+            const days = data?.remaining_days;
+            const endDate = data?.subscription_end_date;
+
+            if (!days && !endDate) return "-";
+
+            return (
+              <div className="flex flex-col leading-tight">
+                <span className="text-gray-800 text-sm font-medium">
+                  {endDate}
+                </span>
+                <span className="text-xs text-gray-500">
+                  {days} {t("remainingDays")}
+                </span>
+              </div>
+            );
+          },
         },
       );
     }
@@ -204,7 +236,14 @@ const Users = () => {
     );
 
     return baseColumns;
-  }, [filterData.role, navigate, pagination.current, pagination.pageSize, t]);
+  }, [
+    filterData.role,
+    filterData.lang,
+    navigate,
+    pagination.current,
+    pagination.pageSize,
+    t,
+  ]);
 
   const handleTableChange = (p: TablePaginationConfig) => {
     setPagination((prev) => ({
@@ -235,7 +274,7 @@ const Users = () => {
   };
 
   return (
-    <Card title="Foydalanuvchilar">
+    <Card title={t("users")}>
       <Row gutter={[12, 12]} className="mb-4">
         <Col xs={24} sm={12} md={8} lg={3}>
           <FSearch
@@ -262,7 +301,7 @@ const Users = () => {
           <Select
             allowClear
             className="w-full"
-            placeholder="Status"
+            placeholder={t("status")}
             value={filterData.status}
             options={statusOptions}
             onChange={(value) => handleFilterChange("status", value)}
@@ -364,7 +403,6 @@ const subjectOptions = [
 ];
 
 const statusOptions = [
-  { value: "all", label: "Hammasi" },
   { value: "active", label: "Faol" },
   { value: "inactive", label: "Faol emas" },
 ];
@@ -377,12 +415,12 @@ const deviceOptions = [
 // Role options
 const roleOptions = [
   { value: "student", label: "O'quvchi" },
-  { value: "teacher", label: "O'qituvchi" },
+  { value: "teacher", label: "Mentorlar" },
   { value: "parent", label: "Ota-ona" },
-  { value: "tutor", label: "Tutor" },
+  { value: "tutor", label: "O'qituvchi" },
 ];
 
 const langOptions = [
-  { value: "uz", label: "UZ" },
-  { value: "ru", label: "RU" },
+  { value: "uz", label: "uz" },
+  { value: "ru", label: "ru" },
 ];
