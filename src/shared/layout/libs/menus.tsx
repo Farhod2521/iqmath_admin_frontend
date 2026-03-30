@@ -102,7 +102,7 @@ export const getMenus = (t: (key: string) => string) => [
         label: t("motivation"),
       },
       {
-        key: "settings",
+        key: "conversion",
         path: "/settings/conversion",
         label: t("conversion"),
       },
