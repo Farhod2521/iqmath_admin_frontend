@@ -25,7 +25,7 @@ import { useTranslation } from "react-i18next";
 import type { RcFile } from "antd/es/upload";
 
 import { BASE_URL } from "@/libs/env";
-import AnnouncementModal from "../../components/modal/AnnouncementModal";
+import AnnouncementModal from "../components/AnnouncementModal";
 import { formatDateColumn } from "@/shared/components/tables/formatters";
 import { FaEdit } from "react-icons/fa";
 import { DeleteOutlined, PlusCircleOutlined } from "@ant-design/icons";

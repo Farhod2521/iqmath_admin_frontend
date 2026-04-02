@@ -6,6 +6,8 @@ import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import FSearch from "@/shared/components/filters/FSearch";
 import { RoleLabel } from "@/shared/utils/constants";
+import RewardModal from "../components/RewardModal";
+import { useForm } from "antd/es/form/Form";
 
 const Users = () => {
   const { t } = useTranslation();
@@ -18,6 +20,8 @@ const Users = () => {
     pageSize: 10,
     total: 0,
   });
+  const [isReward, setIsReward] = useState(false);
+  const [selectedStudent, setSelectedStudent] = useState<StudentData>();
 
   const [filterData, setFilterData] = useState({
     search: undefined,
@@ -28,6 +32,9 @@ const Users = () => {
     lang: "uz",
     device: undefined,
   });
+
+  const openModal = () => setIsReward(true);
+
   const fetchData = useCallback(() => {
     setLoading(true);
 
@@ -53,6 +60,11 @@ const Users = () => {
   useEffect(() => {
     fetchData();
   }, [fetchData]);
+
+  const handleRewardChange = (record: StudentData) => {
+    setSelectedStudent(record);
+    openModal();
+  };
 
   const columns: ColumnsType<StudentData> = useMemo(() => {
     const baseColumns: ColumnsType<StudentData> = [
@@ -166,6 +178,12 @@ const Users = () => {
           ),
       },
       {
+        title: t("device"),
+        dataIndex: "device",
+        key: "device",
+        render: (value: string) => value || "-",
+      },
+      {
         title: t("registerLanguage"),
         dataIndex: "lang",
         key: "lang",
@@ -204,9 +222,9 @@ const Users = () => {
         render: (_value, record) => (
           <div className="flex gap-2 justify-end">
             <button
-              className="bg-[#5D87FF] hover:bg-[#4570EA] text-white px-3 py-1 rounded-lg text-sm flex items-center gap-1"
+              className="bg-[#5D87FF] cursor-pointer hover:bg-[#4570EA] text-white px-3 py-1 rounded-lg text-sm flex items-center gap-1"
               title={t("giveReward")}
-              onClick={() => console.log("reward:", record)}
+              onClick={() => handleRewardChange(record)}
             >
               <svg
                 className="w-4 h-4"
@@ -224,12 +242,12 @@ const Users = () => {
               {t("reward")}
             </button>
 
-            <button
+            {/* <button
               className="bg-blue-500 hover:bg-blue-600 whitespace-nowrap text-white px-3 py-1 rounded-lg text-sm"
               //   onClick={() => navigate(`/users/${record.id}`)}
             >
               {t("loginAsStudent")}
-            </button>
+            </button> */}
           </div>
         ),
       },
@@ -242,6 +260,7 @@ const Users = () => {
     navigate,
     pagination.current,
     pagination.pageSize,
+    handleRewardChange,
     t,
   ]);
 
@@ -378,6 +397,11 @@ const Users = () => {
             </Tag>
           ),
         }}
+      />
+      <RewardModal
+        open={isReward}
+        close={() => setIsReward(false)}
+        selectedStudent={selectedStudent}
       />
     </Card>
   );

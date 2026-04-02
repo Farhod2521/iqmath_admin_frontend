@@ -72,7 +72,7 @@ const DailyCoins: React.FC = () => {
       render: (_, __, index) => index + 1,
     },
     {
-      title: "Kunlik coin limiti",
+      title: "Kunlik tanga limiti",
       dataIndex: "daily_coin_limit",
       render: (value: number, record: DailyCoinData) => {
         if (editingId === record.id) {
@@ -94,7 +94,7 @@ const DailyCoins: React.FC = () => {
         value ? value.replace("T", " ").slice(0, 16) : "-",
     },
     {
-      title: "Action",
+      title: "Amal",
       render: (_: unknown, record: DailyCoinData) => {
         if (editingId === record.id) {
           return (

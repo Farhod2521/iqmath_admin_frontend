@@ -4,6 +4,7 @@ import type { UploadFile } from "antd/es/upload/interface";
 import type { RcFile } from "antd/es/upload";
 import { AnnouncementData, AnnouncementFormData } from "@/services";
 import { BASE_URL } from "@/libs/env";
+import { useTranslation } from "react-i18next";
 
 const ALLOWED_IMAGE_TYPES = [
   "image/jpeg",
@@ -38,6 +39,7 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({
   onFileChange,
   onFileRemove,
 }) => {
+  const { t } = useTranslation();
   // Modal yopilganda formani tozalash
   const handleCancel = () => {
     onCancel();
@@ -72,11 +74,11 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({
 
   return (
     <Modal
-      title={editingItem ? "E'lonni tahrirlash" : "Yangi e'lon"}
+      title={editingItem ? t("announcement.edit") : t("announcement.create")}
       open={open}
       onCancel={handleCancel}
       onOk={() => form.submit()}
-      okText={editingItem ? "Saqlash" : "Yaratish"}
+      okText={editingItem ? t("save") : t("create")}
       confirmLoading={confirmLoading}
       width={700}
     >
@@ -86,15 +88,15 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({
         onFinish={(values: AnnouncementFormData) => onSubmit(values, fileList)}
       >
         <Form.Item
-          label="Sarlavha UZ"
+          label={t("announcement.title_uz")}
           name="title_uz"
-          rules={[{ required: true, message: "Sarlavha kiriting" }]}
+          rules={[{ required: true, message: t("announcement.title_uz") }]}
         >
           <Input />
         </Form.Item>
 
         <Form.Item
-          label="Sarlavha RU"
+          label={t("announcement.title_ru")}
           name="title_ru"
           rules={[{ required: true, message: "Sarlavha kiriting" }]}
         >

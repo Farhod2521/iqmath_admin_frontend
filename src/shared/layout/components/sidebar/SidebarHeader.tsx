@@ -64,7 +64,7 @@ const SidebarHeader = () => {
     <div className="flex justify-between items-center border-b border-gray-200 bg-white px-4 pb-2">
       <div
         className="flex items-center gap-1 cursor-pointer"
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/statistics")}
       >
         <div className="flex items-center justify-center">
           <Brand />

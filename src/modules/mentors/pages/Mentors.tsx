@@ -84,18 +84,7 @@ const Mentors = () => {
         </div>
       ),
     },
-    {
-      title: t("role"),
-      dataIndex: "role",
-      key: "role",
-      render: (value: keyof typeof RoleLabel) => (
-        <div className="flex items-center gap-2 cursor-pointer">
-          <span className="font-medium">
-            {RoleLabel[value] || value || "-"}
-          </span>
-        </div>
-      ),
-    },
+
     {
       title: t("phone"),
       dataIndex: "phone",
@@ -140,6 +129,12 @@ const Mentors = () => {
         ) : (
           <span className="text-gray-400">-</span>
         ),
+    },
+    {
+      title: t("device"),
+      dataIndex: "device",
+      key: "device",
+      render: (value: string) => value || "-",
     },
     {
       title: "Amal",

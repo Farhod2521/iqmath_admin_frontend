@@ -1105,5 +1105,28 @@
   "annoucements": "Э'лоны",
   "role": "Роль",
   "dailyCoin": "Настройки монет",
-  "motivation": "Сроки погашения"
+  "motivation": "Сроки погашения",
+  "announcement": {
+    "title": "Объявления",
+    "create": "Добавить объявление",
+    "edit": "Редактировать объявление",
+
+    "title_uz": "Заголовок (UZ)",
+    "title_ru": "Заголовок (RU)",
+    "text_uz": "Текст (UZ)",
+    "text_ru": "Текст (RU)",
+    "image": "Изображение",
+    "video": "Видео (URL)",
+    "news_status": "Новость",
+    "notification_status": "Уведомление",
+
+    "created": "Создано",
+    "updated": "Обновлено",
+    "deleted": "Удалено",
+
+    "delete_confirm": "Вы уверены, что хотите удалить?",
+
+    "image_error": "Можно загружать только jpg, jpeg, png или webp",
+    "upload": "Загрузить"
+  }
 }

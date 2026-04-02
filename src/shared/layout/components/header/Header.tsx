@@ -28,7 +28,7 @@ const Header = () => {
       </div>
 
       <div className="flex items-center justify-end gap-2">
-        <HeaderMathMenu />
+        {/* <HeaderMathMenu /> */}
         <HeaderHelp />
         {/* <HeaderNotification /> */}
       </div>

@@ -25,10 +25,16 @@ export const getMotivations = () =>
   axiosApi.get<MotivationData[]>("/management/superadmin/motivation/");
 
 export const postMotivations = (data: MotivationFormData) =>
-  axiosApi.post("/management/superadmin/motivation/", data);
+  axiosApi.post<{
+    message: string;
+  }>("/management/superadmin/motivation/", data);
 
 export const putMotivations = (id: number, data: MotivationFormData) =>
-  axiosApi.put(`/management/superadmin/motivation/${id}`, data);
+  axiosApi.put<{
+    message: string;
+  }>(`/management/superadmin/motivation/${id}`, data);
 
 export const deleteMotivations = (id: number) =>
-  axiosApi.delete(`/management/superadmin/motivation/${id}`);
+  axiosApi.delete<{
+    message: string;
+  }>(`/management/superadmin/motivation/${id}`);

@@ -88,7 +88,6 @@ const CategoryModal: React.FC<Props> = ({
               message: t("slugRules"),
             },
           ]}
-          extra={t("slugHint")}
         >
           <Input
             placeholder={t("exampleSlug")}

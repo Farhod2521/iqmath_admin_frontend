@@ -49,7 +49,7 @@ export const getMenus = (t: (key: string) => string) => [
         // icon: (isActive: boolean) => <FaMoneyBillWave size={18} />,
       },
       {
-        key: "category",
+        key: "price-category",
         path: "/prices/category",
         label: t("category"),
         // icon: (isActive: boolean) => <FaClipboardList size={18} />,
@@ -110,6 +110,46 @@ export const getMenus = (t: (key: string) => string) => [
         key: "daily-coin",
         path: "/settings/daily-coin",
         label: t("dailyCoin"),
+      },
+      {
+        key: "category",
+        path: "/settings/category",
+        label: t("category"),
+      },
+      {
+        key: "products",
+        path: "/settings/products",
+        label: t("products"),
+      },
+      {
+        key: "mathematicians",
+        path: "/settings/mathematicians",
+        label: t("Matematik olimlar"),
+      },
+      {
+        key: "referral-coupon-settings",
+        path: "/settings/referral-coupon-settings",
+        label: t("Referal va kupon"),
+      },
+      {
+        key: "banners",
+        path: "/settings/banner",
+        label: t("Banner"),
+      },
+      {
+        key: "management-tags",
+        path: "/settings/management-tags",
+        label: t("Teglar"),
+      },
+      {
+        key: "management-faqs",
+        path: "/settings/management-faqs",
+        label: t("Tez-tez so‘raladigan savollar"),
+      },
+      {
+        key: "upload-file-settings",
+        path: "/settings/upload-file-settings",
+        label: t("Yuklangan fayllar"),
       },
     ],
   },

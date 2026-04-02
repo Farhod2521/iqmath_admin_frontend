@@ -1199,5 +1199,28 @@
   "role": "Roli",
   "dailyCoin": "Tanga sozlamalari",
   "motivation": "Mativatsiyalar",
-  "conversion": "Konversiya"
+  "conversion": "Konversiya",
+  "announcement": {
+    "title": "E'lonlar",
+    "create": "E'lon qo'shish",
+    "edit": "E'lonni tahrirlash",
+
+    "title_uz": "Sarlavha (UZ)",
+    "title_ru": "Sarlavha (RU)",
+    "text_uz": "Matn (UZ)",
+    "text_ru": "Matn (RU)",
+    "image": "Rasm",
+    "video": "Video (URL)",
+    "news_status": "Yangilik",
+    "notification_status": "Bildirishnoma",
+
+    "created": "Yaratildi",
+    "updated": "Yangilandi",
+    "deleted": "O'chirildi",
+
+    "delete_confirm": "E'lonni o'chirishni tasdiqlaysizmi?",
+
+    "image_error": "Faqat jpg, jpeg, png yoki webp rasm yuklash mumkin",
+    "upload": "Yuklash"
+  }
 }
