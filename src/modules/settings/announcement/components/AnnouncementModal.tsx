@@ -1,9 +1,7 @@
 import React, { useEffect } from "react";
 import { Form, Input, Modal, Switch, Upload, message } from "antd";
 import type { UploadFile } from "antd/es/upload/interface";
-import type { RcFile } from "antd/es/upload";
 import { AnnouncementData, AnnouncementFormData } from "@/services";
-import { BASE_URL } from "@/libs/env";
 import { useTranslation } from "react-i18next";
 
 const ALLOWED_IMAGE_TYPES = [
@@ -22,7 +20,7 @@ interface AnnouncementModalProps {
     fileList: UploadFile[],
   ) => Promise<void>;
   confirmLoading: boolean;
-  form: any; // Form instance
+  form: any;
   fileList: UploadFile[];
   onFileChange: (fileList: UploadFile[]) => void;
   onFileRemove: () => void;
@@ -40,7 +38,7 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({
   onFileRemove,
 }) => {
   const { t } = useTranslation();
-  // Modal yopilganda formani tozalash
+
   const handleCancel = () => {
     onCancel();
   };
@@ -57,7 +55,6 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({
     onFileRemove();
   };
 
-  // Formani boshlang'ich qiymatlar bilan to'ldirish
   useEffect(() => {
     if (editingItem) {
       form.setFieldsValue({
@@ -87,39 +84,64 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({
         layout="vertical"
         onFinish={(values: AnnouncementFormData) => onSubmit(values, fileList)}
       >
+        {/* TITLE UZ */}
         <Form.Item
           label={t("announcement.title_uz")}
           name="title_uz"
-          rules={[{ required: true, message: t("announcement.title_uz") }]}
+          rules={[
+            {
+              required: true,
+              message: t("announcement.title_uz"),
+            },
+          ]}
         >
           <Input />
         </Form.Item>
 
+        {/* TITLE RU */}
         <Form.Item
           label={t("announcement.title_ru")}
           name="title_ru"
-          rules={[{ required: true, message: "Sarlavha kiriting" }]}
+          rules={[
+            {
+              required: true,
+              message: t("announcement.title_ru"),
+            },
+          ]}
         >
           <Input />
         </Form.Item>
 
+        {/* TEXT UZ */}
         <Form.Item
-          label="Matn UZ"
+          label={t("announcement.text_uz")}
           name="text_uz"
-          rules={[{ required: true, message: "Matn kiriting" }]}
+          rules={[
+            {
+              required: true,
+              message: t("announcement.text_uz"),
+            },
+          ]}
         >
           <Input.TextArea rows={4} />
         </Form.Item>
 
+        {/* TEXT RU */}
         <Form.Item
-          label="Matn RU"
+          label={t("announcement.text_ru")}
           name="text_ru"
-          rules={[{ required: true, message: "Matn kiriting" }]}
+          rules={[
+            {
+              required: true,
+              message: t("announcement.text_ru"),
+            },
+          ]}
         >
           <Input.TextArea rows={4} />
         </Form.Item>
 
-        <Form.Item label="Rasm" name="image">
+        {/* IMAGE */}
+        <Form.Item label={t("announcement.image")} name="image">
           <Upload
             listType="picture-card"
             fileList={fileList}
@@ -127,14 +149,12 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({
             onRemove={handleRemoveFile}
             beforeUpload={(file) => {
               const isValid = ALLOWED_IMAGE_TYPES.includes(file.type);
+
               if (!isValid) {
-                message.error(
-                  "Faqat jpg, jpeg, png yoki webp rasm yuklash mumkin",
-                );
+                message.error(t("announcement.image_error"));
                 return Upload.LIST_IGNORE;
               }
 
-              // Yuklashni to'xtatamiz (keyin formData orqali yuboramiz)
               return false;
             }}
             accept=".jpg,.jpeg,.png,.webp"
@@ -142,30 +162,36 @@ const AnnouncementModal: React.FC<AnnouncementModalProps> = ({
           >
             {fileList.length >= 1 ? null : (
               <div>
-                <div>+ Yuklash</div>
-                <div style={{ fontSize: 12, color: "#999" }}>Rasm</div>
+                <div>+ {t("announcement.upload")}</div>
+                <div style={{ fontSize: 12, color: "#999" }}>
+                  {t("announcement.image")}
+                </div>
               </div>
             )}
           </Upload>
+
           {editingItem?.image && fileList.length === 0 && (
-            <div style={{ marginTop: 8, color: "#999" }}>Rasm mavjud emas</div>
+            <div style={{ marginTop: 8, color: "#999" }}>{t("noData")}</div>
           )}
         </Form.Item>
 
-        <Form.Item label="Video (URL)" name="video">
+        {/* VIDEO */}
+        <Form.Item label={t("announcement.video")} name="video">
           <Input placeholder="https://example.com/video.mp4" />
         </Form.Item>
 
+        {/* NEWS STATUS */}
         <Form.Item
-          label="News status"
+          label={t("announcement.news_status")}
           name="news_status"
           valuePropName="checked"
         >
           <Switch />
         </Form.Item>
 
+        {/* NOTIFICATION STATUS */}
         <Form.Item
-          label="Notification status"
+          label={t("announcement.notification_status")}
           name="notification_status"
           valuePropName="checked"
         >
