@@ -63,7 +63,7 @@ const StudentSubjectsList = () => {
     {
       title: t("class"),
       dataIndex: "class_name",
-      align: "center",
+      align: "center" as const,
     },
     {
       title: t("mastery"),
@@ -85,7 +85,7 @@ const StudentSubjectsList = () => {
     },
     {
       title: t("action"),
-      align: "center",
+      align: "center" as const,
       render: (row: any) => (
         <Button
           type="text"
