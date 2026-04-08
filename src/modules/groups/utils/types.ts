@@ -10,6 +10,7 @@ export interface MyGroupsData {
 
 export interface MyGroupsFormData {
   name: string;
+  teacher_id: number;
   students?: number[];
 }
 

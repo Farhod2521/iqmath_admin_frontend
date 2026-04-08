@@ -24,18 +24,21 @@ import {
 import { useState, useEffect } from "react";
 import { handleApiError } from "@/shared/utils/handleApiError";
 import { toast } from "react-toastify";
+import SingleImageUpload from "@/shared/components/image/SingleImageUpload";
+import ProductModal from "../components/ProductModal";
+import { useTranslation } from "react-i18next";
 
 const formatMoney = (value: number) => {
   return new Intl.NumberFormat("uz-UZ").format(value) + ".000" + " so'm";
 };
 
 const Products = () => {
+  const { t } = useTranslation();
   const [form] = Form.useForm();
   const queryClient = useQueryClient();
 
   const [isOpen, setIsOpen] = useState(false);
   const [editData, setEditData] = useState<ManagementProductData | null>(null);
-  const [file, setFile] = useState<File | null>(null);
 
   // GET
   const { data, isLoading, error } = useQuery({
@@ -87,7 +90,6 @@ const Products = () => {
   const closeModal = () => {
     setIsOpen(false);
     setEditData(null);
-    setFile(null);
     form.resetFields();
   };
 
@@ -96,22 +98,32 @@ const Products = () => {
     getManagementProduct(record.id)
       .then((res) => {
         setEditData(res);
-        form.setFieldsValue(res);
+        form.setFieldsValue({
+          ...res,
+          image: res.image
+            ? [
+                {
+                  uid: "-1",
+                  name: "image.png",
+                  status: "done",
+                  url: res.image,
+                },
+              ]
+            : [],
+        });
+
         openModal();
       })
       .catch((err) => handleApiError(err));
   };
 
   // SUBMIT
-  const handleSubmit = async () => {
-    const values = await form.validateFields();
-
+  const handleSubmit = async (values: any, file: File | null) => {
     const payload = {
       ...values,
-      image: values?.image || file, //  file qo‘shiladi
+      image: file || values.image, // muhim
     };
 
-    // ❗ faqat file bo‘lsa yuboramiz
     if (file) {
       payload.image = file;
     } else {
@@ -176,7 +188,9 @@ const Products = () => {
           </Button>
 
           <Popconfirm
-            title="O'chirishni tasdiqlaysizmi?"
+            title={t("deleteConfirm")}
+            okText={t("yes")}
+            cancelText={t("no")}
             onConfirm={() => deleteMutation.mutate(record.id)}
           >
             <Button danger>
@@ -205,60 +219,13 @@ const Products = () => {
         scroll={{ x: 800 }}
         pagination={false}
       />
-
-      <Modal
+      <ProductModal
         open={isOpen}
-        onCancel={closeModal}
-        onOk={handleSubmit}
-        confirmLoading={createMutation.isPending || updateMutation.isPending}
-        title={editData ? "Tahrirlash" : "Yangi mahsulot"}
-      >
-        <Form form={form} layout="vertical">
-          <Form.Item
-            name="name_uz"
-            label="Nomi UZ"
-            rules={[{ required: true }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            name="name_ru"
-            label="Nomi RU"
-            rules={[{ required: true }]}
-          >
-            <Input />
-          </Form.Item>
-
-          <Form.Item
-            name="coin"
-            label="Kerakli tanga"
-            rules={[{ required: true }]}
-          >
-            <InputNumber style={{ width: "100%" }} />
-          </Form.Item>
-
-          <Form.Item
-            name="count"
-            label="Mahsulot soni"
-            rules={[{ required: true }]}
-          >
-            <InputNumber style={{ width: "100%" }} />
-          </Form.Item>
-
-          <Form.Item label="Rasm">
-            <Upload
-              beforeUpload={(file) => {
-                setFile(file);
-                return false; // uploadni to‘xtatamiz
-              }}
-              maxCount={1}
-            >
-              <Button icon={<UploadOutlined />}>Rasm yuklash</Button>
-            </Upload>
-          </Form.Item>
-        </Form>
-      </Modal>
+        onClose={closeModal}
+        onSubmit={handleSubmit}
+        loading={createMutation.isPending || updateMutation.isPending}
+        initialValues={editData}
+      />
     </Card>
   );
 };

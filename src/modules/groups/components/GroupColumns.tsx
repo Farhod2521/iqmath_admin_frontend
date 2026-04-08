@@ -1,5 +1,4 @@
-// components/GroupColumns.tsx
-import { Button, Space, Popconfirm } from "antd";
+import { Button, Space, Popconfirm, Tag, Tooltip, Popover, Avatar } from "antd";
 import {
   DeleteOutlined,
   EditOutlined,
@@ -7,7 +6,7 @@ import {
   UserAddOutlined,
 } from "@ant-design/icons";
 import type { ColumnsType } from "antd/es/table";
-import { MyGroupsData } from "../utils/types";
+import { MyGroupsData, StudentsType } from "../services";
 
 interface GroupColumnsProps {
   t: (key: string) => string;
@@ -26,40 +25,115 @@ export const useGroupColumns = ({
   onInfo,
   onDelete,
 }: GroupColumnsProps): ColumnsType<MyGroupsData> => [
-  { title: t("title"), dataIndex: "name", key: "name" },
+  {
+    title: "№",
+    width: 60,
+    align: "center",
+    render: (_, __, index) => index + 1,
+  },
+  {
+    title: t("Guruh nomi"),
+    dataIndex: "name",
+    key: "name",
+    ellipsis: true,
+  },
+  {
+    title: t("tutor"),
+    dataIndex: "teacher_name",
+    key: "teacher_name",
+    ellipsis: true,
+    render: (val: string) => <b>{val}</b>,
+  },
+
+  {
+    title: t("O'quvchilar soni"),
+    dataIndex: "student_count",
+    key: "student_count",
+    align: "center",
+    render: (count: number) => (
+      <Tag color="blue">
+        {count} {t("ta")}
+      </Tag>
+    ),
+  },
   {
     title: t("students"),
     dataIndex: "students",
     key: "students",
-    render: (students: any[]) => (
-      <span>{Array.isArray(students) ? students.length : 0} ta</span>
-    ),
+    render: (students: StudentsType[]) => {
+      if (!students || students.length === 0) {
+        return <span>-</span>;
+      }
+
+      const preview = students.slice(0, 2); // faqat 2 ta ko‘rsatamiz
+
+      return (
+        <Popover
+          title={t("students")}
+          trigger="click"
+          content={
+            <div style={{ maxHeight: 250, overflowY: "auto", minWidth: 200 }}>
+              {students.map((s) => (
+                <Space key={s.id} style={{ display: "flex", marginBottom: 8 }}>
+                  <Avatar>{s.full_name?.[0]}</Avatar>
+                  <div>
+                    <div style={{ fontWeight: 500 }}>{s.full_name}</div>
+                    <div style={{ fontSize: 12, color: "#999" }}>
+                      {s.identification}
+                    </div>
+                  </div>
+                </Space>
+              ))}
+            </div>
+          }
+        >
+          <div style={{ cursor: "pointer" }}>
+            {/* preview list */}
+            <div style={{ marginTop: 4 }}>
+              {preview.map((s) => (
+                <Tag key={s.id}>{s.full_name}</Tag>
+              ))}
+
+              {students.length > 2 && <Tag>+{students.length - 2}</Tag>}
+            </div>
+          </div>
+        </Popover>
+      );
+    },
   },
+
   {
     title: t("actions"),
     key: "actions",
-    width: 140,
+    width: 180,
+    align: "center",
     render: (_: any, row: MyGroupsData) => (
-      <Space>
-        <Button
-          //   type="primary"
-          variant="outlined"
-          onClick={() => onInfo(row)}
-          icon={<InfoCircleOutlined />}
-        />
-        <Button
-          type="primary"
-          onClick={() => onAddStudents(row)}
-          icon={<UserAddOutlined />}
-        />
-        <Button onClick={() => onEdit(row)} icon={<EditOutlined />} />
+      <Space size="small">
+        <Tooltip title={t("details")}>
+          <Button icon={<InfoCircleOutlined />} onClick={() => onInfo(row)} />
+        </Tooltip>
+
+        <Tooltip title={t("add")}>
+          <Button
+            type="primary"
+            icon={<UserAddOutlined />}
+            onClick={() => onAddStudents(row)}
+          />
+        </Tooltip>
+
+        <Tooltip title={t("edit")}>
+          <Button icon={<EditOutlined />} onClick={() => onEdit(row)} />
+        </Tooltip>
+
         <Popconfirm
-          title="Guruhni o‘chirasizmi?"
-          okText="Ha"
-          cancelText="Yo‘q"
+          title={t("delete_confirm")}
+          okText={t("yes")}
+          cancelText={t("no")}
           onConfirm={() => onDelete(row.id)}
         >
-          <Button danger loading={deletePending} icon={<DeleteOutlined />} />
+          <Tooltip title={t("delete")}>
+            <Button danger loading={deletePending} icon={<DeleteOutlined />} />
+          </Tooltip>
         </Popconfirm>
       </Space>
     ),

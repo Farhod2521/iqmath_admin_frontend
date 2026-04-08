@@ -25,18 +25,19 @@ import { useState, useEffect } from "react";
 import { handleApiError } from "@/shared/utils/handleApiError";
 import ModalMathematician from "../components/ModalMathematician";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const Mathematicians = () => {
   const [form] = Form.useForm();
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
 
   const [isOpen, setIsOpen] = useState(false);
   const [editData, setEditData] = useState<ManagementMatematicianData | null>(
     null,
   );
-  const [file, setFile] = useState<File | null>(null);
 
-  // 🔥 GET
+  // GET
   const { data, isLoading, error } = useQuery({
     queryKey: ["mathematicians"],
     queryFn: async () => {
@@ -49,7 +50,7 @@ const Mathematicians = () => {
     if (error) handleApiError(error);
   }, [error]);
 
-  // 🔥 CREATE
+  // CREATE
   const createMutation = useMutation({
     mutationFn: postManagementMatematician,
     onSuccess: (res) => {
@@ -60,7 +61,7 @@ const Mathematicians = () => {
     onError: (e) => handleApiError(e),
   });
 
-  // 🔥 UPDATE
+  // UPDATE
   const updateMutation = useMutation({
     mutationFn: ({ id, data }: any) => putManagementMatematician(id, data),
     onSuccess: (res) => {
@@ -71,7 +72,7 @@ const Mathematicians = () => {
     onError: (e) => handleApiError(e),
   });
 
-  // 🔥 DELETE
+  // DELETE
   const deleteMutation = useMutation({
     mutationFn: deleteManagementMatematician,
     onSuccess: (res) => {
@@ -86,24 +87,23 @@ const Mathematicians = () => {
   const closeModal = () => {
     setIsOpen(false);
     setEditData(null);
-    setFile(null);
     form.resetFields();
   };
 
-  // 🔥 EDIT
+  // EDIT
   const handleEdit = (record: ManagementMatematicianData) => {
     setEditData(record);
     form.setFieldsValue(record);
     openModal();
   };
 
-  // 🔥 SUBMIT
-  const handleSubmit = async () => {
-    const values = await form.validateFields();
+  // SUBMIT
+  const handleSubmit = async (values: any, file: File | null) => {
+    // const values = await form.validateFields();
 
     const payload = {
       ...values,
-      image: file || values.image, // 🔥 muhim
+      image: file || values.image, // muhim
     };
 
     if (file) {
@@ -122,7 +122,7 @@ const Mathematicians = () => {
     }
   };
 
-  // 🔥 TABLE
+  // TABLE
   const columns = [
     {
       title: "T/r",
@@ -144,7 +144,7 @@ const Mathematicians = () => {
       ),
     },
     {
-      title: "Active",
+      title: t("active"),
       render: (_: any, record: ManagementMatematicianData) =>
         record.is_active ? (
           <Tag color="green">Faol</Tag>
@@ -176,7 +176,11 @@ const Mathematicians = () => {
   return (
     <Card
       title="Matematiklar"
-      extra={<Button onClick={openModal}>Qo‘shish</Button>}
+      extra={
+        <Button onClick={openModal} type="primary">
+          Qo‘shish
+        </Button>
+      }
     >
       <Table
         rowKey="id"
@@ -196,6 +200,6 @@ const Mathematicians = () => {
       />
     </Card>
   );
-};
+};;;;;;;
 
 export default Mathematicians;

@@ -12,4 +12,6 @@ export type OnlineDurationData = {
 };
 
 export const getTeacherOnlineDuration = (id: number) =>
-  axiosApi.get<OnlineDurationData>(`/teacher/online-duration/${id}/`);
+  axiosApi.get<OnlineDurationData>(
+    `/func_teacher/teacher/online-duration/${id}/`,
+  );

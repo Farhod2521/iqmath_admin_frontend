@@ -1,11 +1,5 @@
-import { MdBarChart, MdDashboard, MdOutlinePayments } from "react-icons/md";
-import {
-  FaClipboardList,
-  FaDollarSign,
-  FaMoneyBillWave,
-  FaTags,
-  FaUsers,
-} from "react-icons/fa";
+import { MdOutlineManageHistory, MdOutlinePayments } from "react-icons/md";
+import { FaDollarSign, FaUsers } from "react-icons/fa";
 import { PermissionsCode } from "@/shared/utils/menuPermissions";
 import {
   BiChat,
@@ -14,8 +8,9 @@ import {
   BiTrophy,
 } from "react-icons/bi";
 import { PiUsers } from "react-icons/pi";
+import { IoSettingsOutline } from "react-icons/io5";
 
-import { SettingOutlined } from "@ant-design/icons";
+// import { SettingOutlined } from "@ant-design/icons";
 export * from "./index.d";
 
 export const getMenus = (t: (key: string) => string) => [
@@ -88,8 +83,8 @@ export const getMenus = (t: (key: string) => string) => [
   },
   {
     key: "settings",
-    label: t("settings"),
-    icon: (isActive: boolean) => <SettingOutlined size={26} />,
+    label: t("appManagements"),
+    icon: (isActive: boolean) => <IoSettingsOutline size={26} />,
     children: [
       {
         key: "annoucements",
@@ -151,7 +146,25 @@ export const getMenus = (t: (key: string) => string) => [
         path: "/settings/upload-file-settings",
         label: t("Yuklangan fayllar"),
       },
+      {
+        key: "solution-status",
+        path: "/settings/solution-status",
+        label: t("solutionStatus.title"),
+      },
     ],
+  },
+  {
+    key: "app-students",
+    label: t("scoreLog.title"),
+    path: "/app-students/score-log",
+    icon: (isActive: boolean) => <MdOutlineManageHistory size={26} />,
+    // children: [
+    //   {
+    //     key: "score-log",
+    //     path: "/app-students/score-log",
+    //     label: t("scoreLog.title"),
+    //   },
+    // ],
   },
 ];
 

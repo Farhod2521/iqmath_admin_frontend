@@ -10,6 +10,8 @@ import {
   HiOutlineSignal,
 } from "react-icons/hi2";
 import { HiOutlineRefresh } from "react-icons/hi";
+import { handleApiError } from "@/shared/utils/handleApiError";
+import { useTranslation } from "react-i18next";
 
 // ─── Stat Card ────────────────────────────────────────────────────────────────
 interface StatCardProps {
@@ -65,18 +67,21 @@ const InfoRow: React.FC<InfoRowProps> = ({ icon, label, value }) => (
 
 // ─── Main ─────────────────────────────────────────────────────────────────────
 const MentorsDetail: React.FC = () => {
+  const { t } = useTranslation();
   const { id } = useParams();
   const [data, setData] = useState<OnlineDurationData>();
   const [loading, setLoading] = useState(false);
 
   const getData = useCallback(async () => {
-    try {
-      setLoading(true);
-      const res = await getTeacherOnlineDuration(Number(id));
-      setData(res);
-    } finally {
-      setLoading(false);
-    }
+    setLoading(true);
+    await getTeacherOnlineDuration(Number(id))
+      .then((res) => {
+        setData(res);
+      })
+      .catch((err) => handleApiError(err))
+      .finally(() => {
+        setLoading(false);
+      });
   }, [id]);
 
   useEffect(() => {
@@ -109,7 +114,7 @@ const MentorsDetail: React.FC = () => {
             </div>
             <div>
               <h2 className="text-lg font-semibold text-gray-800 m-0 leading-snug">
-                {data?.teacher || "Mentor"}
+                {data?.teacher || t("mentorDetail.mentor")}
               </h2>
             </div>
           </div>
@@ -127,7 +132,7 @@ const MentorsDetail: React.FC = () => {
                 isOnline ? "bg-green-500 animate-pulse" : "bg-red-400"
               }`}
             />
-            {isOnline ? "Online" : "Offline"}
+            {isOnline ? t("mentorDetail.online") : t("mentorDetail.offline")}
           </div>
         </div>
 
@@ -135,21 +140,21 @@ const MentorsDetail: React.FC = () => {
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 px-6 py-5 border-b border-gray-100 bg-gray-50/60">
           <StatCard
             icon={<HiOutlineClock />}
-            label="Umumiy vaqt"
+            label={t("mentorDetail.total_time")}
             value={data?.total_online_formatted || "—"}
             iconBg="bg-indigo-50"
             iconColor="text-indigo-500"
           />
           <StatCard
             icon={<HiOutlinePlay />}
-            label="Hozirgi sessiya"
+            label={t("mentorDetail.current_session")}
             value={data?.current_session_formatted || "—"}
             iconBg="bg-sky-50"
             iconColor="text-sky-500"
           />
           <StatCard
             icon={<HiOutlineHashtag />}
-            label="Sessiyalar soni"
+            label={t("mentorDetail.sessions_count")}
             value={data?.total_sessions ?? 0}
             iconBg="bg-amber-50"
             iconColor="text-amber-500"
@@ -159,12 +164,12 @@ const MentorsDetail: React.FC = () => {
         {/* ── EXTRA INFO ───────────────────────────────────────── */}
         <div className="px-6 py-5">
           <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400 mb-3">
-            Qo'shimcha ma'lumot
+            {t("mentorDetail.extra_info")}
           </p>
 
           <InfoRow
             icon={<HiOutlineSignal />}
-            label="Hozirgi online sekund"
+            label={t("mentorDetail.current_online_seconds")}
             value={data?.current_session_seconds ?? 0}
           />
 
@@ -175,7 +180,7 @@ const MentorsDetail: React.FC = () => {
               icon={!loading && <HiOutlineRefresh size={14} />}
               className="!rounded-lg !text-gray-500 !border-gray-200 !text-sm !font-medium hover:!text-indigo-500 hover:!border-indigo-300 transition-colors"
             >
-              Yangilash
+              {t("mentorDetail.refresh")}
             </Button>
           </div>
         </div>

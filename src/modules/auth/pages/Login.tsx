@@ -17,6 +17,7 @@ import {
   useStoreUsers,
 } from "@/store";
 import { ROLES } from "@/configs/constants";
+import { useTranslation } from "react-i18next";
 
 const { Title, Text } = Typography;
 
@@ -27,6 +28,7 @@ type LoginValues = {
 };
 
 export default function IQmathLogin() {
+  const { i18n } = useTranslation();
   const navigate = useNavigate();
   const setAuth = useStoreAuth(selectedSetAuth);
   const [loading, setLoading] = useState(false);
@@ -49,6 +51,8 @@ export default function IQmathLogin() {
       const res = await postAuthLogin({
         phone: formattedPhone,
         password: values.password,
+        device: "web",
+        lang: i18n.language,
         // redirect: false,
         // remember: values.remember,
       });
@@ -57,14 +61,14 @@ export default function IQmathLogin() {
         saveAuthData(res?.data);
         setAuth(res?.data);
         const userData = await getMe();
-        // if (userData?.role !== ROLES.SUPERADMIN) {
-        //   // Remove auth data and redirect or show error
-        //   removeAuthData();
-        //   setAuth(null);
-        //   setUserData(null);
-        //   handleApiError({ message: "Faqat superadmin kirishi mumkin" });
-        //   return;
-        // }
+        if (userData?.role !== ROLES.SUPERADMIN) {
+          // Remove auth data and redirect or show error
+          removeAuthData();
+          setAuth(null);
+          setUserData(null);
+          handleApiError({ message: "Faqat superadmin kirishi mumkin" });
+          return;
+        }
         navigate("/statistics");
       }, 1000);
     } catch (err: any) {

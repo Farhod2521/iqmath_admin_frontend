@@ -2,6 +2,7 @@
   "basicInformation": "Основная информация",
   "ratings": "Рейтинги",
   "studentRating": "Рейтинг читателей",
+  "appManagements": "Mенеджмент",
   "auth": "Вход / Регистрация",
   "dashboard": "Панель управления",
   "telegram_bot": "Зарегистрируйтесь через Telegram-бот",
@@ -247,7 +248,7 @@
   "chat": "Чат",
   "mentorRequests": "Запросы к ментору",
   "mentorRequestsDescription": "Здесь вы можете просмотреть все ваши запросы к ментору",
-  "search": "Поиск",
+  "searchs": "Поиск...",
   "searchRequests": "Поиск запросов...",
   "allStatuses": "Все статусы",
   "pending": "Ожидает",
@@ -559,6 +560,8 @@
   "friendRemoved": "Друг удален!",
   "noFriendsYet": "У вас пока нет друзей",
   "noFriendsDescription": "Пригласите друзей и начните учиться вместе",
+  "couponStudents": "Ученики по купону",
+  "referralStudents": "Реферальные ученики",
   "joined": "Присоединился",
   "studyingSubjects": "Изучаемые предметы",
   "myReferrals": "Мои приглашения",
@@ -1128,5 +1131,37 @@
 
     "image_error": "Можно загружать только jpg, jpeg, png или webp",
     "upload": "Загрузить"
-  }
+  },
+  "solutionStatus": {
+    "title": "Статус решений",
+    "subject": "Решения по предметам",
+    "recommendation": "Рекомендованные решения",
+    "created": "Создано",
+    "updated": "Обновлено",
+    "deleted": "Удалено",
+    "delete_confirm": "Вы уверены, что хотите удалить?"
+  },
+  "mentorDetail": {
+    "total_time": "Общее время",
+    "current_session": "Текущая сессия",
+    "sessions_count": "Количество сессий",
+    "extra_info": "Дополнительная информация",
+    "current_online_seconds": "Текущие онлайн секунды",
+    "refresh": "Обновить",
+    "online": "Онлайн",
+    "offline": "Оффлайн",
+    "mentor": "Ментор"
+  },
+  "dates": {
+    "fromDate": "Дата начала",
+    "toDate": "Дата окончания"
+  },
+  "scoreLog": {
+    "title": "История начисления баллов",
+    "tR": "№",
+    "awardType": "Тип награды",
+    "awarded": "Начислено",
+    "deleted": "Вы хотите удалить?"
+  },
+  "deleteConfirm": "Вы уверены, что хотите удалить?"
 }

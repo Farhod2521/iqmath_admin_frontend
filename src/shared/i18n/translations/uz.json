@@ -1,5 +1,7 @@
 {
   "basicInformation": "Asosiy ma'lumotlar",
+  "appManagements": "Boshqaruvlar",
+  "appStudents": "app_students",
   "ratings": "Reytinglar",
   "studentRating": "O'quvchilar reytingi",
   "auth": "Kirish / Ro‘yxatdan o‘tish",
@@ -257,7 +259,7 @@
   "chat": "Chat",
   "mentorRequests": "Mentorga yuborilgan murojaatlar",
   "mentorRequestsDescription": "Bu yerda mentorga yuborgan barcha murojaatlaringizni ko'rishingiz mumkin",
-  "search": "Qidirish",
+  "searchs": "Qidiruv...",
   "searchRequests": "Murojaatlarni qidirish...",
   "status": "Holati",
   "allStatuses": "Barcha holatlar",
@@ -449,6 +451,7 @@
   "studentSegment": "O'quvchilar segmenti",
   "activityHeatmap": "Faollik heatmap",
   "activity": "Faollik",
+  "search": "Qidiruv (ism)",
   "searchByName": "Qidiruv (ism)",
   "exportExcel": "Eksport (Excel)",
   "completionPercentage": "Yakunlanish foizi",
@@ -579,6 +582,8 @@
   "friendRemoved": "Dost o'chirildi!",
   "noFriendsYet": "Hali dostlaringiz yo'q",
   "noFriendsDescription": "Dostlaringizni taklif qiling va birgalikda o'qishni boshlang",
+  "couponStudents": "Kupon orqali kelgan o‘quvchilar",
+  "referralStudents": "Referal orqali kelgan o‘quvchilar",
   "joined": "Qo'shilgan",
   "studyingSubjects": "O'qiyotgan fanlar",
   "myReferrals": "Mening takliflarim",
@@ -1222,5 +1227,37 @@
 
     "image_error": "Faqat jpg, jpeg, png yoki webp rasm yuklash mumkin",
     "upload": "Yuklash"
-  }
+  },
+  "solutionStatus": {
+    "title": "Yechim tugmalari holatlari",
+    "subject": "Fanlar bo‘yicha yechim tugmasi yoqilganmi?",
+    "recommendation": "Tavsiyalar bo‘yicha yechim tugmasi yoqilganmi?",
+    "created": "Yaratildi",
+    "updated": "Yangilandi",
+    "deleted": "O'chirildi",
+    "delete_confirm": "O'chirishni tasdiqlaysizmi?"
+  },
+  "mentorDetail": {
+    "total_time": "Umumiy vaqt",
+    "current_session": "Hozirgi sessiya",
+    "sessions_count": "Sessiyalar soni",
+    "extra_info": "Qo'shimcha ma'lumot",
+    "current_online_seconds": "Hozirgi online sekund",
+    "refresh": "Yangilash",
+    "online": "Online",
+    "offline": "Offline",
+    "mentor": "Mentor"
+  },
+  "dates": {
+    "fromDate": "Bosh sanasi",
+    "toDate": "Tugash sanasi"
+  },
+  "scoreLog": {
+    "title": "Ballar olish tarixi",
+    "tR": "T/r",
+    "awardType": "Mukofot turi",
+    "awarded": "Mukofotlangan",
+    "deleted": "O‘chirishni xohlaysizmi?"
+  },
+  "deleteConfirm": "O'chirishni tasdiqlaysizmi?"
 }

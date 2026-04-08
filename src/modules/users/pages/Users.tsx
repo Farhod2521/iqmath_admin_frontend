@@ -25,7 +25,7 @@ const Users = () => {
 
   const [filterData, setFilterData] = useState({
     search: undefined,
-    role: undefined,
+    role: "student",
     status: "active",
     class_num: undefined,
     subject_name: undefined,
@@ -66,10 +66,14 @@ const Users = () => {
     openModal();
   };
 
+  const handleNavigate = (data: StudentData) => {
+    navigate(`/users/pupils/${data.id}?role=${filterData.role}`);
+  };
+
   const columns: ColumnsType<StudentData> = useMemo(() => {
     const baseColumns: ColumnsType<StudentData> = [
       {
-        title: "ID",
+        title: "T/r",
         key: "index",
 
         render: (_value, _record, index) => {
@@ -80,9 +84,14 @@ const Users = () => {
         title: t("user"),
         dataIndex: "full_name",
         key: "full_name",
-        render: (value: string) => (
-          <div className="flex items-center gap-2 cursor-pointer">
-            <span className="font-medium">{value || "-"}</span>
+        render: (value: string, record: StudentData) => (
+          <div
+            className="flex items-center gap-2 cursor-pointer"
+            onDoubleClick={() => handleNavigate(record)}
+          >
+            <span className="font-medium hover:text-blue-500 transition">
+              {value || "-"}
+            </span>
           </div>
         ),
       },
@@ -292,6 +301,44 @@ const Users = () => {
     }));
   };
 
+
+
+  const classOptions = [
+    { value: "5", label: t("class5") },
+    { value: "6", label: t("class6") },
+    { value: "7", label: t("class7") },
+    { value: "8", label: t("class8") },
+    { value: "9", label: t("class9") },
+    { value: "10", label: t("class10") },
+    { value: "11", label: t("class11") },
+  ];
+
+  // Fanlar ro'yxati
+  const subjectOptions = [
+    { value: "Algebra", label: t("algebra") },
+    { value: "Matematika", label: t("math") },
+    { value: "Geometriya", label: t("geometry") },
+  ];
+
+  const statusOptions = [
+    { value: "active", label: t("statusActive") },
+    { value: "inactive", label: t("statusInactive") },
+  ];
+
+  const deviceOptions = [
+    { value: "mobile", label: t("phone") },
+    { value: "web", label: t("web") },
+  ];
+
+  // Role options
+  const roleOptions = [
+    { value: "student", label: t("student") },
+    { value: "teacher", label: t("teachers") },
+    { value: "parent", label: t("parent") },
+    { value: "tutor", label: t("tutor") },
+  ];
+
+
   return (
     <Card title={t("users")}>
       <Row gutter={[12, 12]} className="mb-4">
@@ -301,15 +348,14 @@ const Users = () => {
               handleFilterChange("search", value || undefined)
             }
             style={{ width: "100%" }}
-            placeholder="Qidiruv..."
+            placeholder={t("searchs")}
           />
         </Col>
 
         <Col xs={24} sm={12} md={8} lg={3}>
           <Select
-            allowClear
             className="w-full"
-            placeholder="Rol"
+            placeholder={t("role")}
             value={filterData.role}
             options={roleOptions}
             onChange={(value) => handleFilterChange("role", value)}
@@ -342,7 +388,7 @@ const Users = () => {
           <Select
             allowClear
             className="w-full"
-            placeholder="Qurilma"
+            placeholder={t("device")}
             value={filterData.device}
             options={deviceOptions}
             onChange={(value) => handleFilterChange("device", value)}
@@ -355,7 +401,7 @@ const Users = () => {
               <Select
                 allowClear
                 className="w-full"
-                placeholder="Sinf"
+                placeholder={t("class")}
                 value={filterData.class_num}
                 options={classOptions}
                 onChange={(value) => handleFilterChange("class_num", value)}
@@ -366,7 +412,7 @@ const Users = () => {
               <Select
                 allowClear
                 className="w-full"
-                placeholder="Fan"
+                placeholder={t("subject")}
                 value={filterData.subject_name}
                 options={subjectOptions}
                 onChange={(value) => handleFilterChange("subject_name", value)}
@@ -409,40 +455,8 @@ const Users = () => {
 
 export default Users;
 
-const classOptions = [
-  { value: "5", label: "5-sinf" },
-  { value: "6", label: "6-sinf" },
-  { value: "7", label: "7-sinf" },
-  { value: "8", label: "8-sinf" },
-  { value: "9", label: "9-sinf" },
-  { value: "10", label: "10-sinf" },
-  { value: "11", label: "11-sinf" },
-];
 
-// Fanlar ro'yxati
-const subjectOptions = [
-  { value: "Algebra", label: "Algebra" },
-  { value: "Matematika", label: "Matematika" },
-  { value: "Geometriya", label: "Geometriya" },
-];
 
-const statusOptions = [
-  { value: "active", label: "Faol" },
-  { value: "inactive", label: "Faol emas" },
-];
-
-const deviceOptions = [
-  { value: "mobile", label: "Telefon" },
-  { value: "web", label: "Web" },
-];
-
-// Role options
-const roleOptions = [
-  { value: "student", label: "O'quvchi" },
-  { value: "teacher", label: "Mentorlar" },
-  { value: "parent", label: "Ota-ona" },
-  { value: "tutor", label: "O'qituvchi" },
-];
 
 const langOptions = [
   { value: "uz", label: "uz" },

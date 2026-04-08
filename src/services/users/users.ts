@@ -104,3 +104,4 @@ export const getUsersApplicants = (params: UserApplicantsParams) =>
 
 export const getUsersOnline = () =>
   axiosApi.get<UserOnlineData>("/users/online");
+

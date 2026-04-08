@@ -30,9 +30,8 @@ const Banners = () => {
 
   const [isOpen, setIsOpen] = useState(false);
   const [editData, setEditData] = useState<ManagementBannerData | null>(null);
-  const [file, setFile] = useState<File | null>(null);
 
-  // 🔥 GET
+  // GET
   const { data, isLoading, error } = useQuery({
     queryKey: ["banners"],
     queryFn: async () => {
@@ -45,7 +44,7 @@ const Banners = () => {
     if (error) handleApiError(error);
   }, [error]);
 
-  // 🔥 CREATE
+  // CREATE
   const createMutation = useMutation({
     mutationFn: postManagementBanner,
     onSuccess: (res) => {
@@ -56,7 +55,7 @@ const Banners = () => {
     onError: (e) => handleApiError(e),
   });
 
-  // 🔥 UPDATE
+  // UPDATE
   const updateMutation = useMutation({
     mutationFn: ({ id, data }: any) => putManagementBanner(id, data),
     onSuccess: (res) => {
@@ -67,7 +66,7 @@ const Banners = () => {
     onError: (e) => handleApiError(e),
   });
 
-  // 🔥 DELETE
+  // DELETE
   const deleteMutation = useMutation({
     mutationFn: deleteManagementBanner,
     onSuccess: (res) => {
@@ -82,21 +81,18 @@ const Banners = () => {
   const closeModal = () => {
     setIsOpen(false);
     setEditData(null);
-    setFile(null);
     form.resetFields();
   };
 
-  // 🔥 EDIT
+  // EDIT
   const handleEdit = (record: ManagementBannerData) => {
     setEditData(record);
     form.setFieldsValue(record);
     openModal();
   };
 
-  // 🔥 SUBMIT
-  const handleSubmit = async () => {
-    const values = await form.validateFields();
-
+  // SUBMIT
+  const handleSubmit = async (values: any, file: File | null) => {
     const payload: any = { ...values };
 
     if (file) {
@@ -115,7 +111,7 @@ const Banners = () => {
     }
   };
 
-  // 🔥 TABLE
+  // TABLE
   const columns = [
     {
       title: "T/r",
@@ -186,6 +182,6 @@ const Banners = () => {
       />
     </Card>
   );
-};
+};;;;;;
 
 export default Banners;

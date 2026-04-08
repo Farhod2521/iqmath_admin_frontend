@@ -40,7 +40,6 @@ const BenefitsModal: React.FC<Props> = ({
           </p>
         </div>
       }
-      destroyOnClose
       centered
     >
       <Form

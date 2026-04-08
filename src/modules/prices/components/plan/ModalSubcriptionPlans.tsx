@@ -64,7 +64,6 @@ const ModalSubcriptionPlans = ({
       okText={mode === "create" ? t("create") : t("save")}
       cancelText={t("cancel")}
       okButtonProps={{ loading: isSubmitting }}
-      destroyOnClose
     >
       <Form form={form} layout="vertical" className="subscription-plan-form">
         <Form.Item

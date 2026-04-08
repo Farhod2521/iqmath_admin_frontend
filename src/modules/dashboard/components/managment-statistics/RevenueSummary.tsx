@@ -35,7 +35,7 @@ const RevenueSummary = ({ data, isLoading }: Props) => {
 
   if (isLoading) {
     return (
-      <div className="rounded-[18px] border border-[#E5E7EB] bg-white p-5 sm:p-6 shadow-sm">
+      <div className="rounded-[18px] border border-[#E5E7EB] bg-white p-5 sm:p-6">
         <div className="h-7 w-44 rounded bg-[#F3F4F6] animate-pulse mb-6" />
 
         <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
@@ -55,7 +55,7 @@ const RevenueSummary = ({ data, isLoading }: Props) => {
   }
 
   return (
-    <div className="rounded-[18px] border border-[#E5E7EB] bg-white p-5 sm:p-6 shadow-sm">
+    <div className="rounded-[18px] border border-[#E5E7EB] bg-white p-5 sm:p-6">
       <h3 className="mb-6 text-[20px] font-bold leading-8 text-[#2A3547]">
         {t("revenueReport")}
       </h3>

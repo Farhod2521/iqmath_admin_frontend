@@ -20,9 +20,14 @@ const ReferralCouponSettings = lazy(
 const Banner = lazy(() => import("./banner/pages/Banner"));
 const Tags = lazy(() => import("./tag/pages/Tags"));
 const Faqs = lazy(() => import("./faq/pages/Faqs"));
+const SolutionStatus = lazy(
+  () => import("./solution-status/pages/SolutionStatus"),
+);
+
 const UploadFilesList = lazy(
   () => import("./upload-file/pages/UploadFilesList"),
 );
+
 
 
 
@@ -47,6 +52,7 @@ const SettingsRoutes = (
       element={<ReferralCouponSettings />}
     />
     <Route path="upload-file-settings" element={<UploadFilesList />} />
+    <Route path="solution-status" element={<SolutionStatus />} />
   </Route>
 );
 

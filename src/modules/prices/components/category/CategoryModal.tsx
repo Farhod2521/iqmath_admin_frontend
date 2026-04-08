@@ -42,7 +42,6 @@ const CategoryModal: React.FC<Props> = ({
       cancelText={t("cancel")}
       confirmLoading={loading}
       title={isEdit ? t("editCategory") : t("newCategory")}
-      destroyOnClose
       centered
     >
       <Form

@@ -2,6 +2,8 @@ import { Modal, Form, Input, Upload, Button, Switch } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { ManagementMatematicianData } from "@/services";
 import { useEffect, useState } from "react";
+import SingleImageUpload from "@/shared/components/image/SingleImageUpload";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   open: boolean;
@@ -19,11 +21,23 @@ const ModalMathematician = ({
   initialValues,
 }: Props) => {
   const [form] = Form.useForm();
-  const [file, setFile] = useState<File | null>(null);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (initialValues) {
-      form.setFieldsValue(initialValues);
+        form.setFieldsValue({
+          ...initialValues,
+          image: initialValues.image
+            ? [
+                {
+                  uid: "-1",
+                  name: "image.png",
+                  status: "done",
+                  url: initialValues.image,
+                },
+              ]
+            : [],
+        });
     } else {
       form.resetFields();
     }
@@ -31,6 +45,9 @@ const ModalMathematician = ({
 
   const handleFinish = async () => {
     const values = await form.validateFields();
+      const fileList = values.image || [];
+      const file = fileList[0]?.originFileObj || null;
+
     onSubmit(values, file);
   };
 
@@ -40,18 +57,11 @@ const ModalMathematician = ({
       onCancel={onClose}
       onOk={handleFinish}
       confirmLoading={loading}
+      okText={t("save")}
+      cancelText={t("cancel")}
       title={initialValues ? "Tahrirlash" : "Yangi matematik"}
       width={700}
     >
-      {/* 🔥 preview */}
-      {initialValues?.image && (
-        <img
-          src={initialValues.image}
-          width={80}
-          style={{ marginBottom: 10 }}
-        />
-      )}
-
       <Form form={form} layout="vertical">
         <Form.Item name="title_uz" label="Nomi UZ" rules={[{ required: true }]}>
           <Input />
@@ -89,16 +99,8 @@ const ModalMathematician = ({
           <Switch />
         </Form.Item>
 
-        <Form.Item label="Rasm">
-          <Upload
-            beforeUpload={(file) => {
-              setFile(file);
-              return false;
-            }}
-            maxCount={1}
-          >
-            <Button icon={<UploadOutlined />}>Rasm yuklash</Button>
-          </Upload>
+        <Form.Item name="image" label="Rasm" valuePropName="value">
+          <SingleImageUpload />
         </Form.Item>
       </Form>
     </Modal>

@@ -6,6 +6,8 @@ import axios from "axios";
 export type AuthLoginFormData = {
   phone: number;
   password: string;
+  device: string;
+  lang: string;
   // redirect: boolean;
   // remember: boolean;
 };
@@ -15,6 +17,8 @@ export const postAuthLogin = (data: AuthLoginFormData) => {
 
   formData.append("phone", String(data.phone));
   formData.append("password", data.password);
+  formData.append("device", data?.device);
+  formData.append("lang", data?.lang);
   // formData.append("redirect", String(data.redirect));
   // formData.append("remember", String(data.remember));
 

@@ -24,9 +24,19 @@ export const CreateEditModal = ({
 }: CreateEditModalProps) => {
   const [form] = Form.useForm<MyGroupsFormData>();
 
+  console.log("value", editing);
+
   useEffect(() => {
-    if (open && editing) {
-      form.setFieldsValue({ name: editing.name, students: editing.students });
+    if (open) {
+      if (editing) {
+        form.setFieldsValue({
+          name: editing.name,
+          teacher_id: editing.teacher_id,
+          students: editing.students,
+        });
+      } else {
+        form.resetFields();
+      }
     }
   }, [open, editing, form]);
 
@@ -40,6 +50,7 @@ export const CreateEditModal = ({
     "new-students-without-group",
     search,
   ];
+
   const getStudentListFn = ({ page, size }: { page: number; size: number }) =>
     getStudentList({ page, size, role: "student" });
 
@@ -50,6 +61,20 @@ export const CreateEditModal = ({
     })) || [];
   const getStudentTotal = (data: any) => data?.total || 0;
 
+  // Teacherlar uchun
+  const getTeacherQueryKey = (search: string) => ["teachers-list", search];
+
+  const getTeacherListFn = ({ page, size }: { page: number; size: number }) =>
+    getStudentList({ page, size, role: "teacher" }); // 🔥 role o'zgardi
+
+  const getTeacherOptions = (data: any) =>
+    data?.results?.map((item: any) => ({
+      label: item.full_name,
+      value: Number(item.user_id),
+    })) || [];
+
+  const getTeacherTotal = (data: any) => data?.total || 0;
+
   return (
     <Modal
       title={type === "edit" ? "Guruhni tahrirlash" : "Yangi guruh yaratish"}
@@ -59,7 +84,6 @@ export const CreateEditModal = ({
       cancelText="Bekor qilish"
       okButtonProps={{ loading }}
       onCancel={onCancel}
-      destroyOnClose
     >
       <Form form={form} layout="vertical">
         <Form.Item
@@ -68,6 +92,21 @@ export const CreateEditModal = ({
           rules={[{ required: true, message: "Guruh nomini kiriting" }]}
         >
           <Input placeholder="Masalan: 415-20 guruh" />
+        </Form.Item>
+        <Form.Item
+          label="O‘qituvchi tanlash"
+          name="teacher_id"
+          rules={[{ required: true, message: "O‘qituvchini tanlang" }]}
+        >
+          <SelectInfinite
+            queryKey={getTeacherQueryKey}
+            queryFn={getTeacherListFn}
+            getOptions={getTeacherOptions}
+            getTotal={getTeacherTotal}
+            allowClear
+            placeholder="O'qtuvchi qidiring..."
+            style={{ width: "100%" }}
+          />
         </Form.Item>
         <Form.Item label="Yangi student qo‘shish" name="students">
           <SelectInfinite
@@ -84,4 +123,4 @@ export const CreateEditModal = ({
       </Form>
     </Modal>
   );
-};
+};;;;

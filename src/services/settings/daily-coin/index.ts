@@ -11,10 +11,10 @@ export type DailyCoinFormData = {
 };
 
 export const getDailyCoinSettings = () =>
-  axiosApi.get<DailyCoinData[]>("/daily-coin-settings/");
+  axiosApi.get<DailyCoinData[]>("/management/daily-coin-settings/");
 export const getDailyCoinSetting = (id: number) =>
-  axiosApi.get<DailyCoinData>(`/daily-coin-settings/${id}/`);
+  axiosApi.get<DailyCoinData>(`/management/daily-coin-settings/${id}/`);
 export const postDailyCoinSettings = (id: number, data: DailyCoinFormData) =>
-  axiosApi.post(`/daily-coin-settings/${id}/`, data);
+  axiosApi.post(`/management/daily-coin-settings/${id}/`, data);
 export const deleteDailyCoinSettings = (id: number) =>
-  axiosApi.delete(`/daily-coin-settings/${id}/`);
+  axiosApi.delete(`/management/daily-coin-settings/${id}/`);

@@ -43,6 +43,7 @@ function SelectInfinite<TData>({
   debounceMs = 500,
   selectedOptions = [],
   enabled = true,
+
   ...selectProps
 }: SelectInfiniteProps<TData>) {
   const [search, setSearch] = useState("");

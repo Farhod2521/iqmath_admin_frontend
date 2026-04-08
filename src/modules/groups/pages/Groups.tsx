@@ -90,20 +90,43 @@ const Groups = () => {
     setAddOpen(true);
   };
 
-  const handleSubmit = async (values: MyGroupsFormData) => {
-    if (mainModal === "edit" && editing?.id) {
-      const payload: Partial<MyGroupsFormData> = {};
-      if (values.name !== editing.name) payload.name = values.name;
-      console.log("data", values);
-      if (Object.keys(payload).length === 0) {
-        handleCloseAll();
-        return;
-      }
-      updateMutation.mutate({ id: editing.id, payload });
-    } else if (mainModal === "create") {
-      createMutation.mutate(values);
+
+const handleSubmit = async (values: MyGroupsFormData) => {
+  if (mainModal === "edit" && editing?.id) {
+    const payload: Partial<MyGroupsFormData> = {};
+
+    // name
+    if (values.name !== editing.name) {
+      payload.name = values.name;
     }
-  };
+
+    // teacher
+    if (values.teacher_id !== editing.teacher_id) {
+      payload.teacher_id = values.teacher_id;
+    }
+
+    // students (array compare)
+    const editingStudentIds =
+      editing.students?.map((s: any) => s.id || s) || [];
+    const newStudentIds = values.students || [];
+
+    const isStudentsChanged =
+      editingStudentIds.length !== newStudentIds.length ||
+      editingStudentIds.some((id, i) => id !== newStudentIds[i]);
+
+    if (isStudentsChanged) {
+      payload.students = newStudentIds;
+    }
+
+    if (Object.keys(payload).length === 0) {
+      message.info("Hech qanday o‘zgarish yo‘q");
+      return;
+    }
+    updateMutation.mutate({ id: editing.id, payload });
+  } else if (mainModal === "create") {
+    createMutation.mutate(values);
+  }
+};
 
   const handleAddSubmit = (studentIds: number[]) => {
     if (!selectedGroupId) return;
@@ -141,6 +164,7 @@ const Groups = () => {
         loading={isLoading}
         dataSource={groups || []}
         pagination={false}
+        scroll={{ x: 800 }}
       />
 
       <CreateEditModal

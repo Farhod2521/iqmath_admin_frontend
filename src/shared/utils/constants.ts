@@ -11,6 +11,11 @@ export enum RoleLabel {
   tutor = "O'qituvchi",
 }
 
+export const AwardTypeLabel: Record<string, string> = {
+  coin: "Tanga",
+  score: "Ball",
+};
+
 export enum QuestionType {
   STAFF = "staff",
   CITIZENS = "citizens",

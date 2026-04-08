@@ -5,3 +5,4 @@ export * from './single'
 export * from './users'
 export * from "./online-duration";
 export * from "./reward";
+export * from "./universal-statistics";

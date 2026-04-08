@@ -61,7 +61,6 @@ export const AddStudentsModal = ({
         loading,
         disabled: selectedIds.length === 0,
       }}
-      destroyOnClose
       width={800}
     >
       {open && (

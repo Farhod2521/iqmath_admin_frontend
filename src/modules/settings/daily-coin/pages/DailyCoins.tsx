@@ -4,6 +4,8 @@ import {
   deleteDailyCoinSettings,
   DailyCoinData,
 } from "@/services";
+import { handleApiError } from "@/shared/utils/handleApiError";
+import { DeleteOutlined } from "@ant-design/icons";
 import {
   Card,
   Table,
@@ -15,6 +17,8 @@ import {
 } from "antd";
 import type { ColumnsType } from "antd/es/table";
 import React, { useEffect, useState } from "react";
+import { FaEdit } from "react-icons/fa";
+import { toast } from "react-toastify";
 
 const DailyCoins: React.FC = () => {
   const [data, setData] = useState<DailyCoinData[]>([]);
@@ -44,25 +48,25 @@ const DailyCoins: React.FC = () => {
   const handleSave = async (id: number) => {
     if (value === null) return;
 
-    try {
-      await postDailyCoinSettings(id, {
-        daily_coin_limit: value,
-      });
-      message.success("Yangilandi");
-      setEditingId(null);
-      fetchData();
-    } catch {
-      message.error("Xatolik yuz berdi");
-    }
+     await postDailyCoinSettings(id, {
+       daily_coin_limit: value,
+     })
+       .then((res) => {
+         toast.success("Yangilandi");
+         setEditingId(null);
+         fetchData();
+       })
+       .catch((err) => handleApiError(err));
+     
   };
 
   const handleDelete = async (id: number) => {
     try {
       await deleteDailyCoinSettings(id);
-      message.success("O‘chirildi");
+      toast.success("O‘chirildi");
       fetchData();
     } catch {
-      message.error("Xatolik yuz berdi");
+      toast.error("Xatolik yuz berdi");
     }
   };
 
@@ -109,13 +113,17 @@ const DailyCoins: React.FC = () => {
 
         return (
           <div className="flex gap-2">
-            <Button onClick={() => handleEdit(record)}>Tahrirlash</Button>
+            <Button onClick={() => handleEdit(record)}>
+              <FaEdit />
+            </Button>
 
             <Popconfirm
               title="Rostdan ham o‘chirmoqchimisiz?"
               onConfirm={() => handleDelete(record.id)}
             >
-              <Button danger>O‘chirish</Button>
+              <Button danger>
+                <DeleteOutlined />
+              </Button>
             </Popconfirm>
           </div>
         );

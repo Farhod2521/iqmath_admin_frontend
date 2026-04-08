@@ -18,6 +18,7 @@ import SettingsRoutes from "./modules/settings/routes";
 import ChatsRoutes from "./modules/chats/routes";
 import RatingRoutes from "./modules/ratings/routes";
 import MentorsRoutes from "./modules/mentors/routes";
+import AppStudentsRoutes from "./modules/app-students/routes";
 
 // Pages
 
@@ -42,6 +43,7 @@ const AppRoutes = () => {
             {ChatsRoutes}
             {RatingRoutes}
             {MentorsRoutes}
+            {AppStudentsRoutes}
             {/*  */}
           </Route>
         </Route>
