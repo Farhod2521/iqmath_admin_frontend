@@ -3,6 +3,7 @@ import { Modal } from "antd";
 import { useState, useCallback } from "react";
 import SelectInfinite from "@/shared/components/selects/SelectInfinite";
 import { getStudentList } from "@/services";
+import { useTranslation } from "react-i18next";
 
 interface AddStudentsModalProps {
   open: boolean;
@@ -23,6 +24,7 @@ export const AddStudentsModal = ({
   onSubmit,
   onSelectionChange,
 }: AddStudentsModalProps) => {
+  const { t } = useTranslation();
   // Studentlar uchun memoized funksiyalar
   const getStudentQueryKey = useCallback(
     (search: string) => ["new-students-without-group", search],
@@ -52,11 +54,11 @@ export const AddStudentsModal = ({
 
   return (
     <Modal
-      title="Guruhga talaba qo‘shish"
+      title={t("groupAddStudents")}
       open={open}
       onCancel={onCancel}
       onOk={handleSubmit}
-      okText={`Qo‘shish (${selectedIds.length})`}
+      okText={`${t("adding")} (${selectedIds.length})`}
       okButtonProps={{
         loading,
         disabled: selectedIds.length === 0,
@@ -73,14 +75,13 @@ export const AddStudentsModal = ({
           onChange={(vals) => onSelectionChange(vals as number[])}
           mode="multiple"
           allowClear
-          placeholder="Student qidiring..."
+          placeholder={t("selectStudents")}
           style={{ width: "100%" }}
         />
       )}
 
       <div style={{ marginTop: 8, color: "#999", fontSize: 12 }}>
-        Qidirish + pastga scroll qilsangiz davomiy yuklanadi (agar backend
-        pagination bo‘lsa).
+        {t("scrollDow")}
       </div>
     </Modal>
   );

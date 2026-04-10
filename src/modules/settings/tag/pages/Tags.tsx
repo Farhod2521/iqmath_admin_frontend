@@ -13,8 +13,10 @@ import { useState, useEffect } from "react";
 import { handleApiError } from "@/shared/utils/handleApiError";
 import ModalTag from "../components/ModalTag";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const Tags = () => {
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
 
   const [isOpen, setIsOpen] = useState(false);
@@ -91,7 +93,7 @@ const Tags = () => {
 
   const columns = [
     {
-      title: "T/r",
+      title: t("tags.index"),
       dataIndex: "id",
       key: "id",
       width: "10px",
@@ -100,23 +102,30 @@ const Tags = () => {
       ),
     },
     {
-      title: "Tag nomi",
+      title: t("tags.name"),
       dataIndex: "title",
     },
     {
-      title: "Amal",
+      title: t("action"),
       width: "10px",
       render: (_: any, record: ManagementTagData) => (
         <Space>
-          <Button onClick={() => handleEdit(record)}>
+          <Button
+            variant="outlined"
+            color="primary"
+            size="small"
+            onClick={() => handleEdit(record)}
+          >
             <FaEdit />
           </Button>
 
           <Popconfirm
-            title="O'chirishni tasdiqlaysizmi?"
+            title={t("tags.deleteConfirm")}
+            okText={t("yes")}
+            cancelText={t("no")}
             onConfirm={() => deleteMutation.mutate(record.id)}
           >
-            <Button danger icon={<DeleteOutlined />} />
+            <Button size="small" danger icon={<DeleteOutlined />} />
           </Popconfirm>
         </Space>
       ),
@@ -125,10 +134,10 @@ const Tags = () => {
 
   return (
     <Card
-      title="Taglar"
+      title={t("tags.title")}
       extra={
         <Button type="primary" onClick={openModal}>
-          Qo‘shish
+          + {t("adding")}
         </Button>
       }
     >

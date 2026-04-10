@@ -1,5 +1,6 @@
 import { Form, Input, Modal } from "antd";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 type Props = {
   form: any;
@@ -16,24 +17,30 @@ const ModalCategory = ({
   dataId,
   onClose,
 }: Props) => {
-  const title = dataId ? "Kategoriyani o'zgartirish" : "Kategoriyani yangilash";
+  const { t } = useTranslation();
+
+  const title = dataId
+    ? t("categories.modal.editTitle")
+    : t("categories.modal.createTitle");
 
   return (
     <Modal
       title={title}
       open={isOpen}
       onOk={handleSubmit}
-      okText="Saqlash"
-      cancelText="Bekor qilish"
+      okText={t("categories.modal.save")}
+      cancelText={t("categories.modal.cancel")}
       onCancel={onClose}
     >
-      <Form form={form}>
+      <Form form={form} layout="vertical">
         <Form.Item
           name="title"
-          label="Nomi"
-          rules={[{ required: true, message: "Nomini kiriting" }]}
+          label={t("categories.modal.name")}
+          rules={[
+            { required: true, message: t("categories.modal.nameRequired") },
+          ]}
         >
-          <Input placeholder="Nomi" />
+          <Input placeholder={t("categories.modal.namePlaceholder")} />
         </Form.Item>
       </Form>
     </Modal>

@@ -9,8 +9,8 @@ import {
 import { handleApiError } from "@/shared/utils/handleApiError";
 import { useQuery } from "@tanstack/react-query";
 import { Button, Card, Form, Popconfirm, Table } from "antd";
-import React, { useCallback, useEffect, useState } from "react";
-import { FaEdit, FaRandom } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaEdit } from "react-icons/fa";
 import ModalCategory from "../components/ModalCategory";
 import { ColumnsType } from "antd/es/table";
 import { toast } from "react-toastify";
@@ -20,12 +20,12 @@ import { useTranslation } from "react-i18next";
 const Category = () => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
-  const [isOpen, setisOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [dataId, setDataId] = useState<number>();
 
-  const openModal = () => setisOpen(true);
+  const openModal = () => setIsOpen(true);
   const closeModal = () => {
-    setisOpen(false);
+    setIsOpen(false);
     form.resetFields();
     setDataId(undefined);
   };
@@ -39,50 +39,6 @@ const Category = () => {
     if (error) handleApiError(error);
   }, [error]);
 
-  const columns: ColumnsType<ManagementCategoryData> = [
-    {
-      title: "T/r",
-      key: "id",
-      width: "10px",
-      render: (_, __, index) => index + 1,
-    },
-    {
-      title: "Nomi",
-      dataIndex: "title",
-      key: "title",
-      render: (val: string) => val || "-",
-    },
-    {
-      title: "Amal",
-      dataIndex: "id",
-      key: "action",
-      width: "10%",
-      render: (val: number) => {
-        return (
-          <div className="flex items-center gap-2">
-            <Button
-              variant="outlined"
-              color="blue"
-              onClick={() => handleRowChange(val)}
-            >
-              <FaEdit />
-            </Button>
-            <Popconfirm
-              title="Kategoriyani ochirmoqchimisz"
-              okText={t("yes")}
-              cancelText={t("no")}
-              onConfirm={() => handleDelete(val)}
-            >
-              <Button variant="outlined" danger>
-                <DeleteOutlined />
-              </Button>
-            </Popconfirm>
-          </div>
-        );
-      },
-    },
-  ];
-
   const handleRowChange = (id: number) => {
     getManagementCategory(id)
       .then((res) => {
@@ -90,15 +46,16 @@ const Category = () => {
         form.setFieldsValue(res);
         openModal();
       })
-      .catch((err) => handleApiError(err));
+      .catch(handleApiError);
   };
 
   const handleDelete = (id: number) => {
     deleteManagementCategory(id)
-      .then((res) => {
+      .then(() => {
+        toast.success(t("categories.deleted"));
         refetch();
       })
-      .catch((err) => handleApiError(err));
+      .catch(handleApiError);
   };
 
   const handleSubmit = () => {
@@ -111,16 +68,55 @@ const Category = () => {
         toast.success(res?.message);
         closeModal();
         refetch();
-      }).catch((err) => handleApiError(err));
+      }).catch(handleApiError);
     });
   };
 
+  const columns: ColumnsType<ManagementCategoryData> = [
+    {
+      title: t("categories.index"),
+      render: (_, __, index) => index + 1,
+    },
+    {
+      title: t("categories.name"),
+      dataIndex: "title",
+      render: (val: string) => val || "-",
+    },
+    {
+      title: t("categories.action"),
+      width: "10px",
+      render: (_, record) => (
+        <div className="flex gap-2">
+          <Button
+            variant="outlined"
+            color="primary"
+            size="small"
+            onClick={() => handleRowChange(record.id)}
+          >
+            <FaEdit />
+          </Button>
+
+          <Popconfirm
+            title={t("categories.deleteConfirm")}
+            okText={t("categories.yes")}
+            cancelText={t("categories.no")}
+            onConfirm={() => handleDelete(record.id)}
+          >
+            <Button size="small" danger>
+              <DeleteOutlined />
+            </Button>
+          </Popconfirm>
+        </div>
+      ),
+    },
+  ];
+
   return (
     <Card
-      title="Kategoriyalar"
+      title={t("categories.title")}
       extra={
         <Button onClick={openModal} type="primary">
-          + Kategoriya qo'shish
+          + {t("categories.add")}
         </Button>
       }
     >
@@ -130,10 +126,8 @@ const Category = () => {
         loading={isLoading}
         columns={columns}
         pagination={false}
-        size="small"
-        bordered
-        scroll={{ x: 800 }}
       />
+
       <ModalCategory
         form={form}
         isOpen={isOpen}

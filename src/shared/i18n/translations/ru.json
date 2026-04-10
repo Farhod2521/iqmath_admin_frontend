@@ -1,4 +1,6 @@
 {
+  "unknown": "Неизвестный",
+  "createdAt": "Дата создания",
   "basicInformation": "Основная информация",
   "ratings": "Рейтинги",
   "studentRating": "Рейтинг читателей",
@@ -96,6 +98,23 @@
   "more": "Более",
   "aboutus": "О нас",
   "notYetSolved": "Начать",
+  "parentsManagement": "Управление родителями",
+  "manageParentsAndTheirAccess": "Управление родителями и их доступом",
+  "createParent": "Добавить родителя",
+  "createNewParent": "Создать нового родителя",
+  "enterFullName": "Введите полное имя",
+  "enterPassword": "Введите пароль",
+  "selectStudents": "Выберите учеников",
+  "studentsCount": "Количество учеников",
+  "registrationDate": "Дата регистрации",
+  "view": "Просмотр",
+  "pleaseFillAllFields": "Пожалуйста, заполните все поля",
+  "parentCreatedSuccessfully": "Родитель успешно создан",
+  "errorCreatingParent": "Ошибка при создании родителя",
+  "errorLoadingParents": "Ошибка при загрузке данных родителей",
+  "creating": "Создание...",
+  "create": "Создать",
+  "never": "Никогда",
   "correctAnswers": "Правильные ответы",
   "totalScores": "Общий балл",
   "inCorrectAnswers": "Неправильные ответы",
@@ -454,7 +473,16 @@
   "overallCompletionRate": "Общий процент завершения",
   "leaderboard": "Лучшие результаты (Leaderboard)",
   "name": "Имя",
+  "scrollDow": "Если вы выполните поиск и прокрутите вниз, страница будет загружаться непрерывно.",
   "group": "Группа",
+  "groupName": "Название группы",
+  "groupAdd": "Добавить группу",
+  "groupAddStudents": "Добавить студента в группу",
+  "groupEdit": "Редактировать группу",
+  "groupInfo": "Подробная информация о группе",
+  "newGroupAdd": "Создать новую группу",
+  "enterGroupName": "Guruh nomini kiriting",
+  "forExampleGroup": "Например: группа 415-20",
   "recentActivity": "Последняя активность",
   "Faol": "Активный",
   "Passiv": "Пассивный",
@@ -718,8 +746,8 @@
   "verify": "Подтвердить",
   "parent": "Родитель",
   "tutor": "Учитель",
+  "chooseTutor": "Выберите учителя",
   "selectUserType": "Выберите тип пользователя",
-
   "inviteStudent": "Пригласить ученика",
   "noInvitedStudents": "Приглашенные ученики отсутствуют!",
   "inviteStudentsDescription": "Пригласите своих учеников и зарегистрируйте их",
@@ -786,7 +814,7 @@
   "convertButton": "Выполнить конвертацию",
   "footerInfo": "Все конвертации автоматически рассчитываются и сохраняются через API",
   "payments": "Платежи",
-  "id": "ID",
+  "id": "ИД",
   "mastery_statistics": "Статистика освоения",
   "no_statistics": "Статистика пока отсутствует",
   "loadingProducts": "Загрузка товаров...",
@@ -1108,6 +1136,7 @@
   "annoucements": "Э'лоны",
   "role": "Роль",
   "dailyCoin": "Настройки монет",
+  "conversion": "Конвертация",
   "motivation": "Сроки погашения",
   "announcement": {
     "title": "Объявления",
@@ -1131,6 +1160,288 @@
 
     "image_error": "Можно загружать только jpg, jpeg, png или webp",
     "upload": "Загрузить"
+  },
+  "motivations": {
+    "motivations": "Мотивации",
+    "addMotivation": "Добавить мотивацию",
+
+    "title": "Заголовок",
+    "createdAt": "Создано",
+    "updatedAt": "Обновлено",
+
+    "deleteMotivationConfirm": "Вы уверены, что хотите удалить мотивацию?",
+
+    "editMotivation": "Редактировать мотивацию",
+    "newMotivation": "Новая мотивация",
+
+    "titleUz": "Заголовок (Узбекский)",
+    "titleRu": "Заголовок (Русский)",
+    "contentUz": "Текст (Узбекский)",
+    "contentRu": "Текст (Русский)",
+
+    "enterTitleUz": "Введите заголовок на узбекском",
+    "enterTitleRu": "Введите заголовок на русском",
+    "enterContentUz": "Введите текст на узбекском",
+    "enterContentRu": "Введите текст на русском",
+
+    "min3Chars": "Минимум 3 символа",
+    "min10Chars": "Минимум 10 символов",
+
+    "titlePlaceholderUz": "Заголовок мотивации (Узбекский)",
+    "titlePlaceholderRu": "Заголовок мотивации (Русский)",
+    "contentPlaceholderUz": "Текст мотивации (Узбекский)",
+    "contentPlaceholderRu": "Текст мотивации (Русский)",
+
+    "statusTooltip": "При активном статусе отображается пользователям",
+
+    "motivationCreated": "Мотивация успешно создана",
+    "motivationUpdated": "Мотивация успешно обновлена",
+    "motivationDeleted": "Мотивация удалена",
+    "errorOccurred": "Произошла ошибка"
+  },
+  "conversions": {
+    "conversionRates": "Курсы конверсии",
+    "add": "Добавить",
+    "edit": "Редактировать",
+    "createNew": "Добавить новый",
+
+    "coinToScore": "Количество баллов за 1 монету",
+    "coinToMoney": "Сумма денег за 1 монету",
+    "updatedAt": "Дата обновления",
+    "action": "Действие",
+
+    "confirmDelete": "Вы уверены, что хотите удалить?",
+    "yes": "Да",
+    "no": "Нет",
+
+    "coinToScoreLabel": "Баллы за 1 монету",
+    "coinToMoneyLabel": "Деньги за 1 монету",
+
+    "requiredField": "Обязательное поле"
+  },
+  "dailyCoinSettings": {
+    "dailyCoinSettings": "Настройки ежедневных монет",
+
+    "dailyCoinLimit": "Дневной лимит монет",
+    "updatedTime": "Время обновления",
+
+    "confirmDelete": "Вы уверены, что хотите удалить?",
+
+    "updated": "Обновлено",
+    "deleted": "Удалено",
+    "errorOccurred": "Произошла ошибка"
+  },
+  "categories": {
+    "title": "Категории",
+    "add": "Добавить категорию",
+
+    "index": "№",
+    "name": "Название",
+    "action": "Действие",
+
+    "edit": "Редактировать",
+
+    "deleteConfirm": "Вы уверены, что хотите удалить категорию?",
+    "yes": "Да",
+    "no": "Нет",
+
+    "deleted": "Успешно удалено",
+
+    "modal": {
+      "editTitle": "Редактировать категорию",
+      "createTitle": "Новая категория",
+      "save": "Сохранить",
+      "cancel": "Отмена",
+      "name": "Название",
+      "namePlaceholder": "Введите название",
+      "nameRequired": "Введите название"
+    }
+  },
+  "productsMenu": {
+    "title": "Товары",
+    "add": "Добавить",
+
+    "index": "№",
+    "nameUz": "Название (уз)",
+    "nameRu": "Название (рус)",
+    "coin": "Требуемые монеты",
+    "price": "Цена (сум)",
+    "count": "Количество",
+    "image": "Изображение",
+    "action": "Действие",
+
+    "deleteConfirm": "Вы уверены, что хотите удалить?",
+    "yes": "Да",
+    "no": "Нет",
+
+    "modal": {
+      "editTitle": "Редактировать",
+      "createTitle": "Новый товар",
+
+      "nameUz": "Название (UZ)",
+      "nameRu": "Название (RU)",
+      "coin": "Монеты",
+      "count": "Количество",
+      "image": "Изображение",
+
+      "nameUzRequired": "Введите название (UZ)",
+      "nameRuRequired": "Введите название (RU)",
+      "coinRequired": "Введите монеты",
+      "countRequired": "Введите количество",
+
+      "save": "Сохранить",
+      "cancel": "Отмена"
+    }
+  },
+  "referralSettings": {
+    "title": "Настройки рефералов и купонов",
+    "save": "Сохранить",
+
+    "teacherBonus": "Реферальный бонус для преподавателя (баллы)",
+    "studentBonus": "Реферальный бонус для ученика (баллы)",
+
+    "couponDiscount": "Скидка по купону (%)",
+    "couponDiscountTeacher": "Скидка по купону для ментора (%)",
+
+    "couponDays": "Срок действия купона (дни)",
+    "referralDays": "Срок действия реферального кода (дни)",
+
+    "studentCashback": "Кэшбэк для ученика (%)",
+    "teacherCashback": "Кэшбэк для преподавателя (%)",
+
+    "required": "Обязательное поле"
+  },
+  "banners": {
+    "title": "Баннеры",
+    "add": "Добавить",
+
+    "index": "№",
+    "image": "Изображение",
+    "description": "Описание",
+    "action": "Действие",
+
+    "deleteConfirm": "Вы уверены, что хотите удалить?",
+
+    "modal": {
+      "editTitle": "Редактировать",
+      "createTitle": "Новый баннер",
+
+      "description": "Описание",
+      "image": "Изображение",
+
+      "save": "Сохранить",
+      "cancel": "Отмена"
+    }
+  },
+  "mathematicians": {
+    "title": "Математики",
+    "add": "Добавить",
+
+    "index": "№",
+    "nameUz": "Имя (UZ)",
+    "nameRu": "Имя (RU)",
+    "years": "Годы жизни",
+    "image": "Изображение",
+    "status": "Статус",
+    "action": "Действие",
+
+    "active": "Активный",
+    "inactive": "Неактивный",
+
+    "deleteConfirm": "Вы уверены, что хотите удалить?",
+
+    "modal": {
+      "editTitle": "Редактировать",
+      "createTitle": "Новый математик",
+
+      "nameUz": "Имя (UZ)",
+      "nameRu": "Имя (RU)",
+      "subtitleUz": "Подзаголовок (UZ)",
+      "subtitleRu": "Подзаголовок (RU)",
+      "yearsUz": "Годы (UZ)",
+      "yearsRu": "Годы (RU)",
+      "descriptionUz": "Описание (UZ)",
+      "descriptionRu": "Описание (RU)",
+      "active": "Активный",
+      "image": "Изображение",
+
+      "nameUzRequired": "Введите имя (UZ)",
+      "nameRuRequired": "Введите имя (RU)",
+
+      "save": "Сохранить",
+      "cancel": "Отмена"
+    }
+  },
+  "tags": {
+    "title": "Теги",
+    "add": "Добавить",
+
+    "index": "№",
+    "name": "Название тега",
+    "action": "Действие",
+
+    "deleteConfirm": "Вы уверены, что хотите удалить?",
+    "yes": "Да",
+    "no": "Нет",
+
+    "modal": {
+      "editTitle": "Редактировать",
+      "createTitle": "Новый тег",
+
+      "name": "Название тега",
+      "placeholder": "Например: Математика",
+      "required": "Введите название тега",
+
+      "save": "Сохранить",
+      "cancel": "Отмена"
+    }
+  },
+  "faqs": {
+    "title": "Часто задаваемые вопросы",
+    "add": "Добавить",
+
+    "index": "№",
+    "question": "Вопрос",
+    "answer": "Ответ",
+    "video": "Видео",
+    "view": "Смотреть",
+    "action": "Действие",
+
+    "deleteConfirm": "Вы уверены, что хотите удалить?",
+
+    "modal": {
+      "editTitle": "Редактировать",
+      "createTitle": "Новый FAQ",
+
+      "question": "Вопрос",
+      "answer": "Ответ (HTML)",
+      "video": "Ссылка YouTube",
+
+      "questionRequired": "Введите вопрос",
+      "answerRequired": "Введите ответ",
+
+      "questionPlaceholder": "Введите вопрос",
+      "answerPlaceholder": "Введите ответ",
+      "videoPlaceholder": "https://youtube.com/...",
+
+      "save": "Сохранить",
+      "cancel": "Отмена"
+    }
+  },
+  "uploadFiles": {
+    "title": "Загруженные файлы",
+    "name": "Имя файла",
+    "format": "Формат",
+    "index": "№",
+    "file": "Файл",
+    "view": "Смотреть",
+    "uploadedAt": "Дата загрузки",
+    "action": "Действие",
+
+    "chooseFile": "Выбрать файл",
+    "upload": "Загрузить",
+
+    "deleteConfirm": "Вы уверены, что хотите удалить файл?"
   },
   "solutionStatus": {
     "title": "Статус решений",

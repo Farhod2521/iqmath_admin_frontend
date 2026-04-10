@@ -56,7 +56,9 @@ const UsersDetails = () => {
 
             <div>
               <h2 className="text-lg font-semibold">{data.full_name}</h2>
-              <p className="text-sm text-gray-500">ID: {data.identification}</p>
+              <p className="text-sm text-gray-500">
+                {t("id")}: {data.identification}
+              </p>
               <p className="text-sm text-gray-500">
                 {t("phone")}: {data.phone}
               </p>

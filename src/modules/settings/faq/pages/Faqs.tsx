@@ -13,14 +13,16 @@ import { useState, useEffect } from "react";
 import { handleApiError } from "@/shared/utils/handleApiError";
 import ModalFaq from "../components/ModalFaq";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const Faq = () => {
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
 
   const [isOpen, setIsOpen] = useState(false);
   const [editData, setEditData] = useState<ManagementFaqData | null>(null);
 
-  // 🔥 GET
+  // GET
   const { data, isLoading, error } = useQuery({
     queryKey: ["faq"],
     queryFn: async () => {
@@ -33,7 +35,7 @@ const Faq = () => {
     if (error) handleApiError(error);
   }, [error]);
 
-  // 🔥 CREATE
+  // CREATE
   const createMutation = useMutation({
     mutationFn: postFileManagementFaq,
     onSuccess: (res) => {
@@ -44,7 +46,7 @@ const Faq = () => {
     onError: (e) => handleApiError(e),
   });
 
-  // 🔥 UPDATE
+  // UPDATE
   const updateMutation = useMutation({
     mutationFn: ({ id, data }: any) => putManagementFaq(id, data),
     onSuccess: (res) => {
@@ -55,7 +57,7 @@ const Faq = () => {
     onError: (e) => handleApiError(e),
   });
 
-  // 🔥 DELETE
+  // DELETE
   const deleteMutation = useMutation({
     mutationFn: deleteManagementFaq,
     onSuccess: (res) => {
@@ -77,7 +79,7 @@ const Faq = () => {
     openModal();
   };
 
-  // 🔥 SUBMIT
+  // SUBMIT
   const handleSubmit = async (values: any) => {
     if (editData) {
       await updateMutation.mutateAsync({
@@ -95,7 +97,7 @@ const Faq = () => {
   };
   const columns = [
     {
-      title: "T/r",
+      title: t("faqs.index"),
       dataIndex: "id",
       key: "id",
       width: "10px",
@@ -104,11 +106,11 @@ const Faq = () => {
       ),
     },
     {
-      title: "Savol",
+      title: t("faqs.question"),
       dataIndex: "question",
     },
     {
-      title: "Javob",
+      title: t("faqs.answer"),
       dataIndex: "answer",
       render: (val: string) => {
         const text = stripHtml(val);
@@ -122,31 +124,38 @@ const Faq = () => {
       },
     },
     {
-      title: "Video",
+      title: t("faqs.video"),
       dataIndex: "url",
       render: (val: string) =>
         val ? (
           <a href={val} target="_blank">
-            Ko‘rish
+            {t("faqs.view")}
           </a>
         ) : (
           "-"
         ),
     },
     {
-      title: "Amal",
+      title: t("action"),
       width: "10px",
       render: (_: any, record: ManagementFaqData) => (
         <Space>
-          <Button onClick={() => handleEdit(record)}>
+          <Button
+            variant="outlined"
+            color="primary"
+            size="small"
+            onClick={() => handleEdit(record)}
+          >
             <FaEdit />
           </Button>
 
           <Popconfirm
-            title="O'chirishni tasdiqlaysizmi?"
+            title={t("faqs.deleteConfirm")}
+            okText={t("yes")}
+            cancelText={t("no")}
             onConfirm={() => deleteMutation.mutate(record.id)}
           >
-            <Button danger icon={<DeleteOutlined />} />
+            <Button size="small" danger icon={<DeleteOutlined />} />
           </Popconfirm>
         </Space>
       ),
@@ -155,10 +164,10 @@ const Faq = () => {
 
   return (
     <Card
-      title="FAQ"
+      title={t("faqs.title")}
       extra={
         <Button type="primary" onClick={openModal}>
-          Qo‘shish
+          + {t("adding")}
         </Button>
       }
     >
@@ -180,6 +189,6 @@ const Faq = () => {
       />
     </Card>
   );
-};
+};;;;;;;
 
 export default Faq;

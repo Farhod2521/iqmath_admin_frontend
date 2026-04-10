@@ -1,17 +1,7 @@
-import { Modal, Form, Input, Upload, Button } from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import { useEffect, useState } from "react";
-import { ManagementBannerData } from "@/services";
+import { Modal, Form, Input } from "antd";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import SingleImageUpload from "@/shared/components/image/SingleImageUpload";
-
-type Props = {
-  open: boolean;
-  onClose: () => void;
-  onSubmit: (values: any, file: File | null) => void;
-  loading: boolean;
-  initialValues?: ManagementBannerData | null;
-};
 
 const ModalBanner = ({
   open,
@@ -19,7 +9,7 @@ const ModalBanner = ({
   onSubmit,
   loading,
   initialValues,
-}: Props) => {
+}: any) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
 
@@ -57,24 +47,20 @@ const ModalBanner = ({
       onCancel={onClose}
       onOk={handleSubmit}
       confirmLoading={loading}
-      okText={t("save")}
-      cancelText={t("cancel")}
-      title={initialValues ? "Tahrirlash" : "Yangi banner"}
+      okText={t("banners.modal.save")}
+      cancelText={t("banners.modal.cancel")}
+      title={
+        initialValues
+          ? t("banners.modal.editTitle")
+          : t("banners.modal.createTitle")
+      }
     >
-      {/* {initialValues?.image && (
-        <img
-          src={initialValues.image}
-          width={120}
-          style={{ marginBottom: 10, borderRadius: 6 }}
-        />
-      )} */}
-
       <Form form={form} layout="vertical">
-        <Form.Item name="desc" label="Tavsif">
+        <Form.Item name="desc" label={t("banners.modal.description")}>
           <Input />
         </Form.Item>
 
-        <Form.Item name="image" label="Rasm" valuePropName="value">
+        <Form.Item name="image" label={t("banners.modal.image")}>
           <SingleImageUpload />
         </Form.Item>
       </Form>

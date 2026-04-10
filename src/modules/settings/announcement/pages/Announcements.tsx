@@ -202,7 +202,7 @@ const Announcements = () => {
   const columns: ColumnsType<AnnouncementData> = useMemo(
     () => [
       {
-        title: "T/r",
+        title: t("scoreLog.tR"),
         dataIndex: "id",
         key: "id",
         width: 70,
@@ -211,19 +211,25 @@ const Announcements = () => {
         ),
       },
       {
-        title: "Sarlavha",
+        title:
+          i18n.language === "uz"
+            ? t("announcement.title_uz")
+            : t("announcement.title_ru"),
         dataIndex: i18n.language === "uz" ? "title_uz" : "title_ru",
         key: "title",
         ellipsis: true,
       },
-      // {
-      //   title: "Sarlavha",
-      //   dataIndex: i18n.language === "uz" ? "text_uz" : "text_ru",
-      //   key: "title",
-      //   ellipsis: true,
-      // },
       {
-        title: "Rasm",
+        title:
+          i18n.language === "uz"
+            ? t("announcement.text_uz")
+            : t("announcement.text_ru"),
+        dataIndex: i18n.language === "uz" ? "text_uz" : "text_ru",
+        key: "text",
+        ellipsis: true,
+      },
+      {
+        title: t("announcement.image"),
         dataIndex: "image",
         key: "image",
         width: 100,
@@ -254,21 +260,21 @@ const Announcements = () => {
           value ? <Tag color="blue">Ha</Tag> : <Tag>Yo'q</Tag>,
       },
       {
-        title: "Yaratilgan",
+        title: t("announcement.created"),
         dataIndex: "created_at",
         key: "created_at",
         width: 180,
         render: (val: string) => formatDateColumn(val),
       },
       {
-        title: "O'zgargan vaqti",
+        title: t("announcement.updated"),
         dataIndex: "updated_at",
         key: "updated_at",
         width: 180,
         render: (val: string) => formatDateColumn(val),
       },
       {
-        title: "Amallar",
+        title: t("actions"),
         key: "actions",
         width: 100,
         render: (_, record) => (
@@ -283,9 +289,9 @@ const Announcements = () => {
             </Button>
 
             <Popconfirm
-              title="E'lonni o'chirishni tasdiqlaysizmi?"
-              okText="Ha"
-              cancelText="Yo'q"
+              title={t("announcement.delete_confirm")}
+              okText={t("yes")}
+              cancelText={t("no")}
               onConfirm={() => deleteMutation.mutate(record.id)}
             >
               <Button danger size="small" loading={deleteMutation.isPending}>
@@ -301,10 +307,10 @@ const Announcements = () => {
 
   return (
     <Card
-      title="E'lonlar"
+      title={t("announcement.title")}
       extra={
         <Button type="primary" onClick={handleCreate}>
-          <PlusCircleOutlined /> E'lon qo'shish
+          <PlusCircleOutlined /> {t("announcement.create")}
         </Button>
       }
     >

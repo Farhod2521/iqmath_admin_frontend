@@ -154,7 +154,7 @@ const handleSubmit = async (values: MyGroupsFormData) => {
       title={t("groups")}
       extra={
         <Button type="primary" onClick={handleOpenCreate}>
-          Guruh qo'shish
+          {t("groupAdd")}
         </Button>
       }
     >

@@ -68,7 +68,7 @@ const Mentors = () => {
 
   const columns: ColumnsType<StudentData> = [
     {
-      title: "ID",
+      title: t("id"),
       key: "index",
       render: (_value, _record, index) => {
         return (pagination.current - 1) * pagination.pageSize + index + 1;

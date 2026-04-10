@@ -125,7 +125,7 @@ const Mathematicians = () => {
   // TABLE
   const columns = [
     {
-      title: "T/r",
+      title: t("mathematicians.index"),
       dataIndex: "id",
       key: "id",
       width: "10px",
@@ -133,38 +133,45 @@ const Mathematicians = () => {
         <span>{index + 1}</span>
       ),
     },
-    { title: "Nomi (UZ)", dataIndex: "title_uz" },
-    { title: "Nomi (RU)", dataIndex: "title_ru" },
-    { title: "Yillar", dataIndex: "life_years_uz" },
+    { title: t("mathematicians.nameUz"), dataIndex: "title_uz" },
+    { title: t("mathematicians.nameRu"), dataIndex: "title_ru" },
+    { title: t("mathematicians.years"), dataIndex: "life_years_uz" },
 
     {
-      title: "Rasm",
+      title: t("mathematicians.image"),
       render: (_: any, record: ManagementMatematicianData) => (
         <img src={record.image} width={50} />
       ),
     },
     {
-      title: t("active"),
+      title: t("mathematicians.status"),
       render: (_: any, record: ManagementMatematicianData) =>
         record.is_active ? (
-          <Tag color="green">Faol</Tag>
+          <Tag color="green">{t("mathematicians.active")}</Tag>
         ) : (
-          <Tag color="red">Faol emas</Tag>
+          <Tag color="red">{t("mathematicians.inactive")}</Tag>
         ),
     },
     {
-      title: "Amal",
+      title: t("action"),
       render: (_: any, record: ManagementMatematicianData) => (
         <Space>
-          <Button onClick={() => handleEdit(record)}>
+          <Button
+            variant="outlined"
+            color="primary"
+            size="small"
+            onClick={() => handleEdit(record)}
+          >
             <FaEdit />
           </Button>
 
           <Popconfirm
-            title="O'chirishni tasdiqlaysizmi?"
+            title={t("mathematicians.deleteConfirm")}
+            okText={t("yes")}
+            cancelText={t("no")}
             onConfirm={() => deleteMutation.mutate(record.id)}
           >
-            <Button danger>
+            <Button size="small" danger>
               <DeleteOutlined />
             </Button>
           </Popconfirm>
@@ -175,10 +182,10 @@ const Mathematicians = () => {
 
   return (
     <Card
-      title="Matematiklar"
+      title={t("mathematicians.title")}
       extra={
         <Button onClick={openModal} type="primary">
-          Qo‘shish
+          + {t("adding")}
         </Button>
       }
     >
@@ -200,6 +207,6 @@ const Mathematicians = () => {
       />
     </Card>
   );
-};;;;;;;
+}
 
 export default Mathematicians;

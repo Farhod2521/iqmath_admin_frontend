@@ -42,13 +42,13 @@ const Motivation = () => {
   const createMutation = useMutation({
     mutationFn: postMotivations,
     onSuccess: () => {
-      message.success("Motivatsiya yaratildi");
+      message.success(t("motivationCreated"));
       setOpen(false);
       form.resetFields();
       queryClient.invalidateQueries({ queryKey: ["motivations-data"] });
     },
     onError: (error: any) => {
-      message.error(error?.response?.data?.message || "Xatolik yuz berdi");
+      message.error(error?.response?.data?.message || t("errorOccurred"));
     },
   });
 
@@ -61,25 +61,25 @@ const Motivation = () => {
       payload: MotivationFormData;
     }) => putMotivations(id, payload),
     onSuccess: () => {
-      message.success("Motivatsiya yangilandi");
+      message.success(t("motivationUpdated"));
       setOpen(false);
       setEditingItem(null);
       form.resetFields();
       queryClient.invalidateQueries({ queryKey: ["motivations-data"] });
     },
     onError: (error: any) => {
-      message.error(error?.response?.data?.message || "Xatolik yuz berdi");
+      message.error(error?.response?.data?.message || t("errorOccurred"));
     },
   });
 
   const deleteMutation = useMutation({
     mutationFn: deleteMotivations,
     onSuccess: () => {
-      message.success("Motivatsiya o'chirildi");
+      message.success(t("motivationDeleted"));
       queryClient.invalidateQueries({ queryKey: ["motivations-data"] });
     },
     onError: (error: any) => {
-      message.error(error?.response?.data?.message || "Xatolik yuz berdi");
+      message.error(error?.response?.data?.message || t("errorOccurred"));
     },
   });
 
@@ -125,49 +125,44 @@ const Motivation = () => {
   const columns: ColumnsType<MotivationData> = useMemo(
     () => [
       {
-        title: "T/r",
-        dataIndex: "id",
-        key: "id",
+        title: t("scoreLog.tR"),
+        key: "index",
         width: "10px",
-        render: (text: string, record: any, index: number) => (
-          <span>{index + 1}</span>
-        ),
+        render: (_, __, index: number) => <span>{index + 1}</span>,
       },
       {
-        title: "Sarlavha",
+        title: t("motivations.title"),
         dataIndex: i18n.language === "uz" ? "title_uz" : "title_ru",
         key: "title",
-        // ellipsis: true,
-        // width: 200,
       },
       {
-        title: "Holati",
+        title: t("status"),
         dataIndex: "is_active",
         key: "is_active",
         width: 100,
         render: (value: boolean) =>
           value ? (
-            <Tag color="green">Faol</Tag>
+            <Tag color="green">{t("active")}</Tag>
           ) : (
-            <Tag color="red">Faol emas</Tag>
+            <Tag color="red">{t("inactive")}</Tag>
           ),
       },
       {
-        title: "Yaratilgan",
+        title: t("motivations.createdAt"),
         dataIndex: "created_at",
         key: "created_at",
         width: 180,
         render: (val: string) => formatDateColumn(val),
       },
       {
-        title: "O'zgargan vaqti",
+        title: t("motivations.updatedAt"),
         dataIndex: "updated_at",
         key: "updated_at",
         width: 120,
         render: (val: string) => formatDateColumn(val),
       },
       {
-        title: "Amallar",
+        title: t("actions"),
         key: "actions",
         width: 120,
         render: (_, record) => (
@@ -182,9 +177,9 @@ const Motivation = () => {
             </Button>
 
             <Popconfirm
-              title="Motivatsiyani o'chirishni tasdiqlaysizmi?"
-              okText="Ha"
-              cancelText="Yo'q"
+              title={t("motivations.deleteMotivationConfirm")}
+              okText={t("yes")}
+              cancelText={t("no")}
               onConfirm={() => deleteMutation.mutate(record.id)}
             >
               <Button danger size="small" loading={deleteMutation.isPending}>
@@ -200,10 +195,10 @@ const Motivation = () => {
 
   return (
     <Card
-      title="Motivatsiyalar"
+      title={t("motivations.motivations")}
       extra={
         <Button type="primary" onClick={handleCreate}>
-          + Motivatsiya qo'shish
+          + {t("motivations.addMotivation")}
         </Button>
       }
     >
@@ -217,7 +212,11 @@ const Motivation = () => {
       />
 
       <Modal
-        title={editingItem ? "Motivatsiyani tahrirlash" : "Yangi motivatsiya"}
+        title={
+          editingItem
+            ? t("motivations.editMotivation")
+            : t("motivations.newMotivation")
+        }
         open={open}
         onCancel={() => {
           setOpen(false);
@@ -225,72 +224,73 @@ const Motivation = () => {
           form.resetFields();
         }}
         onOk={handleSubmit}
-        okText={editingItem ? "Saqlash" : "Yaratish"}
+        okText={editingItem ? t("save") : t("create")}
+        cancelText={t("cancel")}
         confirmLoading={createMutation.isPending || updateMutation.isPending}
         width={700}
       >
         <Form form={form} layout="vertical">
           <Form.Item
-            label="Sarlavha (O'zbek)"
+            label={t("motivations.titleUz")}
             name="title_uz"
             rules={[
-              { required: true, message: "Sarlavhani o'zbek tilida kiriting" },
-              { min: 3, message: "Kamida 3 ta belgi bo'lishi kerak" },
+              { required: true, message: t("motivations.enterTitleUz") },
+              { min: 3, message: t("motivations.min3Chars") },
             ]}
           >
-            <Input placeholder="Motivatsiya sarlavhasi (O'zbek)" />
+            <Input placeholder={t("motivations.titlePlaceholderUz")} />
           </Form.Item>
 
           <Form.Item
-            label="Sarlavha (Rus)"
+            label={t("motivations.titleRu")}
             name="title_ru"
             rules={[
-              { required: true, message: "Sarlavhani rus tilida kiriting" },
-              { min: 3, message: "Kamida 3 ta belgi bo'lishi kerak" },
+              { required: true, message: t("motivations.enterTitleRu") },
+              { min: 3, message: t("motivations.min3Chars") },
             ]}
           >
-            <Input placeholder="Motivatsiya sarlavhasi (Rus)" />
+            <Input placeholder={t("motivations.titlePlaceholderRu")} />
           </Form.Item>
 
           <Form.Item
-            label="Matn (O'zbek)"
+            label={t("motivations.contentUz")}
             name="content_uz"
             rules={[
-              { required: true, message: "Matnni o'zbek tilida kiriting" },
-              { min: 10, message: "Kamida 10 ta belgi bo'lishi kerak" },
+              { required: true, message: t("motivations.enterContentUz") },
+              { min: 10, message: t("motivations.min10Chars") },
             ]}
           >
             <Input.TextArea
               rows={4}
-              placeholder="Motivatsiya matni (O'zbek)"
+              placeholder={t("motivations.contentPlaceholderUz")}
               showCount
               maxLength={500}
             />
           </Form.Item>
 
           <Form.Item
-            label="Matn (Rus)"
+            label={t("motivations.contentRu")}
             name="content_ru"
             rules={[
-              { required: true, message: "Matnni rus tilida kiriting" },
-              { min: 10, message: "Kamida 10 ta belgi bo'lishi kerak" },
+              { required: true, message: t("motivations.enterContentRu") },
+              { min: 10, message: t("motivations.min10Chars") },
             ]}
           >
             <Input.TextArea
               rows={4}
-              placeholder="Motivatsiya matni (Rus)"
+              placeholder={t("motivations.contentPlaceholderRu")}
               showCount
               maxLength={500}
             />
           </Form.Item>
 
           <Form.Item
-            label="Holati"
+            label={t("status")}
             name="is_active"
             valuePropName="checked"
-            tooltip="Faol holatda foydalanuvchilarga ko'rinadi"
+            tooltip={t("statusTooltip")}
           >
-            <Switch checkedChildren="Faol" unCheckedChildren="Faol emas" />
+            <Switch />
           </Form.Item>
         </Form>
       </Modal>

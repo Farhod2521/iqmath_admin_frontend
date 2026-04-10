@@ -21,8 +21,10 @@ import {
 } from "@/services";
 import { handleApiError } from "@/shared/utils/handleApiError";
 import { formatDateColumn } from "@/shared/components/tables/formatters";
+import { useTranslation } from "react-i18next";
 
 const ConversionRates = () => {
+  const { t } = useTranslation();
   const [form] = Form.useForm();
   const queryClient = useQueryClient();
 
@@ -31,20 +33,15 @@ const ConversionRates = () => {
     null,
   );
 
-  // 🔥 GET
   const { data, isLoading, error } = useQuery({
     queryKey: ["conversion-rates"],
-    queryFn: async () => {
-      const res = await getManagementConversionRates();
-      return res;
-    },
+    queryFn: getManagementConversionRates,
   });
 
   useEffect(() => {
     if (error) handleApiError(error);
   }, [error]);
 
-  //  CREATE
   const createMutation = useMutation({
     mutationFn: postManagementConversionRate,
     onSuccess: () => {
@@ -54,7 +51,6 @@ const ConversionRates = () => {
     onError: (error) => handleApiError(error),
   });
 
-  //  UPDATE
   const updateMutation = useMutation({
     mutationFn: putManagementConversionRate,
     onSuccess: () => {
@@ -64,7 +60,6 @@ const ConversionRates = () => {
     onError: (error) => handleApiError(error),
   });
 
-  // ❗ DELETE yo‘q API → fake qilib qo‘yamiz (yoki keyin qo‘shasan)
   const deleteMutation = useMutation({
     mutationFn: async (id: number) => {
       console.log("delete id:", id);
@@ -82,7 +77,6 @@ const ConversionRates = () => {
     form.resetFields();
   };
 
-  //  EDIT
   const handleEdit = (record: ManagementConversionRateData) => {
     setEditData(record);
     form.setFieldsValue({
@@ -92,7 +86,6 @@ const ConversionRates = () => {
     openModal();
   };
 
-  // SUBMIT
   const handleSubmit = async () => {
     try {
       const values: ManagementConversionRateFormData =
@@ -108,23 +101,22 @@ const ConversionRates = () => {
     }
   };
 
-  // TABLE
   const columns = [
     {
-      title: "1 tangaga teng ball miqdori",
+      title: t("conversions.coinToScore"),
       dataIndex: "coin_to_score",
     },
     {
-      title: "1 tangaga teng pul miqdori",
+      title: t("conversions.coinToMoney"),
       dataIndex: "coin_to_money",
     },
     {
-      title: "O'zgargan vaqti",
+      title: t("conversions.updatedAt"),
       dataIndex: "updated_at",
       render: (val: string) => formatDateColumn(val),
     },
     {
-      title: "Amal",
+      title: t("action"),
       render: (_: any, record: ManagementConversionRateData) => (
         <Space>
           <Button
@@ -136,10 +128,11 @@ const ConversionRates = () => {
             <FaEdit />
           </Button>
 
+          {/* DELETE future */}
           {/* <Popconfirm
-            title="O'chirishni tasdiqlaysizmi?"
-            okText="Ha"
-            cancelText="Yo'q"
+            title={t("confirmDelete")}
+            okText={t("yes")}
+            cancelText={t("no")}
             onConfirm={() => deleteMutation.mutate(record.id)}
           >
             <Button danger size="small">
@@ -153,10 +146,10 @@ const ConversionRates = () => {
 
   return (
     <Card
-      title="Konversiya kurslari"
+      title={t("conversions.conversionRates")}
       extra={
         <Button type="primary" onClick={openModal}>
-          Qo‘shish
+          {t("conversions.add")}
         </Button>
       }
     >
@@ -175,21 +168,27 @@ const ConversionRates = () => {
         onCancel={closeModal}
         onOk={handleSubmit}
         confirmLoading={createMutation.isPending || updateMutation.isPending}
-        title={editData ? "Tahrirlash" : "Yangi qo‘shish"}
+        title={editData ? t("conversions.edit") : t("conversions.createNew")}
+        okText={editData ? t("save") : t("create")}
+        cancelText={t("cancel")}
       >
         <Form form={form} layout="vertical">
           <Form.Item
             name="coin_to_score"
-            label="1 tangaga teng ball"
-            rules={[{ required: true }]}
+            label={t("conversions.coinToScoreLabel")}
+            rules={[
+              { required: true, message: t("conversions.requiredField") },
+            ]}
           >
             <Input type="number" />
           </Form.Item>
 
           <Form.Item
             name="coin_to_money"
-            label="1 tangaga teng pul"
-            rules={[{ required: true }]}
+            label={t("conversions.coinToMoneyLabel")}
+            rules={[
+              { required: true, message: t("conversions.requiredField") },
+            ]}
           >
             <Input />
           </Form.Item>

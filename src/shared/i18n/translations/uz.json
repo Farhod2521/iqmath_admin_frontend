@@ -1,4 +1,6 @@
 {
+  "unknown": "Noma'lum",
+  "createdAt": "Yaratilgan sana",
   "basicInformation": "Asosiy ma'lumotlar",
   "appManagements": "Boshqaruvlar",
   "appStudents": "app_students",
@@ -425,7 +427,7 @@
   "teacherCashbackAmount": "O'qituvchilar cashback",
   "platformStatistics": "Platforma statistikasi va hisobotlar",
   "teachers": "Mentorlar",
-  "tutors": "O'qtuvchilar",
+  "tutors": "O'qituvchilar",
   "mostSold": "Eng ko'p sotilgan",
   "successful": "Muvaffaqiyatli",
   "mostUsed": "Eng ko'p ishlatilgan",
@@ -458,8 +460,17 @@
   "overallCompletionRate": "O'quvchilarning umumiy yakunlanish foizi",
   "leaderboard": "Eng yaxshi natijalar (Leaderboard)",
   "name": "Ism",
+  "scrollDow": "Qidirish + pastga scroll qilsangiz davomiy yuklanadi.",
   "group": "Guruh",
+  "groupName": "Guruh nomi",
+  "groupAdd": "Guruh qo'shish",
+  "groupAddStudents": "Guruhga talaba qo‘shish",
+  "groupEdit": "Guruhni tahrirlash",
+  "groupInfo": "Guruh tafsilotlari",
   "recentActivity": "So'nggi faoliyat",
+  "newGroupAdd": "Yangi guruh yaratish",
+  "enterGroupName": "Guruh nomini kiriting",
+  "forExampleGroup": "Masalan: 415-20 guruh",
   "Faol": "Faol",
   "Passiv": "Passiv",
   "Yangi": "Yangi",
@@ -593,7 +604,6 @@
   "referred": "Taklif qilingan",
   "fullName": "To'liq ism",
   "inviteLinkDescription": "Dostlaringizni taklif qilish uchun havolani ulashing",
-  "products": "Mahsulotlar",
   "allProducts": "Barcha mahsulotlar",
   "purchasedProducts": "Harid qilingan mahsulotlar",
   "price": "Narxi",
@@ -628,7 +638,6 @@
   "totalNumberStudents": "Talabalarning umumiy soni",
   "moreMonth": "Bu oyda ko'proq",
   "noChildrenDescriptionAdd": "Hali hech qanday farzand qo‘shilmagan. Farzand qo‘shish uchun tugmani bosing.",
-  "childId": "ID",
   "statusActive": "Faol",
   "statusInactive": "Faol emas",
   "subjectUz": "Fan (O‘zbek)",
@@ -816,6 +825,7 @@
   "verify": "Tasdiqlash",
   "parent": "Ota-ona",
   "tutor": "O'qituvchi",
+  "chooseTutor": "O'qituvchini tanlang",
   "selectUserType": "Foydalanuvchi turini tanlang",
   "inviteStudent": "O'quvchi taklif qilish",
   "noInvitedStudents": "Taklif qilingan o'quvchilar mavjud emas!",
@@ -1227,6 +1237,288 @@
 
     "image_error": "Faqat jpg, jpeg, png yoki webp rasm yuklash mumkin",
     "upload": "Yuklash"
+  },
+  "motivations": {
+    "motivations": "Motivatsiyalar",
+    "addMotivation": "Motivatsiya qo'shish",
+    "title": "Sarlavha",
+    "createdAt": "Yaratilgan",
+    "updatedAt": "O'zgargan vaqti",
+
+    "deleteMotivationConfirm": "Motivatsiyani o'chirishni tasdiqlaysizmi?",
+
+    "editMotivation": "Motivatsiyani tahrirlash",
+    "newMotivation": "Yangi motivatsiya",
+
+    "titleUz": "Sarlavha (O'zbek)",
+    "titleRu": "Sarlavha (Rus)",
+    "contentUz": "Matn (O'zbek)",
+    "contentRu": "Matn (Rus)",
+
+    "enterTitleUz": "Sarlavhani o'zbek tilida kiriting",
+    "enterTitleRu": "Sarlavhani rus tilida kiriting",
+    "enterContentUz": "Matnni o'zbek tilida kiriting",
+    "enterContentRu": "Matnni rus tilida kiriting",
+
+    "min3Chars": "Kamida 3 ta belgi bo'lishi kerak",
+    "min10Chars": "Kamida 10 ta belgi bo'lishi kerak",
+
+    "titlePlaceholderUz": "Motivatsiya sarlavhasi (O'zbek)",
+    "titlePlaceholderRu": "Motivatsiya sarlavhasi (Rus)",
+    "contentPlaceholderUz": "Motivatsiya matni (O'zbek)",
+    "contentPlaceholderRu": "Motivatsiya matni (Rus)",
+
+    "statusTooltip": "Faol holatda foydalanuvchilarga ko'rinadi",
+
+    "motivationCreated": "Motivatsiya yaratildi",
+    "motivationUpdated": "Motivatsiya yangilandi",
+    "motivationDeleted": "Motivatsiya o'chirildi",
+    "errorOccurred": "Xatolik yuz berdi"
+  },
+  "conversions": {
+    "conversionRates": "Konversiya kurslari",
+    "add": "Qo‘shish",
+    "edit": "Tahrirlash",
+    "createNew": "Yangi qo‘shish",
+
+    "coinToScore": "1 tangaga teng ball miqdori",
+    "coinToMoney": "1 tangaga teng pul miqdori",
+    "updatedAt": "O'zgargan vaqti",
+    "action": "Amal",
+
+    "confirmDelete": "O'chirishni tasdiqlaysizmi?",
+    "yes": "Ha",
+    "no": "Yo'q",
+
+    "coinToScoreLabel": "1 tangaga teng ball",
+    "coinToMoneyLabel": "1 tangaga teng pul",
+
+    "requiredField": "Majburiy maydon"
+  },
+  "dailyCoinSettings": {
+    "dailyCoinSettings": "Kunlik coin sozlamalari",
+
+    "dailyCoinLimit": "Kunlik tanga limiti",
+    "updatedTime": "Yangilangan vaqt",
+
+    "confirmDelete": "Rostdan ham o‘chirmoqchimisiz?",
+
+    "updated": "Yangilandi",
+    "deleted": "O‘chirildi",
+    "errorOccurred": "Xatolik yuz berdi"
+  },
+
+  "categories": {
+    "title": "Kategoriyalar",
+    "add": "Kategoriya qo'shish",
+
+    "index": "T/r",
+    "name": "Nomi",
+    "action": "Amal",
+
+    "edit": "Tahrirlash",
+
+    "deleteConfirm": "Kategoriyani o‘chirmoqchimisiz?",
+    "yes": "Ha",
+    "no": "Yo'q",
+
+    "deleted": "Muvaffaqiyatli o‘chirildi",
+
+    "modal": {
+      "editTitle": "Kategoriyani o'zgartirish",
+      "createTitle": "Yangi kategoriya",
+      "save": "Saqlash",
+      "cancel": "Bekor qilish",
+      "name": "Nomi",
+      "namePlaceholder": "Nomini kiriting",
+      "nameRequired": "Nomini kiriting"
+    }
+  },
+  "productsMenu": {
+    "title": "Mahsulotlar",
+    "add": "Qo‘shish",
+
+    "index": "T/r",
+    "nameUz": "Mahsulot nomi (uz)",
+    "nameRu": "Mahsulot nomi (ru)",
+    "coin": "Kerakli tanga",
+    "price": "Narxi (so'm)",
+    "count": "Mahsulot soni",
+    "image": "Rasm",
+    "action": "Amal",
+
+    "deleteConfirm": "Rostdan ham o‘chirmoqchimisiz?",
+    "yes": "Ha",
+    "no": "Yo'q",
+
+    "modal": {
+      "editTitle": "Tahrirlash",
+      "createTitle": "Yangi mahsulot",
+
+      "nameUz": "Nomi UZ",
+      "nameRu": "Nomi RU",
+      "coin": "Kerakli tanga",
+      "count": "Mahsulot soni",
+      "image": "Rasm",
+
+      "nameUzRequired": "Nomi (UZ) majburiy",
+      "nameRuRequired": "Nomi (RU) majburiy",
+      "coinRequired": "Tanga kiriting",
+      "countRequired": "Soni kiriting",
+
+      "save": "Saqlash",
+      "cancel": "Bekor qilish"
+    }
+  },
+  "mathematicians": {
+    "title": "Matematiklar",
+    "add": "Qo‘shish",
+
+    "index": "T/r",
+    "nameUz": "Nomi (UZ)",
+    "nameRu": "Nomi (RU)",
+    "years": "Yillar",
+    "image": "Rasm",
+    "status": "Holati",
+    "action": "Amal",
+
+    "active": "Faol",
+    "inactive": "Faol emas",
+
+    "deleteConfirm": "O'chirishni tasdiqlaysizmi?",
+
+    "modal": {
+      "editTitle": "Tahrirlash",
+      "createTitle": "Yangi matematik",
+
+      "nameUz": "Nomi UZ",
+      "nameRu": "Nomi RU",
+      "subtitleUz": "Subtitle UZ",
+      "subtitleRu": "Subtitle RU",
+      "yearsUz": "Yillar UZ",
+      "yearsRu": "Yillar RU",
+      "descriptionUz": "Description UZ",
+      "descriptionRu": "Description RU",
+      "active": "Faol",
+      "image": "Rasm",
+
+      "nameUzRequired": "Nomi (UZ) majburiy",
+      "nameRuRequired": "Nomi (RU) majburiy",
+
+      "save": "Saqlash",
+      "cancel": "Bekor qilish"
+    }
+  },
+  "banners": {
+    "title": "Bannerlar",
+    "add": "Qo‘shish",
+
+    "index": "T/r",
+    "image": "Rasm",
+    "description": "Tavsif",
+    "action": "Amal",
+
+    "deleteConfirm": "O'chirishni tasdiqlaysizmi?",
+
+    "modal": {
+      "editTitle": "Tahrirlash",
+      "createTitle": "Yangi banner",
+
+      "description": "Tavsif",
+      "image": "Rasm",
+
+      "save": "Saqlash",
+      "cancel": "Bekor qilish"
+    }
+  },
+  "tags": {
+    "title": "Taglar",
+    "add": "Qo‘shish",
+
+    "index": "T/r",
+    "name": "Tag nomi",
+    "action": "Amal",
+
+    "deleteConfirm": "O'chirishni tasdiqlaysizmi?",
+    "yes": "Ha",
+    "no": "Yo'q",
+
+    "modal": {
+      "editTitle": "Tahrirlash",
+      "createTitle": "Yangi tag",
+
+      "name": "Tag nomi",
+      "placeholder": "Masalan: Matematika",
+      "required": "Tag nomini kiriting",
+
+      "save": "Saqlash",
+      "cancel": "Bekor qilish"
+    }
+  },
+  "faqs": {
+    "title": "Tez-tez so‘raladigan savollar",
+    "add": "Qo‘shish",
+
+    "index": "T/r",
+    "question": "Savol",
+    "answer": "Javob",
+    "video": "Video",
+    "view": "Ko‘rish",
+    "action": "Amal",
+
+    "deleteConfirm": "O'chirishni tasdiqlaysizmi?",
+
+    "modal": {
+      "editTitle": "Tahrirlash",
+      "createTitle": "Yangi FAQ",
+
+      "question": "Savol",
+      "answer": "Javob (HTML)",
+      "video": "YouTube havola",
+
+      "questionRequired": "Savolni kiriting",
+      "answerRequired": "Javobni kiriting",
+
+      "questionPlaceholder": "Savolni yozing",
+      "answerPlaceholder": "Javobni yozing",
+      "videoPlaceholder": "https://youtube.com/...",
+
+      "save": "Saqlash",
+      "cancel": "Bekor qilish"
+    }
+  },
+  "uploadFiles": {
+    "title": "Yuklangan fayllar",
+    "name": "Fayl nomi",
+    "format": "Format",
+    "index": "T/r",
+    "file": "Fayl",
+    "view": "Ko‘rish",
+    "uploadedAt": "Yuklangan vaqti",
+    "action": "Amal",
+
+    "chooseFile": "Fayl tanlash",
+    "upload": "Yuklash",
+
+    "deleteConfirm": "Faylni o‘chirishni tasdiqlaysizmi?"
+  },
+  "referralSettings": {
+    "title": "Referal va kupon sozlamalari",
+    "save": "Saqlash",
+
+    "teacherBonus": "O‘qituvchi uchun referal bonus (ball)",
+    "studentBonus": "O‘quvchi uchun referal bonus (ball)",
+
+    "couponDiscount": "Kupon chegirmasi (%)",
+    "couponDiscountTeacher": "Mentor uchun kupon chegirmasi (%)",
+
+    "couponDays": "Kupon amal qilish muddati (kun)",
+    "referralDays": "Referal kod amal qilish muddati (kun)",
+
+    "studentCashback": "O‘quvchi uchun cashback (%)",
+    "teacherCashback": "O‘qituvchi uchun cashback (%)",
+
+    "required": "Majburiy maydon"
   },
   "solutionStatus": {
     "title": "Yechim tugmalari holatlari",

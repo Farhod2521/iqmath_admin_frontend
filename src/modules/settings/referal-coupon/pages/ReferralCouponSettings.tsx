@@ -8,52 +8,51 @@ import {
 import { useEffect } from "react";
 import { handleApiError } from "@/shared/utils/handleApiError";
 import { toast } from "react-toastify";
+import { useTranslation } from "react-i18next";
 
 const ReferralCouponSettings = () => {
   const [form] = Form.useForm();
   const queryClient = useQueryClient();
+  const { t } = useTranslation();
 
-  //  GET
+  // GET
   const { data, isLoading, error } = useQuery({
     queryKey: ["referral-settings"],
-    queryFn: async () => {
-      const res = await getManagementReferalCoupons();
-      return res;
-    },
+    queryFn: getManagementReferalCoupons,
   });
 
   useEffect(() => {
     if (error) handleApiError(error);
   }, [error]);
 
-  //  fill form
+  // fill form
   useEffect(() => {
     if (data) {
       form.setFieldsValue(data);
     }
   }, [data]);
 
-  //  CREATE
+  // CREATE
   const createMutation = useMutation({
     mutationFn: postManagementReferalCoupons,
     onSuccess: (res) => {
       toast.success(res?.message);
       queryClient.invalidateQueries({ queryKey: ["referral-settings"] });
     },
-    onError: (e) => handleApiError(e),
+    onError: (err) => handleApiError(err),
   });
 
-  //  UPDATE
+  // UPDATE
   const updateMutation = useMutation({
     mutationFn: putManagementReferalCoupons,
     onSuccess: (res) => {
       toast.success(res?.message);
       queryClient.invalidateQueries({ queryKey: ["referral-settings"] });
     },
-    onError: (e) => handleApiError(e),
+    onError: (err) => handleApiError(err),
   });
 
-  //  SUBMIT
+  // SUBMIT
   const handleSubmit = async () => {
     const values = await form.validateFields();
 
@@ -66,7 +65,7 @@ const ReferralCouponSettings = () => {
 
   return (
     <Card
-      title="Referal va kupon sozlamalari"
+      title={t("referralSettings.title")}
       loading={isLoading}
       extra={
         <Button
@@ -74,7 +73,7 @@ const ReferralCouponSettings = () => {
           onClick={handleSubmit}
           loading={createMutation.isPending || updateMutation.isPending}
         >
-          Saqlash
+          {t("referralSettings.save")}
         </Button>
       }
     >
@@ -83,8 +82,13 @@ const ReferralCouponSettings = () => {
           <Col span={12}>
             <Form.Item
               name="teacher_referral_bonus_points"
-              label="O‘qituvchi uchun referal bonus (ball)"
-              rules={[{ required: true }]}
+              label={t("referralSettings.teacherBonus")}
+              rules={[
+                {
+                  required: true,
+                  message: t("referralSettings.required"),
+                },
+              ]}
             >
               <InputNumber style={{ width: "100%" }} />
             </Form.Item>
@@ -93,8 +97,13 @@ const ReferralCouponSettings = () => {
           <Col span={12}>
             <Form.Item
               name="student_referral_bonus_points"
-              label="O‘quvchi uchun referal bonus (ball)"
-              rules={[{ required: true }]}
+              label={t("referralSettings.studentBonus")}
+              rules={[
+                {
+                  required: true,
+                  message: t("referralSettings.required"),
+                },
+              ]}
             >
               <InputNumber style={{ width: "100%" }} />
             </Form.Item>
@@ -103,7 +112,7 @@ const ReferralCouponSettings = () => {
           <Col span={12}>
             <Form.Item
               name="coupon_discount_percent"
-              label="Kupon chegirmasi (%)"
+              label={t("referralSettings.couponDiscount")}
             >
               <InputNumber style={{ width: "100%" }} />
             </Form.Item>
@@ -112,7 +121,7 @@ const ReferralCouponSettings = () => {
           <Col span={12}>
             <Form.Item
               name="coupon_discount_percent_teacher"
-              label="Mentor uchun kupon chegirmasi (%)"
+              label={t("referralSettings.couponDiscountTeacher")}
             >
               <InputNumber style={{ width: "100%" }} />
             </Form.Item>
@@ -121,7 +130,7 @@ const ReferralCouponSettings = () => {
           <Col span={12}>
             <Form.Item
               name="coupon_valid_days"
-              label="Kupon amal qilish muddati (kun)"
+              label={t("referralSettings.couponDays")}
             >
               <InputNumber style={{ width: "100%" }} />
             </Form.Item>
@@ -130,7 +139,7 @@ const ReferralCouponSettings = () => {
           <Col span={12}>
             <Form.Item
               name="referral_valid_days"
-              label="Referal kod amal qilish muddati (kun)"
+              label={t("referralSettings.referralDays")}
             >
               <InputNumber style={{ width: "100%" }} />
             </Form.Item>
@@ -139,7 +148,7 @@ const ReferralCouponSettings = () => {
           <Col span={12}>
             <Form.Item
               name="coupon_student_cashback_percent"
-              label="O‘quvchi uchun cashback (%)"
+              label={t("referralSettings.studentCashback")}
             >
               <InputNumber style={{ width: "100%" }} />
             </Form.Item>
@@ -148,7 +157,7 @@ const ReferralCouponSettings = () => {
           <Col span={12}>
             <Form.Item
               name="coupon_teacher_cashback_percent"
-              label="O‘qituvchi uchun cashback (%)"
+              label={t("referralSettings.teacherCashback")}
             >
               <InputNumber style={{ width: "100%" }} />
             </Form.Item>

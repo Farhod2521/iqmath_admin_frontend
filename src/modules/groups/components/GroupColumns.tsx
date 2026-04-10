@@ -26,13 +26,13 @@ export const useGroupColumns = ({
   onDelete,
 }: GroupColumnsProps): ColumnsType<MyGroupsData> => [
   {
-    title: "№",
+    title: t("scoreLog.tR"),
     width: 60,
     align: "center",
     render: (_, __, index) => index + 1,
   },
   {
-    title: t("Guruh nomi"),
+    title: t("groupName"),
     dataIndex: "name",
     key: "name",
     ellipsis: true,
@@ -46,7 +46,7 @@ export const useGroupColumns = ({
   },
 
   {
-    title: t("O'quvchilar soni"),
+    title: t("studentsCount"),
     dataIndex: "student_count",
     key: "student_count",
     align: "center",

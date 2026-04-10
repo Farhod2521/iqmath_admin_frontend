@@ -55,37 +55,57 @@ const ProductModal = ({
       open={open}
       onCancel={onClose}
       onOk={handleSubmit}
-      okText={t("save")}
-      cancelText={t("cancel")}
+      okText={t("productsMenu.modal.save")}
+      cancelText={t("productsMenu.modal.cancel")}
       confirmLoading={loading}
-      title={initialValues ? "Tahrirlash" : "Yangi mahsulot"}
+      title={
+        initialValues
+          ? t("productsMenu.modal.editTitle")
+          : t("productsMenu.modal.createTitle")
+      }
     >
       <Form form={form} layout="vertical">
-        <Form.Item name="name_uz" label="Nomi UZ" rules={[{ required: true }]}>
+        <Form.Item
+          name="name_uz"
+          label={t("productsMenu.modal.nameUz")}
+          rules={[
+            { required: true, message: t("productsMenu.modal.nameUzRequired") },
+          ]}
+        >
           <Input />
         </Form.Item>
 
-        <Form.Item name="name_ru" label="Nomi RU" rules={[{ required: true }]}>
+        <Form.Item
+          name="name_ru"
+          label={t("productsMenu.modal.nameRu")}
+          rules={[
+            { required: true, message: t("productsMenu.modal.nameRuRequired") },
+          ]}
+        >
           <Input />
         </Form.Item>
 
         <Form.Item
           name="coin"
-          label="Kerakli tanga"
-          rules={[{ required: true }]}
+          label={t("productsMenu.modal.coin")}
+          rules={[
+            { required: true, message: t("productsMenu.modal.coinRequired") },
+          ]}
         >
           <InputNumber style={{ width: "100%" }} />
         </Form.Item>
 
         <Form.Item
           name="count"
-          label="Mahsulot soni"
-          rules={[{ required: true }]}
+          label={t("productsMenu.modal.count")}
+          rules={[
+            { required: true, message: t("productsMenu.modal.countRequired") },
+          ]}
         >
           <InputNumber style={{ width: "100%" }} />
         </Form.Item>
 
-        <Form.Item name="image" label="Rasm" valuePropName="value">
+        <Form.Item name="image" label={t("productsMenu.modal.image")}>
           <SingleImageUpload />
         </Form.Item>
       </Form>

@@ -143,7 +143,7 @@ const Products = () => {
   // TABLE
   const columns = [
     {
-      title: "T/r",
+      title: t("productsMenu.index"),
       dataIndex: "id",
       key: "id",
       width: "10px",
@@ -152,38 +152,43 @@ const Products = () => {
       ),
     },
     {
-      title: "Mahsulot nomi (uz)",
+      title: t("productsMenu.nameUz"),
       dataIndex: "name_uz",
     },
     {
-      title: "Mahsulot nomi (ru)",
+      title: t("productsMenu.nameRu"),
       dataIndex: "name_ru",
     },
     {
-      title: "Kerakli tanga",
+      title: t("productsMenu.coin"),
       dataIndex: "coin",
     },
     {
-      title: "Narxi (so'm)",
+      title: t("productsMenu.price"),
       dataIndex: "price_money",
       render: (value: number) => formatMoney(value),
     },
     // { title: "Narxi (ball)", dataIndex: "price_score" },
     {
-      title: "Mahsulot soni",
+      title: t("productsMenu.count"),
       dataIndex: "count",
     },
     {
-      title: "Rasm",
+      title: t("productsMenu.image"),
       render: (_: any, record: ManagementProductData) => (
         <img src={record.image} width={50} />
       ),
     },
     {
-      title: "Amal",
+      title: t("productsMenu.action"),
       render: (_: any, record: ManagementProductData) => (
         <Space>
-          <Button onClick={() => handleEdit(record)}>
+          <Button
+            variant="outlined"
+            color="primary"
+            size="small"
+            onClick={() => handleEdit(record)}
+          >
             <FaEdit />
           </Button>
 
@@ -193,7 +198,7 @@ const Products = () => {
             cancelText={t("no")}
             onConfirm={() => deleteMutation.mutate(record.id)}
           >
-            <Button danger>
+            <Button size="small" danger>
               <DeleteOutlined />
             </Button>
           </Popconfirm>
@@ -204,10 +209,10 @@ const Products = () => {
 
   return (
     <Card
-      title="Mahsulotlar"
+      title={t("productsMenu.title")}
       extra={
         <Button onClick={openModal} type="primary">
-          Qo‘shish
+          {t("productsMenu.add")}
         </Button>
       }
     >

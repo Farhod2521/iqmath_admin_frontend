@@ -1,23 +1,10 @@
 import { Modal, Form, Input } from "antd";
 import { useEffect } from "react";
-import { ManagementTagData } from "@/services";
+import { useTranslation } from "react-i18next";
 
-type Props = {
-  open: boolean;
-  onClose: () => void;
-  onSubmit: (values: any) => void;
-  loading: boolean;
-  initialValues?: ManagementTagData | null;
-};
-
-const ModalTag = ({
-  open,
-  onClose,
-  onSubmit,
-  loading,
-  initialValues,
-}: Props) => {
+const ModalTag = ({ open, onClose, onSubmit, loading, initialValues }: any) => {
   const [form] = Form.useForm();
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (initialValues) {
@@ -38,15 +25,19 @@ const ModalTag = ({
       onCancel={onClose}
       onOk={handleSubmit}
       confirmLoading={loading}
-      title={initialValues ? "Tahrirlash" : "Yangi tag"}
+      okText={t("save")}
+      cancelText={t("cancel")}
+      title={
+        initialValues ? t("tags.modal.editTitle") : t("tags.modal.createTitle")
+      }
     >
       <Form form={form} layout="vertical">
         <Form.Item
           name="title"
-          label="Tag nomi"
-          rules={[{ required: true, message: "Tag nomini kiriting" }]}
+          label={t("tags.modal.name")}
+          rules={[{ required: true, message: t("tags.modal.required") }]}
         >
-          <Input placeholder="Masalan: Matematika" />
+          <Input placeholder={t("tags.modal.placeholder")} />
         </Form.Item>
       </Form>
     </Modal>

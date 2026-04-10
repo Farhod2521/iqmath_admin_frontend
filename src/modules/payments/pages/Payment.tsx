@@ -1,11 +1,12 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Button, Card, Popconfirm, Table, Tag, Tooltip } from "antd";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { deletePayments, getPayments, PaymentsData } from "../services";
 import { formatDateColumn } from "@/shared/components/tables/formatters";
 import { toast } from "react-toastify";
 import { DeleteOutlined } from "@ant-design/icons";
+import { handleApiError } from "@/shared/utils/handleApiError";
 
 const formatMoney = (v: any) => {
   const n = Number(v);
@@ -21,7 +22,7 @@ const statusColor = (status?: string) => {
   return "default";
 };
 
-const Payments = () => {
+const Payment = () => {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [pagination, setPagination] = useState({
@@ -30,10 +31,18 @@ const Payments = () => {
     total: 10,
   });
 
-  const { data = [], isLoading } = useQuery({
+  const {
+    data = [],
+    isLoading,
+    error,
+  } = useQuery({
     queryKey: ["payments"],
     queryFn: getPayments,
   });
+
+  useEffect(() => {
+    if (error) handleApiError(error);
+  }, [error]);
 
   const columns = useMemo(
     () => [
@@ -147,4 +156,4 @@ const Payments = () => {
   );
 };
 
-export default Payments;
+export default Payment;

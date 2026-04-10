@@ -23,8 +23,10 @@ import { useState, useEffect } from "react";
 import { handleApiError } from "@/shared/utils/handleApiError";
 import { toast } from "react-toastify";
 import ModalBanner from "../components/ModalBanner";
+import { useTranslation } from "react-i18next";
 
 const Banners = () => {
+  const { t } = useTranslation();
   const [form] = Form.useForm();
   const queryClient = useQueryClient();
 
@@ -114,7 +116,7 @@ const Banners = () => {
   // TABLE
   const columns = [
     {
-      title: "T/r",
+      title: t("banners.index"),
       dataIndex: "id",
       key: "id",
       width: "10px",
@@ -123,30 +125,37 @@ const Banners = () => {
       ),
     },
     {
-      title: "Rasm",
+      title: t("banners.image"),
       render: (_: any, record: ManagementBannerData) => (
         <img src={record.image} width={100} style={{ borderRadius: 6 }} />
       ),
     },
     {
-      title: "Tavsif",
+      title: t("banners.description"),
       dataIndex: "desc",
       render: (val: string) => val || "-",
     },
     {
-      title: "Amal",
+      title: t("action"),
       width: "10px",
       render: (_: any, record: ManagementBannerData) => (
         <Space>
-          <Button onClick={() => handleEdit(record)}>
+          <Button
+            variant="outlined"
+            color="primary"
+            size="small"
+            onClick={() => handleEdit(record)}
+          >
             <FaEdit />
           </Button>
 
           <Popconfirm
-            title="O'chirishni tasdiqlaysizmi?"
+            title={t("banners.deleteConfirm")}
+            okText={t("yes")}
+            cancelText={t("no")}
             onConfirm={() => deleteMutation.mutate(record.id)}
           >
-            <Button danger>
+            <Button size="small" danger>
               <DeleteOutlined />
             </Button>
           </Popconfirm>
@@ -157,10 +166,10 @@ const Banners = () => {
 
   return (
     <Card
-      title="Bannerlar"
+      title={t("banners.title")}
       extra={
         <Button type="primary" onClick={openModal}>
-          Qo‘shish
+          + {t("adding")}
         </Button>
       }
     >
@@ -182,6 +191,6 @@ const Banners = () => {
       />
     </Card>
   );
-};;;;;;
+}
 
 export default Banners;

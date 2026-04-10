@@ -1,4 +1,5 @@
 import { Modal, Spin, Empty, Divider, Tag } from "antd";
+import { useTranslation } from "react-i18next";
 
 interface InfoModalProps {
   open: boolean;
@@ -13,21 +14,23 @@ export const InfoModal = ({
   groupDetail,
   onCancel,
 }: InfoModalProps) => {
+  const { t } = useTranslation();
   return (
     <Modal
-      title="Guruh tafsilotlari"
+      title={t("groupInfo")}
       open={open}
       onCancel={onCancel}
       onOk={onCancel}
+      okText={t("close")}
+      cancelText={t("cancel")}
       width={600}
-      destroyOnClose
     >
       {loading ? (
         <div className="py-10 text-center">
           <Spin />
         </div>
       ) : !groupDetail ? (
-        <Empty description="Ma'lumot topilmadi" />
+        <Empty description={t("noDataFound")} />
       ) : (
         <>
           {/* 🔷 HEADER */}
@@ -37,21 +40,22 @@ export const InfoModal = ({
             </div>
 
             <Tag color="blue" className="text-sm px-3 py-1 rounded-full">
-              {groupDetail.student_count} ta student
+              {groupDetail.student_count} {t("msgResult.moreCount")}{" "}
+              {t("student")}
             </Tag>
           </div>
 
           {/* 🔷 INFO GRID */}
           <div className="grid grid-cols-2 gap-4 mb-4">
             <div className="bg-gray-50 rounded-xl p-3">
-              <p className="text-xs text-gray-400 m-0">O‘qituvchi</p>
+              <p className="text-xs text-gray-400 m-0">{t("tutor")}</p>
               <p className="font-medium text-gray-800 m-0">
                 {groupDetail.teacher_name || "—"}
               </p>
             </div>
 
             <div className="bg-gray-50 rounded-xl p-3">
-              <p className="text-xs text-gray-400 m-0">Yaratilgan sana</p>
+              <p className="text-xs text-gray-400 m-0">{t("createdAt")}</p>
               <p className="font-medium text-gray-800 m-0">
                 {groupDetail.created_at || "—"}
               </p>
@@ -63,7 +67,7 @@ export const InfoModal = ({
           {/* 🔷 STUDENTS */}
           <div className="flex items-center justify-between mb-3">
             <h3 className="font-semibold m-0">
-              Studentlar ({groupDetail.students?.length || 0})
+              {t("students")} ({groupDetail.students?.length || 0})
             </h3>
           </div>
 
@@ -79,20 +83,20 @@ export const InfoModal = ({
                     <p className="font-medium text-gray-800 m-0">
                       {s.full_name ||
                         `${s.first_name ?? ""} ${s.last_name ?? ""}`.trim() ||
-                        "Noma'lum"}
+                        t("unknown")}
                     </p>
 
                     <p className="text-xs text-gray-400 m-0">
-                      ID: {s.identification || s.id}
+                      {t("id")}: {s.identification || s.id}
                     </p>
                   </div>
 
-                  <Tag color="geekblue">Student</Tag>
+                  <Tag color="geekblue">{t("student")}</Tag>
                 </div>
               ))}
             </div>
           ) : (
-            <Empty description="Student yo‘q" />
+            <Empty description={t("student") + t("no")} />
           )}
         </>
       )}

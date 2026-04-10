@@ -59,47 +59,91 @@ const ModalMathematician = ({
       confirmLoading={loading}
       okText={t("save")}
       cancelText={t("cancel")}
-      title={initialValues ? "Tahrirlash" : "Yangi matematik"}
+      title={
+        initialValues
+          ? t("mathematicians.modal.editTitle")
+          : t("mathematicians.modal.createTitle")
+      }
       width={700}
     >
       <Form form={form} layout="vertical">
-        <Form.Item name="title_uz" label="Nomi UZ" rules={[{ required: true }]}>
+        <Form.Item
+          name="title_uz"
+          label={t("mathematicians.modal.nameUz")}
+          rules={[
+            {
+              required: true,
+              message: t("mathematicians.modal.nameUzRequired"),
+            },
+          ]}
+        >
           <Input />
         </Form.Item>
 
-        <Form.Item name="title_ru" label="Nomi RU" rules={[{ required: true }]}>
+        <Form.Item
+          name="title_ru"
+          label={t("mathematicians.modal.nameRu")}
+          rules={[
+            {
+              required: true,
+              message: t("mathematicians.modal.nameRuRequired"),
+            },
+          ]}
+        >
           <Input />
         </Form.Item>
 
-        <Form.Item name="subtitle_uz" label="Subtitle UZ">
+        <Form.Item
+          name="subtitle_uz"
+          label={t("mathematicians.modal.subtitleUz")}
+        >
           <Input />
         </Form.Item>
 
-        <Form.Item name="subtitle_ru" label="Subtitle RU">
+        <Form.Item
+          name="subtitle_ru"
+          label={t("mathematicians.modal.subtitleRu")}
+        >
           <Input />
         </Form.Item>
 
-        <Form.Item name="life_years_uz" label="Yillar UZ">
+        <Form.Item
+          name="life_years_uz"
+          label={t("mathematicians.modal.yearsUz")}
+        >
           <Input />
         </Form.Item>
 
-        <Form.Item name="life_years_ru" label="Yillar RU">
+        <Form.Item
+          name="life_years_ru"
+          label={t("mathematicians.modal.yearsRu")}
+        >
           <Input />
         </Form.Item>
 
-        <Form.Item name="description_uz" label="Description UZ">
+        <Form.Item
+          name="description_uz"
+          label={t("mathematicians.modal.descriptionUz")}
+        >
           <Input.TextArea />
         </Form.Item>
 
-        <Form.Item name="description_ru" label="Description RU">
+        <Form.Item
+          name="description_ru"
+          label={t("mathematicians.modal.descriptionRu")}
+        >
           <Input.TextArea />
         </Form.Item>
 
-        <Form.Item name="is_active" label="Active" valuePropName="checked">
+        <Form.Item
+          name="is_active"
+          label={t("mathematicians.modal.active")}
+          valuePropName="checked"
+        >
           <Switch />
         </Form.Item>
 
-        <Form.Item name="image" label="Rasm" valuePropName="value">
+        <Form.Item name="image" label={t("mathematicians.modal.image")}>
           <SingleImageUpload />
         </Form.Item>
       </Form>

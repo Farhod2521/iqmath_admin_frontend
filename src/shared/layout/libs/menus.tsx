@@ -119,32 +119,32 @@ export const getMenus = (t: (key: string) => string) => [
       {
         key: "mathematicians",
         path: "/settings/mathematicians",
-        label: t("Matematik olimlar"),
+        label: t("mathematicians.title"),
       },
       {
         key: "referral-coupon-settings",
         path: "/settings/referral-coupon-settings",
-        label: t("Referal va kupon"),
+        label: t("referralSettings.title"),
       },
       {
         key: "banners",
         path: "/settings/banner",
-        label: t("Banner"),
+        label: t("banners.title"),
       },
       {
         key: "management-tags",
         path: "/settings/management-tags",
-        label: t("Teglar"),
+        label: t("tags.title"),
       },
       {
         key: "management-faqs",
         path: "/settings/management-faqs",
-        label: t("Tez-tez so‘raladigan savollar"),
+        label: t("faqs.title"),
       },
       {
         key: "upload-file-settings",
         path: "/settings/upload-file-settings",
-        label: t("Yuklangan fayllar"),
+        label: t("uploadFiles.title"),
       },
       {
         key: "solution-status",

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import SelectInfinite from "@/shared/components/selects/SelectInfinite";
 import { getStudentList } from "@/services";
 import { MyGroupsFormData, MyGroupsData } from "../utils/types";
+import { useTranslation } from "react-i18next";
 
 interface CreateEditModalProps {
   open: boolean;
@@ -23,8 +24,8 @@ export const CreateEditModal = ({
   onSubmit,
 }: CreateEditModalProps) => {
   const [form] = Form.useForm<MyGroupsFormData>();
+  const { t } = useTranslation();
 
-  console.log("value", editing);
 
   useEffect(() => {
     if (open) {
@@ -77,26 +78,26 @@ export const CreateEditModal = ({
 
   return (
     <Modal
-      title={type === "edit" ? "Guruhni tahrirlash" : "Yangi guruh yaratish"}
+      title={type === "edit" ? t("groupEdit") : t("newGroupAdd")}
       open={open}
       onOk={handleSubmit}
-      okText="Saqlash"
-      cancelText="Bekor qilish"
+      okText={t("save")}
+      cancelText={t("cancel")}
       okButtonProps={{ loading }}
       onCancel={onCancel}
     >
       <Form form={form} layout="vertical">
         <Form.Item
-          label="Nomi"
+          label={t("groupName")}
           name="name"
-          rules={[{ required: true, message: "Guruh nomini kiriting" }]}
+          rules={[{ required: true, message: t("enterGroupName") }]}
         >
-          <Input placeholder="Masalan: 415-20 guruh" />
+          <Input placeholder={t("forExampleGroup")} />
         </Form.Item>
         <Form.Item
-          label="O‘qituvchi tanlash"
+          label={t("tutor")}
           name="teacher_id"
-          rules={[{ required: true, message: "O‘qituvchini tanlang" }]}
+          rules={[{ required: true, message: t("chooseTutor") }]}
         >
           <SelectInfinite
             queryKey={getTeacherQueryKey}
@@ -104,11 +105,11 @@ export const CreateEditModal = ({
             getOptions={getTeacherOptions}
             getTotal={getTeacherTotal}
             allowClear
-            placeholder="O'qtuvchi qidiring..."
+            placeholder={t("tutors")}
             style={{ width: "100%" }}
           />
         </Form.Item>
-        <Form.Item label="Yangi student qo‘shish" name="students">
+        <Form.Item label={t("selectStudents")} name="students">
           <SelectInfinite
             queryKey={getStudentQueryKey}
             queryFn={getStudentListFn}
@@ -116,7 +117,7 @@ export const CreateEditModal = ({
             getTotal={getStudentTotal}
             mode="multiple"
             allowClear
-            placeholder="Student qidiring..."
+            placeholder={t("selectStudents")}
             style={{ width: "100%" }}
           />
         </Form.Item>
