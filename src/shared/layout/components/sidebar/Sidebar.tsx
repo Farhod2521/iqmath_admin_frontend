@@ -10,7 +10,7 @@ const { Sider } = Layout;
 const SiderMenu = () => {
   const userData = useStoreUsers(selectedUserData);
   const { collapsed, toggleCollapsed } = useThemeStore();
-
+  //  const theme = useAppSelector(selectTheme)
   const hasRegionAndDistrict = !!(userData?.region && userData?.districts);
   const sidebarHeight = hasRegionAndDistrict
     ? "h-[calc(-305px+100vh)]"

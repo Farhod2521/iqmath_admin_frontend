@@ -55,6 +55,12 @@ export const getMenus = (t: (key: string) => string) => [
         label: t("benifits"),
         // icon: (isActive: boolean) => <FaTags size={18} />,
       },
+      {
+        key: "subscription-setting",
+        path: "/prices/subscription-setting",
+        label: t("subscription.title"),
+        // icon: (isActive: boolean) => <FaTags size={18} />,
+      },
     ],
   },
   {
@@ -114,7 +120,7 @@ export const getMenus = (t: (key: string) => string) => [
       {
         key: "products",
         path: "/settings/products",
-        label: t("products"),
+        label: t("productsMenu.title"),
       },
       {
         key: "mathematicians",
@@ -145,6 +151,11 @@ export const getMenus = (t: (key: string) => string) => [
         key: "upload-file-settings",
         path: "/settings/upload-file-settings",
         label: t("uploadFiles.title"),
+      },
+      {
+        key: "upload-settings",
+        path: "/settings/upload-settings",
+        label: t("uploadSettings.title"),
       },
       {
         key: "solution-status",

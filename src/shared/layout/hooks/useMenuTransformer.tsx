@@ -1,9 +1,24 @@
-import { MenuProps } from "antd";
+import { MenuProps, Tooltip } from "antd";
 import { NavLink } from "react-router-dom";
 import { MenuItem } from "@/shared/layout/libs";
 import { PermissionsCode } from "@/shared/utils/menuPermissions";
+import { useThemeStore } from "@/store";
 
 export const useMenuTransformer = (navigate: (path: string) => void) => {
+  const { collapsed } = useThemeStore();
+
+  const renderLabel = (label: string) => {
+    if (collapsed) {
+      return (
+        <Tooltip title={label} placement="right">
+          {/* <span className="py-3">{label}</span> */}
+        </Tooltip>
+      );
+    }
+
+    return <span className="py-3">{label}</span>;
+  };
+
   const transformMenuData = (items: MenuItem[]): MenuProps["items"] =>
     items.map((item) => {
       const baseItem = {
@@ -19,14 +34,13 @@ export const useMenuTransformer = (navigate: (path: string) => void) => {
               className="w-full flex justify-between items-center cursor-pointer"
               onClick={() => item.path && navigate(item.path)}
             >
-              <span className="py-3">{item.label}</span>
+              {/* <span className="py-3">{item.label}</span> */}
+              {renderLabel(item.label)}
             </div>
           ),
           children: transformMenuData(item.children) ?? [],
         };
       }
-
-      const isOffers = item.key === PermissionsCode.OFFERS.MENU;
 
       return {
         ...baseItem,
@@ -35,7 +49,8 @@ export const useMenuTransformer = (navigate: (path: string) => void) => {
             to={item.path ?? "#"}
             className="w-full flex justify-between items-center"
           >
-            <span className="py-3">{item.label}</span>
+            {/* <span className="py-3">{item.label}</span> */}
+            {renderLabel(item.label)}
           </NavLink>
         ),
       };

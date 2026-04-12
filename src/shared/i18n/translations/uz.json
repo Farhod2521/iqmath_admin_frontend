@@ -707,6 +707,8 @@
   "inProgress": "Jarayonda",
   "personalInformation": "Shaxsiy ma'lumotlar",
   "profileUpdatedSuccessfully": "Profil muvaffaqiyatli yangilandi",
+  "updatedSuccessfully": "Yangilandi",
+  "deletedSuccessfully": "O‘chirildi",
   "profileUpdateError": "Profilni yangilashda xatolik",
   "saving": "Saqlanmoqda",
   "saveChanges": "O'zgarishlarni saqlash",
@@ -1539,6 +1541,24 @@
     "online": "Online",
     "offline": "Offline",
     "mentor": "Mentor"
+  },
+  "uploadSettings": {
+    "title": "Yuklash hajmi sozlamalari",
+    "add": "Qo‘shish",
+    "edit": "Tahrirlash",
+    "create": "Yaratish",
+    "delete": "O‘chirish",
+    "confirmDelete": "O‘chirishni xohlaysizmi?",
+    "maxSize": "Maksimal hajm (MB)",
+    "required": "Majburiy",
+    "updatedAt": "Yangilangan vaqti",
+    "successCreate": "Yuklash sozlamasi yaratildi",
+    "successUpdate": "Yuklash sozlamasi yangilandi",
+    "successDelete": "Yuklash sozlamasi o‘chirildi"
+  },
+  "subscription": {
+    "title": "Obuna sozlamalari",
+    "freeTrialDays": "Bepul sinov kunlari"
   },
   "dates": {
     "fromDate": "Bosh sanasi",

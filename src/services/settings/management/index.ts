@@ -10,3 +10,5 @@ export * from "./tag";
 export * from "./faq";
 export * from "./upload-file";
 export * from "./solution-status";
+export * from "./upload-settings";
+

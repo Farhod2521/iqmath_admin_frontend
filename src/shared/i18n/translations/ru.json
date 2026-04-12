@@ -660,6 +660,8 @@
   "inactive": "Неактивный",
   "online": "Онлайн",
   "offline": "Офлайн",
+  "updatedSuccessfully": "Обновлено",
+  "deletedSuccessfully": "Удалено",
   "viewDetails": "Подробнее",
   "noChildrenFound": "Дети не найдены",
   "loadingChildren": "Загрузка данных о детях...",
@@ -1462,6 +1464,24 @@
     "online": "Онлайн",
     "offline": "Оффлайн",
     "mentor": "Ментор"
+  },
+  "uploadSettings": {
+    "title": "Настройки размера загрузки",
+    "add": "Добавить",
+    "edit": "Редактировать",
+    "create": "Создать",
+    "delete": "Удалить",
+    "confirmDelete": "Вы хотите удалить?",
+    "maxSize": "Максимальный размер (MB)",
+    "required": "Обязательное поле",
+    "updatedAt": "Дата обновления",
+    "successCreate": "Настройка загрузки создана",
+    "successUpdate": "Настройка загрузки обновлена",
+    "successDelete": "Настройка загрузки удалена"
+  },
+  "subscription": {
+    "title": "Настройки подписки",
+    "freeTrialDays": "Дни бесплатного периода"
   },
   "dates": {
     "fromDate": "Дата начала",

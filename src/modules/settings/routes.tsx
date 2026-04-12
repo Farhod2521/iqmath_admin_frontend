@@ -27,6 +27,9 @@ const SolutionStatus = lazy(
 const UploadFilesList = lazy(
   () => import("./upload-file/pages/UploadFilesList"),
 );
+const UploadSettings = lazy(
+  () => import("./upload-settings/pages/UploadSettings"),
+);
 
 
 
@@ -52,6 +55,7 @@ const SettingsRoutes = (
       element={<ReferralCouponSettings />}
     />
     <Route path="upload-file-settings" element={<UploadFilesList />} />
+    <Route path="upload-settings" element={<UploadSettings />} />
     <Route path="solution-status" element={<SolutionStatus />} />
   </Route>
 );

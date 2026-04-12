@@ -6,6 +6,7 @@ import { THEME__OPTION } from "./themeInitialState";
 interface ThemeState {
   currentTheme: MenuTheme;
   collapsed: boolean;
+  theme: string;
 
   // actions
   setTheme: (theme: MenuTheme) => void;
@@ -17,6 +18,7 @@ export const useThemeStore = create<ThemeState>((set) => ({
   /* ---------------- initial state ---------------- */
   currentTheme: (getCookie(THEME__OPTION) as MenuTheme) ?? "light",
   collapsed: false,
+  theme: "ligt",
   /* ---------------- actions ---------------- */
   setTheme: (theme) => {
     set({ currentTheme: theme });
