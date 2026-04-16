@@ -94,6 +94,12 @@ export type StudentDataList = {
   results: StudentData[];
   total: number;
   total_pages: number;
+  student_count: number;
+  superadmin_count: number;
+  teacher_count: number;
+  total_count: number;
+  tutor_count: number;
+  parent_count: number;
 };
 
 export const getUsers = (params: UserParams) =>
@@ -104,4 +110,3 @@ export const getUsersApplicants = (params: UserApplicantsParams) =>
 
 export const getUsersOnline = () =>
   axiosApi.get<UserOnlineData>("/users/online");
-

@@ -1,14 +1,26 @@
 import { axiosApi } from "@/configs/api";
 
 export type ManagementUploadFileParams = {
-  page: number;
-  limit: number;
+  page?: number;
+  page_size?: number;
+  date_from?: string;
+  date_to?: string;
+  date?: string;
 };
 
 export type ManagementUploadFileData = {
   id: number;
   file_url: string;
   uploaded_at: string;
+  file_size_mb: number;
+};
+
+export type ManagementUploadFileDataList = {
+  page: number;
+  page_size: number;
+  pages: number;
+  results: ManagementUploadFileData[];
+  total: number;
 };
 
 export type ManagementUploadFileFormData = {
@@ -16,7 +28,7 @@ export type ManagementUploadFileFormData = {
 };
 
 export const getManagementUploadFiles = (params: ManagementUploadFileParams) =>
-  axiosApi.get<ManagementUploadFileData[]>(
+  axiosApi.get<ManagementUploadFileDataList>(
     "/management/upload-file-list/",
     params,
   );

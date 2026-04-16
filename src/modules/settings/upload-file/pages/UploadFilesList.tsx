@@ -1,4 +1,14 @@
-import { Button, Card, Table, Upload, Popconfirm, Space } from "antd";
+import {
+  Button,
+  Card,
+  Table,
+  Upload,
+  Popconfirm,
+  Space,
+  TablePaginationConfig,
+  Tag,
+  DatePicker,
+} from "antd";
 import {
   UploadOutlined,
   DeleteOutlined,
@@ -12,30 +22,44 @@ import {
   postFileManagementUploadFile,
   deleteManagementUploadFile,
   ManagementUploadFileData,
+  ManagementUploadFileParams,
 } from "@/services";
 import { useState, useEffect } from "react";
 import { handleApiError } from "@/shared/utils/handleApiError";
 import { toast } from "react-toastify";
 import { formatDateColumn } from "@/shared/components/tables/formatters";
 import { useTranslation } from "react-i18next";
+import dayjs from "dayjs";
+const { RangePicker } = DatePicker;
 
 const UploadFilesList = () => {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [file, setFile] = useState<File | null>(null);
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
-    total: 10,
+    total: 0,
+  });
+  const [filterData, setFilterData] = useState<ManagementUploadFileParams>({
+    date_from: undefined,
+    date_to: undefined,
+    date: undefined,
   });
 
   // GET
   const { data, isLoading, error } = useQuery({
-    queryKey: ["files"],
+    queryKey: [
+      "files-upload-data",
+      pagination.current,
+      pagination.pageSize,
+      filterData,
+    ],
     queryFn: async () => {
       const res = await getManagementUploadFiles({
         page: pagination?.current,
-        limit: pagination?.pageSize,
+        page_size: pagination?.pageSize,
+        ...filterData,
       });
       return res;
     },
@@ -45,12 +69,23 @@ const UploadFilesList = () => {
     if (error) handleApiError(error);
   }, [error]);
 
+  useEffect(() => {
+    if (data) {
+      setPagination((prev) => ({
+        ...prev,
+        total: data?.total,
+        current:
+          data?.total > 0 && data?.results?.length === 0 ? 1 : prev?.current,
+      }));
+    }
+  }, [data]);
+
   // UPLOAD
   const uploadMutation = useMutation({
     mutationFn: postFileManagementUploadFile,
     onSuccess: (res) => {
       toast.success(res?.message);
-      queryClient.invalidateQueries({ queryKey: ["files"] });
+      queryClient.invalidateQueries({ queryKey: ["files-upload-data"] });
       setFile(null);
     },
     onError: (e) => handleApiError(e),
@@ -61,7 +96,7 @@ const UploadFilesList = () => {
     mutationFn: deleteManagementUploadFile,
     onSuccess: (res) => {
       toast.success(res?.message);
-      queryClient.invalidateQueries({ queryKey: ["files"] });
+      queryClient.invalidateQueries({ queryKey: ["files-upload-data"] });
     },
     onError: (e) => handleApiError(e),
   });
@@ -81,15 +116,6 @@ const UploadFilesList = () => {
     if (["doc", "docx"].includes(ext)) return "word";
 
     return "file";
-  };
-
-  const formatFileSize = (bytes: number) => {
-    if (!bytes) return "-";
-
-    const sizes = ["B", "KB", "MB", "GB"];
-    const i = Math.floor(Math.log(bytes) / Math.log(1024));
-
-    return (bytes / Math.pow(1024, i)).toFixed(2) + " " + sizes[i];
   };
 
   const FilePreview = ({ url }: { url: string }) => {
@@ -123,9 +149,9 @@ const UploadFilesList = () => {
       dataIndex: "id",
       key: "id",
       width: "10px",
-      render: (text: string, record: any, index: number) => (
-        <span>{index + 1}</span>
-      ),
+      render: (_value: any, _record: any, index: number) => {
+        return (pagination.current - 1) * pagination.pageSize + index + 1;
+      },
     },
 
     {
@@ -162,6 +188,11 @@ const UploadFilesList = () => {
         return ext?.toUpperCase() || "-";
       },
     },
+    {
+      title: t("uploadFiles.fileSize"),
+      dataIndex: "file_size_mb",
+      render: (val: number) => val || "-",
+    },
     // {
     //   title: "Hajmi",
     //   render: (_: any, record: ManagementUploadFileData) =>
@@ -191,6 +222,10 @@ const UploadFilesList = () => {
     },
   ];
 
+  const handleTableChange = (p: TablePaginationConfig) => {
+    setPagination((prev) => ({ ...prev, ...p }));
+  };
+
   return (
     <Card
       title={t("uploadFiles.title")}
@@ -219,12 +254,54 @@ const UploadFilesList = () => {
         </Space>
       }
     >
+      <Space style={{ marginBottom: 16 }}>
+        <RangePicker
+          style={{ width: 280 }}
+          format="DD.MM.YYYY"
+          placeholder={[t("dates.fromDate"), t("dates.toDate")]}
+          onChange={(dates) => {
+            setFilterData((prev) => ({
+              ...prev,
+              date_from: dates?.[0]
+                ? dayjs(dates[0]).format("YYYY-MM-DD")
+                : undefined,
+              date_to: dates?.[1]
+                ? dayjs(dates[1]).format("YYYY-MM-DD")
+                : undefined,
+            }));
+          }}
+        />
+        <DatePicker
+          style={{ width: 160 }}
+          format="DD.MM.YYYY"
+          placeholder={t("dates.specificDate")}
+          onChange={(date) => {
+            setFilterData((prev) => ({
+              ...prev,
+              date: date ? dayjs(date).format("YYYY-MM-DD") : undefined,
+            }));
+          }}
+        />
+      </Space>
+
       <Table
-        rowKey="id"
-        dataSource={data || []}
+        size="small"
+        dataSource={data?.results || []}
         loading={isLoading}
+        rowKey={(record) => String(record?.id)}
+        onChange={handleTableChange}
         columns={columns}
-        pagination={false}
+        pagination={{
+          ...pagination,
+          pageSizeOptions: [10, 20, 30, 50, 70, 100],
+          showSizeChanger: true,
+          locale: { items_per_page: "" },
+          showTotal: (total, rage) => (
+            <Tag className="pagination_tag">
+              Jami: <b>{total}</b>
+            </Tag>
+          ),
+        }}
         scroll={{ x: 600 }}
       />
     </Card>
@@ -232,6 +309,3 @@ const UploadFilesList = () => {
 };
 
 export default UploadFilesList;
-
-
-

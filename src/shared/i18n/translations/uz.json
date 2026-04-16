@@ -533,7 +533,8 @@
   "of": "Dan",
   "elements": "Ta element",
   "noData": "Ma'lumot yo'q",
-  "phone": "Telefon",
+  "phone": "Andirod telefon",
+  "ios": "IOS telefon",
   "web": "Web",
   "registeredDevice": "Qurilma",
   "registeredLanguage": "Tili",
@@ -1498,6 +1499,7 @@
     "view": "Ko‘rish",
     "uploadedAt": "Yuklangan vaqti",
     "action": "Amal",
+    "fileSize": "Fayl hajmi (MB)",
 
     "chooseFile": "Fayl tanlash",
     "upload": "Yuklash",
@@ -1540,7 +1542,9 @@
     "refresh": "Yangilash",
     "online": "Online",
     "offline": "Offline",
-    "mentor": "Mentor"
+    "mentor": "Mentor",
+    "avg_session": "O‘rtacha sessiya davomiyligi",
+    "last_update": "Oxirgi yangilanish"
   },
   "uploadSettings": {
     "title": "Yuklash hajmi sozlamalari",
@@ -1562,7 +1566,8 @@
   },
   "dates": {
     "fromDate": "Bosh sanasi",
-    "toDate": "Tugash sanasi"
+    "toDate": "Tugash sanasi",
+    "specificDate": "Sanani tanlang"
   },
   "scoreLog": {
     "title": "Ballar olish tarixi",
