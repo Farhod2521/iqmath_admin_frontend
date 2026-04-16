@@ -3,7 +3,7 @@ import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import { Card, Col, Image, Row, Select, Table, Tag } from "antd";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import FSearch from "@/shared/components/filters/FSearch";
 import { RoleLabel } from "@/shared/utils/constants";
 import RewardModal from "../components/RewardModal";
@@ -12,6 +12,7 @@ import { useForm } from "antd/es/form/Form";
 const Users = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<StudentData[]>([]);
@@ -33,6 +34,15 @@ const Users = () => {
     device: undefined,
   });
 
+  const [stats, setStats] = useState({
+    student_count: 0,
+    superadmin_count: 0,
+    teacher_count: 0,
+    total_count: 0,
+    tutor_count: 0,
+    parent_count: 0,
+  });
+
   const openModal = () => setIsReward(true);
 
   const fetchData = useCallback(() => {
@@ -45,6 +55,16 @@ const Users = () => {
     })
       .then((res) => {
         setData(res?.results || []);
+
+        setStats({
+          student_count: res?.student_count,
+          superadmin_count: res?.superadmin_count,
+          teacher_count: res?.teacher_count,
+          total_count: res?.total_count,
+          tutor_count: res?.tutor_count,
+          parent_count: res?.parent_count,
+        });
+
         setPagination((prev) => ({
           ...prev,
           total: res?.total || 0,
@@ -89,7 +109,7 @@ const Users = () => {
             className="flex items-center gap-2 cursor-pointer"
             onDoubleClick={() => handleNavigate(record)}
           >
-            <span className="font-medium hover:text-blue-500 transition">
+            <span className=" hover:text-blue-500 transition">
               {value || "-"}
             </span>
           </div>
@@ -101,9 +121,7 @@ const Users = () => {
         key: "role",
         render: (value: keyof typeof RoleLabel) => (
           <div className="flex items-center gap-2 cursor-pointer">
-            <span className="font-medium">
-              {RoleLabel[value] || value || "-"}
-            </span>
+            <span className="">{RoleLabel[value] || value || "-"}</span>
           </div>
         ),
       },
@@ -153,9 +171,7 @@ const Users = () => {
 
             return (
               <div className="flex flex-col leading-tight">
-                <span className="text-gray-800 text-sm font-medium">
-                  {endDate}
-                </span>
+                <span className="text-gray-800 text-sm ">{endDate}</span>
                 <span className="text-xs text-gray-500">
                   {days} {t("remainingDays")}
                 </span>
@@ -301,8 +317,6 @@ const Users = () => {
     }));
   };
 
-
-
   const classOptions = [
     { value: "5", label: t("class5") },
     { value: "6", label: t("class6") },
@@ -326,7 +340,8 @@ const Users = () => {
   ];
 
   const deviceOptions = [
-    { value: "mobile", label: t("phone") },
+    { value: "android", label: t("phone") },
+    { value: "ios", label: t("ios") },
     { value: "web", label: t("web") },
   ];
 
@@ -337,7 +352,6 @@ const Users = () => {
     { value: "parent", label: t("parent") },
     { value: "tutor", label: t("tutor") },
   ];
-
 
   return (
     <Card title={t("users")}>
@@ -421,6 +435,38 @@ const Users = () => {
           </>
         )}
       </Row>
+      <Row gutter={[12, 12]} className="mb-4">
+        <Col>
+          <Tag color="blue">
+            {t("totalStudents")}: {stats.student_count}
+          </Tag>
+        </Col>
+        <Col>
+          <Tag color="green">
+            {t("totalTeachers")}: {stats.teacher_count}
+          </Tag>
+        </Col>
+        <Col>
+          <Tag color="orange">
+            {t("totalParents")}: {stats.parent_count}
+          </Tag>
+        </Col>
+        <Col>
+          <Tag color="purple">
+            {t("totalTutors")}: {stats.tutor_count}
+          </Tag>
+        </Col>
+        <Col>
+          <Tag color="red">
+            {t("superadmin")}: {stats.superadmin_count}
+          </Tag>
+        </Col>
+        <Col>
+          <Tag color="gold">
+            {t("total")}: {stats.total_count}
+          </Tag>
+        </Col>
+      </Row>
       <Table<StudentData>
         dataSource={data}
         scroll={{ x: 1400 }}
@@ -454,9 +500,6 @@ const Users = () => {
 };
 
 export default Users;
-
-
-
 
 const langOptions = [
   { value: "uz", label: "uz" },

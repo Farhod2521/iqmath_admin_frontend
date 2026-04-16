@@ -2,7 +2,7 @@ import { getUsers, StudentData } from "@/services";
 import FSearch from "@/shared/components/filters/FSearch";
 import { RoleLabel } from "@/shared/utils/constants";
 import { handleApiError } from "@/shared/utils/handleApiError";
-import { Button, Card, Select, Table, Tag } from "antd";
+import { Button, Card, Modal, Select, Table, Tag } from "antd";
 import { ColumnsType, TablePaginationConfig } from "antd/es/table";
 import React, {
   useCallback,
@@ -14,6 +14,7 @@ import React, {
 import { useTranslation } from "react-i18next";
 import { FaInfoCircle } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
+import MentorsDetailModal from "./MentorsDetailModal";
 
 const Mentors = () => {
   const { t } = useTranslation();
@@ -34,6 +35,13 @@ const Mentors = () => {
     lang: "uz",
     device: undefined,
   });
+  const [selectedId, setSelectedId] = useState<number | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleOpenModal = (id: number) => {
+    setSelectedId(id);
+    setIsModalOpen(true);
+  };
 
   const fetchData = useCallback(() => {
     setIsLoading(true);
@@ -138,14 +146,14 @@ const Mentors = () => {
     },
     {
       title: "Amal",
-      dataIndex: "user_id",
-      key: "user_id",
+      dataIndex: "id",
+      key: "id",
       render: (value) => (
         <div>
           <Button
             color="blue"
             variant="outlined"
-            onClick={() => handleNavigate(value)}
+            onClick={() => handleOpenModal(value)}
           >
             <FaInfoCircle />
           </Button>
@@ -172,7 +180,8 @@ const Mentors = () => {
   ];
 
   const deviceOptions = [
-    { value: "mobile", label: t("submitted") },
+    { value: "android", label: t("phone") },
+    { value: "ios", label: t("ios") },
     { value: "web", label: t("web") },
   ];
   return (
@@ -240,6 +249,9 @@ const Mentors = () => {
         dataSource={data}
         onChange={handleTableChange}
         rowKey={(record) => String(record?.id)}
+        onRow={(record) => ({
+          onDoubleClick: () => handleOpenModal(record?.id),
+        })}
         pagination={{
           current: pagination.current,
           pageSize: pagination.pageSize,
@@ -254,6 +266,14 @@ const Mentors = () => {
           ),
         }}
       />
+      <Modal
+        open={isModalOpen}
+        onCancel={() => setIsModalOpen(false)}
+        footer={null}
+        width={800}
+      >
+        {selectedId && <MentorsDetailModal id={selectedId} />}
+      </Modal>
     </Card>
   );
 };
