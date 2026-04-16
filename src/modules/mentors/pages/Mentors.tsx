@@ -174,16 +174,18 @@ const Mentors = () => {
     }
   };
 
+    const deviceOptions = [
+      { value: "android", label: t("phone") },
+      { value: "ios", label: t("ios") },
+      { value: "web", label: t("web") },
+    ];
+
   const statusOptions = [
     { value: "active", label: t("statusActive") },
     { value: "inactive", label: t("statusInactive") },
   ];
 
-  const deviceOptions = [
-    { value: "android", label: t("phone") },
-    { value: "ios", label: t("ios") },
-    { value: "web", label: t("web") },
-  ];
+
   return (
     <Card title={t("teachers")}>
       <div className="flex items-center gap-2 mb-4">
