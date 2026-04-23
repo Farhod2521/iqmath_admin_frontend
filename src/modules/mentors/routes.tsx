@@ -2,8 +2,6 @@ import { lazy } from "react";
 import { Navigate, Route } from "react-router-dom";
 
 const Mentors = lazy(() => import("./pages/Mentors"));
-const MentorsDetail = lazy(() => import("./pages/MentorsDetailModal"));
-
 const MentorsRoutes = (
   <>
     <Route path="/mentors" element={<Mentors />} />

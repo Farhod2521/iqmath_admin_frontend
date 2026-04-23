@@ -11,7 +11,7 @@ import Statistics from "./Statistics";
 
 const ManagmentStatistics = () => {
   const { data, isLoading } = useQuery({
-    queryKey: [""],
+    queryKey: ["ManagmentStatistics-data"],
     queryFn: getManagementStatistics,
   });
 
