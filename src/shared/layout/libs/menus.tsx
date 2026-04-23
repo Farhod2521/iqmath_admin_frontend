@@ -73,12 +73,12 @@ export const getMenus = (t: (key: string) => string) => [
     label: t("groups"),
     icon: () => <FaUsers size={22} />,
   },
-  {
-    key: "chats",
-    path: "/chats",
-    label: t("chat"),
-    icon: () => <BiChat size={22} />,
-  },
+  // {
+  //   key: "chats",
+  //   path: "/chats",
+  //   label: t("chat"),
+  //   icon: () => <BiChat size={22} />,
+  // },
   {
     key: "ratings",
     path: "/ratings",
