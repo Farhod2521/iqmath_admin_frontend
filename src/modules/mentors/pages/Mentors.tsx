@@ -190,7 +190,7 @@ const Mentors = () => {
               search: value,
             }))
           }
-          className="w-[200px]!"
+          className="w-50!"
           placeholder="Qidiruv..."
         />
         <Select

@@ -4,7 +4,7 @@ export * from "./dashboard";
 export * from "./student";
 export * from "./ratings";
 export * from "./func-students";
-
+export * from "./reward-log";
 
 export * from "./modules/modules";
 export * from "./settings";

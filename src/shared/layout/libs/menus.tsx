@@ -1,4 +1,8 @@
-import { MdOutlineManageHistory, MdOutlinePayments } from "react-icons/md";
+import {
+  MdOutlineManageHistory,
+  MdOutlinePayments,
+  MdOutlineWorkspacePremium,
+} from "react-icons/md";
 import { FaDollarSign, FaUsers } from "react-icons/fa";
 import { PermissionsCode } from "@/shared/utils/menuPermissions";
 import {
@@ -86,6 +90,12 @@ export const getMenus = (t: (key: string) => string) => [
     path: "/payments/payment",
     label: t("payments"),
     icon: () => <MdOutlinePayments size={22} />,
+  },
+  {
+    key: "reward-log",
+    path: "/reward-log",
+    label: t("rewardLog"),
+    icon: () => <MdOutlineWorkspacePremium size={22} />,
   },
   {
     key: "settings",

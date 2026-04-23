@@ -1,79 +1,93 @@
 // ErrorBoundary.tsx
-import React from 'react'
-import { Result, Button, Card, Collapse, Typography, Space } from 'antd'
+import React from "react";
+import { Result, Button, Card, Collapse, Typography, Space } from "antd";
 
-type FallbackRender = (args: { error: Error; reset: () => void }) => React.ReactNode
+type FallbackRender = (args: {
+  error: Error;
+  reset: () => void;
+}) => React.ReactNode;
 
 export interface ErrorBoundaryProps {
-  fallback?: React.ReactNode | FallbackRender
-  onError?: (error: Error, info: React.ErrorInfo) => void
-  onReset?: (details: { reason: 'imperative-api' | 'keys'; prevError: Error | null }) => void
-  resetKeys?: unknown[]
-  children: React.ReactNode
+  fallback?: React.ReactNode | FallbackRender;
+  onError?: (error: Error, info: React.ErrorInfo) => void;
+  onReset?: (details: {
+    reason: "imperative-api" | "keys";
+    prevError: Error | null;
+  }) => void;
+  resetKeys?: unknown[];
+  children: React.ReactNode;
 }
 
 interface ErrorBoundaryState {
-  hasError: boolean
-  error: Error | null
+  hasError: boolean;
+  error: Error | null;
 }
 
 function arraysShallowEqual(a?: unknown[], b?: unknown[]) {
-  if (a === b) return true
-  if (!a || !b) return false
-  if (a.length !== b.length) return false
+  if (a === b) return true;
+  if (!a || !b) return false;
+  if (a.length !== b.length) return false;
   for (let i = 0; i < a.length; i++) {
-    if (!Object.is(a[i], b[i])) return false
+    if (!Object.is(a[i], b[i])) return false;
   }
-  return true
+  return true;
 }
 
-export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
-  state: ErrorBoundaryState = { hasError: false, error: null }
+export class ErrorBoundary extends React.Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
+  state: ErrorBoundaryState = { hasError: false, error: null };
 
   static getDerivedStateFromError(error: Error): Partial<ErrorBoundaryState> {
-    return { hasError: true, error }
+    return { hasError: true, error };
   }
 
   componentDidCatch(error: Error, info: React.ErrorInfo) {
-    this.props.onError?.(error, info)
+    this.props.onError?.(error, info);
   }
 
   componentDidUpdate(prevProps: ErrorBoundaryProps) {
-    const { resetKeys } = this.props
+    const { resetKeys } = this.props;
     if (!arraysShallowEqual(prevProps.resetKeys, resetKeys)) {
-      this.resetErrorBoundary('keys')
+      this.resetErrorBoundary("keys");
     }
   }
 
-  resetErrorBoundary = (reason: 'imperative-api' | 'keys' = 'imperative-api') => {
-    const prevError = this.state.error
+  resetErrorBoundary = (
+    reason: "imperative-api" | "keys" = "imperative-api",
+  ) => {
+    const prevError = this.state.error;
     this.setState({ hasError: false, error: null }, () => {
-      this.props.onReset?.({ reason, prevError })
-    })
-  }
+      this.props.onReset?.({ reason, prevError });
+    });
+  };
 
   private renderFallback() {
-    const { fallback } = this.props
-    const reset = () => this.resetErrorBoundary('imperative-api')
-    const error = this.state.error ?? new Error('Unknown error')
+    const { fallback } = this.props;
+    const reset = () => this.resetErrorBoundary("imperative-api");
+    const error = this.state.error ?? new Error("Unknown error");
 
     if (!fallback) {
-      return <AntdErrorFallback error={error} reset={reset} />
+      return <AntdErrorFallback error={error} reset={reset} />;
     }
-    if (typeof fallback === 'function') {
-      return (fallback as FallbackRender)({ error, reset })
+    if (typeof fallback === "function") {
+      return (fallback as FallbackRender)({ error, reset });
     }
-    return fallback
+    return fallback;
   }
 
   render() {
-    if (this.state.hasError) return this.renderFallback()
-    return this.props.children
+    if (this.state.hasError) return this.renderFallback();
+    return this.props.children;
   }
 }
 
 /** Antd + Tailwind fallback */
-export const AntdErrorFallback: React.FC<{ error: Error; reset: () => void }> = ({ error, reset }) => {
+export const AntdErrorFallback: React.FC<{
+  error: Error;
+  reset: () => void;
+}> = ({ error, reset }) => {
   return (
     <div className="p-4 md:p-6">
       <Card className="shadow-sm rounded-2xl">
@@ -86,7 +100,9 @@ export const AntdErrorFallback: React.FC<{ error: Error; reset: () => void }> = 
               <Button type="primary" onClick={reset}>
                 Qayta urinish
               </Button>
-              <Button onClick={() => window.location.reload()}>Sahifani qayta yuklash</Button>
+              <Button onClick={() => window.location.reload()}>
+                Sahifani qayta yuklash
+              </Button>
             </Space>
           }
         />
@@ -94,33 +110,35 @@ export const AntdErrorFallback: React.FC<{ error: Error; reset: () => void }> = 
           className="mt-2"
           items={[
             {
-              key: 'details',
-              label: 'Tafsilotlar (stack trace)',
+              key: "details",
+              label: "Tafsilotlar (stack trace)",
               children: (
                 <Typography.Paragraph className="mb-0!">
-                  <pre className="whitespace-pre-wrap text-xs md:text-sm">{error.stack || error.message}</pre>
+                  <pre className="whitespace-pre-wrap text-xs md:text-sm">
+                    {error.stack || error.message}
+                  </pre>
                 </Typography.Paragraph>
-              )
-            }
+              ),
+            },
           ]}
         />
       </Card>
     </div>
-  )
-}
+  );
+};
 
 /** HOC: komponentni tezda o‘rash uchun */
 export function withErrorBoundary<P extends object>(
   Wrapped: React.ComponentType<P>,
-  boundaryProps?: Omit<ErrorBoundaryProps, 'children'>
+  boundaryProps?: Omit<ErrorBoundaryProps, "children">,
 ) {
   const ComponentWithBoundary: React.FC<P> = (props) => (
     <ErrorBoundary {...boundaryProps}>
       <Wrapped {...(props as P)} />
     </ErrorBoundary>
-  )
-  ComponentWithBoundary.displayName = `withErrorBoundary(${Wrapped.displayName || Wrapped.name || 'Component'})`
-  return ComponentWithBoundary
+  );
+  ComponentWithBoundary.displayName = `withErrorBoundary(${Wrapped.displayName || Wrapped.name || "Component"})`;
+  return ComponentWithBoundary;
 }
 
 function CustomFallback({ error, reset }: { error: Error; reset: () => void }) {
@@ -137,6 +155,6 @@ function CustomFallback({ error, reset }: { error: Error; reset: () => void }) {
         }
       />
     </div>
-  )
+  );
 }
-export { CustomFallback }
+export { CustomFallback };

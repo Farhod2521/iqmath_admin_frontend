@@ -7,7 +7,7 @@ const MentorsDetail = lazy(() => import("./pages/MentorsDetailModal"));
 const MentorsRoutes = (
   <>
     <Route path="/mentors" element={<Mentors />} />
-    <Route path="/mentors/:id" element={<MentorsDetail />} />
+    {/* <Route path="/mentors/:id" element={<MentorsDetail />} /> */}
   </>
 );
 

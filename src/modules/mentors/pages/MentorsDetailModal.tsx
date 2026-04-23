@@ -87,11 +87,11 @@ const MentorsDetailModal = ({ id }: { id: number }) => {
 
   return (
     <Spin spinning={loading}>
-      <Card className="!rounded-xl !border-none overflow-hidden">
+      <Card className="rounded-xl! border-none! overflow-hidden">
         {/* ── HEADER (COMPACT) ── */}
         <div className="flex items-center justify-between px-4 py-3 border-b border-gray-100">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white text-sm font-bold">
+            <div className="w-10 h-10 rounded-full bg-linear-to-br from-indigo-500 to-indigo-600 flex items-center justify-center text-white text-sm font-bold">
               {initials}
             </div>
             <div>
@@ -183,7 +183,7 @@ const MentorsDetailModal = ({ id }: { id: number }) => {
             onClick={getData}
             loading={loading}
             icon={<HiOutlineRefresh size={14} />}
-            className="!text-xs"
+            className="text-xs!"
           >
             {t("mentorDetail.refresh")}
           </Button>
