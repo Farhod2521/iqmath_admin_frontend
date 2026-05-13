@@ -8,8 +8,12 @@ export type ManagementFaqData = {
 };
 
 export type ManagementFaqFormData = {
-  question: string;
-  answer: string;
+  // question: string;
+  question_ru: string;
+  question_uz: string;
+  // answer: string;
+  answer_ru: string;
+  answer_uz: string;
   url: string;
 };
 
@@ -19,7 +23,7 @@ export const getManagementFaqs = () =>
 export const getManagementFaq = (id: number) =>
   axiosApi.get<ManagementFaqData>(`/management/superadmin/faq/${id}/`);
 
-export const postFileManagementFaq = (data: ManagementFaqFormData) =>
+export const postManagementFaq = (data: ManagementFaqFormData) =>
   axiosApi.post<{
     message: string;
   }>(`/management/superadmin/faq/`, data);

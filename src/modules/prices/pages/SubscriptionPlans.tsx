@@ -155,7 +155,8 @@ const SubscriptionPlans = () => {
       months: Number(values.months),
       price_per_month: String(values.price_per_month),
       discount_percent: Number(values.discount_percent || 0),
-      is_active: Boolean(values.is_active),
+      is_active: Boolean(values.is_active) || false,
+      category: values.category,
     };
 
     if (mode === "create") {
@@ -168,7 +169,7 @@ const SubscriptionPlans = () => {
     const editPayload: any = { ...basePayload };
 
     // category bo‘sh bo‘lsa umuman yubormaymiz
-    if (values.category) editPayload.category = String(values.category);
+    // if (values.category) editPayload.category = String(values.category);
 
     // benefits: [id, id, ...]
     if (Array.isArray(values.benefits)) editPayload.benefits = values.benefits;

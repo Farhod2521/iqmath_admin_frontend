@@ -5,6 +5,7 @@ export * from "./student";
 export * from "./ratings";
 export * from "./func-students";
 export * from "./reward-log";
+export * from "./library";
 
 export * from "./modules/modules";
 export * from "./settings";

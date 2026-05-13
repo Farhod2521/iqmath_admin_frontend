@@ -4,7 +4,7 @@ import { FaEdit } from "react-icons/fa";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import {
   getManagementFaqs,
-  postFileManagementFaq,
+  postManagementFaq,
   putManagementFaq,
   deleteManagementFaq,
   ManagementFaqData,
@@ -37,7 +37,7 @@ const Faq = () => {
 
   // CREATE
   const createMutation = useMutation({
-    mutationFn: postFileManagementFaq,
+    mutationFn: postManagementFaq,
     onSuccess: (res) => {
       toast.success(res?.message);
       queryClient.invalidateQueries({ queryKey: ["faq"] });
@@ -106,12 +106,30 @@ const Faq = () => {
       ),
     },
     {
-      title: t("faqs.question"),
-      dataIndex: "question",
+      title: t("faqs.question") + " (UZ)",
+      dataIndex: "question_uz",
     },
     {
-      title: t("faqs.answer"),
-      dataIndex: "answer",
+      title: t("faqs.question") + " (RU)",
+      dataIndex: "question_ru",
+    },
+    {
+      title: t("faqs.answer") + " (UZ)",
+      dataIndex: "answer_uz",
+      render: (val: string) => {
+        const text = stripHtml(val);
+        const short = text.length > 100 ? text.slice(0, 100) + "..." : text;
+
+        return (
+          <Tooltip title={text}>
+            <span>{text.length > 80 ? text.slice(0, 80) + "..." : text}</span>
+          </Tooltip>
+        );
+      },
+    },
+    {
+      title: t("faqs.answer") + " (RuU)",
+      dataIndex: "answer_ru",
       render: (val: string) => {
         const text = stripHtml(val);
         const short = text.length > 100 ? text.slice(0, 100) + "..." : text;
@@ -189,6 +207,6 @@ const Faq = () => {
       />
     </Card>
   );
-};;;;;;;
+};
 
 export default Faq;

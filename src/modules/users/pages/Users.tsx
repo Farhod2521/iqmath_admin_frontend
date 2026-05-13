@@ -24,7 +24,15 @@ const Users = () => {
   const [isReward, setIsReward] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState<StudentData>();
 
-  const [filterData, setFilterData] = useState({
+  const [filterData, setFilterData] = useState<{
+    search?: string;
+    status?: string;
+    role?: string;
+    class_num?: number;
+    subject_name?: string;
+    lang?: string;
+    device?: string;
+  }>({
     search: undefined,
     role: "student",
     status: "active",
@@ -33,6 +41,27 @@ const Users = () => {
     lang: "uz",
     device: undefined,
   });
+
+  useEffect(() => {
+    const roleParam = searchParams.get("role");
+    const statusParam = searchParams.get("status");
+    const searchParam = searchParams.get("search");
+
+    if (
+      roleParam &&
+      ["student", "teacher", "parent", "tutor"].includes(roleParam)
+    ) {
+      setFilterData((prev) => ({ ...prev, role: roleParam }));
+    }
+
+    if (statusParam && ["active", "inactive"].includes(statusParam)) {
+      setFilterData((prev) => ({ ...prev, status: statusParam }));
+    }
+
+    if (searchParam) {
+      setFilterData((prev) => ({ ...prev, search: searchParam }));
+    }
+  }, [searchParams]);
 
   const [stats, setStats] = useState({
     student_count: 0,
@@ -352,6 +381,16 @@ const Users = () => {
     { value: "parent", label: t("parent") },
     { value: "tutor", label: t("tutor") },
   ];
+
+  if (loading && data.length === 0) {
+    return (
+      <Card title={t("users")}>
+        <div className="flex items-center justify-center min-h-100">
+          <div className="w-10 h-10 border-4 rounded-full border-amber-500 border-t-transparent animate-spin"></div>
+        </div>
+      </Card>
+    );
+  }
 
   return (
     <Card title={t("users")}>

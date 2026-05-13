@@ -8,6 +8,7 @@ import {
   Modal,
   Row,
   Select,
+  Switch,
 } from "antd";
 import React, { useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -66,6 +67,12 @@ const ModalSubcriptionPlans = ({
       okButtonProps={{ loading: isSubmitting }}
     >
       <Form form={form} layout="vertical" className="subscription-plan-form">
+        <Form.Item name="is_active" valuePropName="checked" className="mb-5">
+          {/* <Checkbox className="text-[15px] font-medium text-[#1F2937]">
+            {t("active")}
+          </Checkbox> */}
+          <Switch />
+        </Form.Item>
         <Form.Item
           label={
             <span className="text-[14px] font-medium text-[#1F2937]">
@@ -82,25 +89,23 @@ const ModalSubcriptionPlans = ({
           />
         </Form.Item>
 
-        {mode === "edit" && (
-          <Form.Item
-            label={
-              <span className="text-[15px] font-medium text-[#1F2937]">
-                {t("categoryOptional")}
-              </span>
-            }
-            name="category"
-            className="mb-5"
-          >
-            <Select
-              allowClear
-              placeholder={t("selectCategory")}
-              options={categoryOptions}
-              className="custom-plan-select"
-              popupClassName="custom-plan-dropdown"
-            />
-          </Form.Item>
-        )}
+        <Form.Item
+          label={
+            <span className="text-[15px] font-medium text-[#1F2937]">
+              {t("categoryOptional")}
+            </span>
+          }
+          name="category"
+          className="mb-5"
+        >
+          <Select
+            allowClear
+            placeholder={t("selectCategory")}
+            options={categoryOptions}
+            className="custom-plan-select"
+            popupClassName="custom-plan-dropdown"
+          />
+        </Form.Item>
 
         <Row gutter={[24, 24]}>
           <Col span={12}>
@@ -202,28 +207,20 @@ const ModalSubcriptionPlans = ({
           </div>
         )}
 
-        <Form.Item name="is_active" valuePropName="checked" className="mb-5">
-          <Checkbox className="text-[15px] font-medium text-[#1F2937]">
-            {t("active")}
-          </Checkbox>
-        </Form.Item>
-
-        {mode === "edit" && (
-          <div className="rounded-[14px] bg-[#EEF4FF] px-4 py-4">
-            <div className="text-[15px] font-medium text-[#344054]">
-              {t("totalPrice")}:
-            </div>
-
-            <div className="mt-2 text-[16px] text-[#98A2B3] line-through">
-              {moneyUZ(Number(wMonths || 0) * Number(wPrice || 0))}{" "}
-              {t("currency")}
-            </div>
-
-            <div className="mt-1 text-[18px] font-bold text-[#155EEF]">
-              {moneyUZ(totalPrice)} {t("currency")}
-            </div>
+        <div className="rounded-[14px] bg-[#EEF4FF] px-4 py-4">
+          <div className="text-[15px] font-medium text-[#344054]">
+            {t("totalPrice")}:
           </div>
-        )}
+
+          <div className="mt-2 text-[16px] text-[#98A2B3] line-through">
+            {moneyUZ(Number(wMonths || 0) * Number(wPrice || 0))}{" "}
+            {t("currency")}
+          </div>
+
+          <div className="mt-1 text-[18px] font-bold text-[#155EEF]">
+            {moneyUZ(totalPrice)} {t("currency")}
+          </div>
+        </div>
       </Form>
     </Modal>
   );

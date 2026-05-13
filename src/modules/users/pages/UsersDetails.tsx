@@ -35,7 +35,7 @@ const UsersDetails = () => {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-[300px]">
+      <div className="flex justify-center items-center h-75">
         <Spin />
       </div>
     );

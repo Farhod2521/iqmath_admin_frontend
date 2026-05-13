@@ -14,6 +14,7 @@ import AwardNew from "@/assets/icons/award-new.svg";
 import ClockOrange from "@/assets/icons/clock-orange.svg";
 import ClockGray from "@/assets/icons/clock-gray.svg";
 import SuccessfulNew from "@/assets/icons/successful-new.svg";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   data: any;
@@ -22,12 +23,32 @@ interface Props {
 
 const StatsCards = ({ data, isLoading }: Props) => {
   const { t } = useTranslation();
+  const navigate = useNavigate();
+
+  const handleNavigateClick = (
+    filter: string | undefined,
+    extraParams?: Record<string, string>,
+  ) => {
+    if (filter) {
+      const params = new URLSearchParams();
+      params.set("role", filter);
+
+      if (extraParams) {
+        Object.entries(extraParams).forEach(([key, value]) => {
+          params.set(key, value);
+        });
+      }
+
+      navigate(`/users/pupils?${params.toString()}`);
+    }
+  };
 
   const stats = [
     {
       key: "totalTeachers",
       title: t("teachers"),
       label: t("totalTeachers"),
+      filter: "teacher",
       value: data?.total_teachers || 0,
       icon: TeachersNew,
     },
@@ -35,6 +56,7 @@ const StatsCards = ({ data, isLoading }: Props) => {
       key: "totalStudents",
       title: t("students"),
       label: t("totalStudents"),
+      filter: "student",
       value: data?.total_students || 0,
       icon: StudentsNew,
     },
@@ -42,6 +64,7 @@ const StatsCards = ({ data, isLoading }: Props) => {
       key: "totalParents",
       title: t("parents"),
       label: t("totalParents"),
+      filter: "parent",
       value: data?.total_parents || 0,
       icon: ParentsNew,
     },
@@ -49,6 +72,7 @@ const StatsCards = ({ data, isLoading }: Props) => {
       key: "totalTutors",
       title: t("tutors"),
       label: t("totalTutors"),
+      filter: "tutor",
       value: data?.total_tutors || 0,
       icon: TutorsNew,
     },
@@ -84,6 +108,8 @@ const StatsCards = ({ data, isLoading }: Props) => {
       key: "activeSubscribers",
       title: t("activeSubscribers"),
       label: t("activeSubscribers"),
+      filter: "student",
+      extraParams: { status: "active" },
       value: data?.active_subscribers || 0,
       icon: ActiveUsersNew,
     },
@@ -144,7 +170,8 @@ const StatsCards = ({ data, isLoading }: Props) => {
       {stats.map((stat) => (
         <div
           key={stat.key}
-          className="rounded-2xl border border-[#E6E8EC] bg-white px-5 py-4 min-h-29.5 shadow-[0_1px_2px_rgba(16,24,40,0.04)] transition-all duration-200 hover:shadow-[0_4px_14px_rgba(16,24,40,0.08)]"
+          onDoubleClick={() => handleNavigateClick(stat?.filter)}
+          className={`${stat?.filter ? "cursor-pointer" : ""} rounded-2xl border border-[#E6E8EC] bg-white px-5 py-4 min-h-29.5 shadow-[0_1px_2px_rgba(16,24,40,0.04)] transition-all duration-200 hover:shadow-[0_4px_14px_rgba(16,24,40,0.08)]`}
         >
           <div className="flex items-start gap-3">
             <div className="flex h-10 w-10 items-center justify-center rounded-[10px] bg-[#F5F6F8] shrink-0">

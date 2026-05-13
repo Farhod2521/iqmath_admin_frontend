@@ -33,6 +33,7 @@ export type StudentParamsData = {
   page: number;
   size: number;
   role?: string;
+  status?: string;
 };
 
 export type StudentListDataList = {

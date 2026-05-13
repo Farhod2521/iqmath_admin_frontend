@@ -20,6 +20,7 @@ import RatingRoutes from "./modules/ratings/routes";
 import MentorsRoutes from "./modules/mentors/routes";
 import AppStudentsRoutes from "./modules/app-students/routes";
 import RewardLogRoutes from "./modules/reward-log/routes";
+import LibraryRoutes from "./modules/library/routes";
 
 // Pages
 
@@ -39,6 +40,7 @@ const AppRoutes = () => {
             {UsersRoutes}
             {SettingsRoutes}
             {PricesRoutes}
+            {LibraryRoutes}
             {GroupsRoutes}
             {PaymentsRoutes}
             {ChatsRoutes}

@@ -1,5 +1,13 @@
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Button, Card, Popconfirm, Table, Tag, Tooltip } from "antd";
+import {
+  Button,
+  Card,
+  Popconfirm,
+  Table,
+  Tag,
+  Tooltip,
+  Typography,
+} from "antd";
 import React, { useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { deletePayments, getPayments, PaymentsData } from "../services";
@@ -7,6 +15,9 @@ import { formatDateColumn } from "@/shared/components/tables/formatters";
 import { toast } from "react-toastify";
 import { DeleteOutlined } from "@ant-design/icons";
 import { handleApiError } from "@/shared/utils/handleApiError";
+import { ColumnsType } from "antd/es/table";
+
+const { Text } = Typography;
 
 const formatMoney = (v: any) => {
   const n = Number(v);
@@ -22,8 +33,15 @@ const statusColor = (status?: string) => {
   return "default";
 };
 
+const formatAmount = (amount: number) => {
+  return new Intl.NumberFormat("uz-UZ", {
+    style: "decimal",
+    minimumFractionDigits: 0,
+  }).format(amount);
+};
+
 const Payment = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const queryClient = useQueryClient();
   const [pagination, setPagination] = useState({
     current: 1,
@@ -40,90 +58,153 @@ const Payment = () => {
     queryFn: getPayments,
   });
 
+  const getStatusTag = (status: string) => {
+    const map: any = {
+      pending: {
+        color: "gold",
+        label: i18n.language === "ru" ? "В ожидании" : "Kutilmoqda",
+      },
+      completed: {
+        color: "green",
+        label: i18n.language === "ru" ? "Подтверждено" : "Tasdiqlangan",
+      },
+      failed: {
+        color: "red",
+        label: i18n.language === "ru" ? "Отменено" : "Bekor qilingan",
+      },
+    };
+
+    return <Tag color={map[status]?.color}>{map[status]?.label}</Tag>;
+  };
+
   useEffect(() => {
     if (error) handleApiError(error);
   }, [error]);
 
-  const columns = useMemo(
+  // KERAKLI MAYDONLAR (asosiy + muhim qo'shimchalar):
+  const columns: ColumnsType<PaymentsData> = useMemo(
     () => [
       {
         title: "T/r",
-        dataIndex: "id",
-        key: "id",
+        key: "index",
         width: "50px",
-        render: (rol: string, d: any, idx: number) => {
-          return <div>{idx + 1}</div>;
-        },
+        render: (_: any, __: any, idx: number) => <div>{idx + 1}</div>,
+      },
+      {
+        title: i18n.language === "ru" ? "Ученик" : "O'quvchi",
+        dataIndex: "student_name",
+        key: "student_name",
+        render: (v: string) => v || "-",
+      },
+      {
+        title:
+          i18n.language === "ru"
+            ? `Сумма (${t("sum")})`
+            : `Summa (${t("sum")})`,
+        width: "120px",
+        render: (_, record) => (
+          <div>
+            <Text strong>{formatAmount(Number(record?.amount))}</Text>
+            {record.original_amount !== record.amount && (
+              <div>
+                <Text delete type="secondary">
+                  {formatAmount(Number(record.original_amount))}
+                </Text>
+              </div>
+            )}
+          </div>
+        ),
+      },
+      {
+        title: i18n.language === "ru" ? "Скидка" : "Chegirma",
+        render: (_, record) =>
+          record.discount_percent > 0 ? `${record.discount_percent}%` : "-",
+      },
+      {
+        title: i18n.language === "ru" ? "Купон" : "Kupon",
+        render: (_, record) =>
+          record.coupon_code ? (
+            <div>
+              <Tag>{record.coupon_code}</Tag>
+              <div style={{ fontSize: 12, color: "#999" }}>
+                ({record.coupon_type})
+              </div>
+            </div>
+          ) : (
+            "-"
+          ),
       },
       {
         title: t("status"),
         dataIndex: "status",
         key: "status",
-
         render: (status: string) => (
           <Tag color={statusColor(status)} style={{ fontWeight: 700 }}>
-            {status || "-"}
+            {status === "success" ? t("success") : t("cancelled")}
           </Tag>
         ),
       },
       {
-        title: t("amount"),
-        dataIndex: "amount",
-        key: "amount",
-
-        render: (v: string) => `${formatMoney(v)} so'm`,
-      },
-      {
-        title: t("paymentGateway"),
+        title: i18n.language === "ru" ? "Способ оплаты" : "To'lov usuli",
         dataIndex: "payment_gateway",
         key: "payment_gateway",
-
+        render: (val: string) => (
+          <span style={{ textTransform: "capitalize" }}>{val}</span>
+        ),
+      },
+      {
+        title:
+          i18n.language === "ru"
+            ? `Кешбэк (Учитель) ${t("sum")}`
+            : `Cashback (O'qituvchi) ${t("sum")}`,
+        width: "200px",
+        render: (_, record) =>
+          formatAmount(Number(record.teacher_cashback_amount)),
+      },
+      {
+        title: t("childPhone") || "Telefon",
+        dataIndex: "student_phone",
+        key: "student_phone",
         render: (v: string) => v || "-",
       },
       {
-        title: t("paymentDate"),
+        title: t("planName") || "Tarif",
+        dataIndex: "plan_name",
+        key: "plan_name",
+        width: "100px",
+        render: (v: string) => v || "-",
+      },
+      {
+        title: i18n.language === "ru" ? "Дата платежа" : "To'lov sanasi",
         dataIndex: "payment_date",
         key: "payment_date",
-
+        render: (v: string) => formatDateColumn(v),
+      },
+      {
+        title: t("createdAt") || "Yaratilgan",
+        dataIndex: "created_at",
+        key: "created_at",
         render: (v: string) => formatDateColumn(v),
       },
       {
         title: t("actions"),
-        dataIndex: "actions",
         key: "actions",
-        width: "10px",
-        render: (v: any, d: PaymentsData) => {
-          return (
-            <Popconfirm
-              title={t("paymentAreYouSure")}
-              onConfirm={() => handleDelete(d.id)}
-              okText={t("yes")}
-              cancelText={t("no")}
-            >
-              <Tooltip title={t("delete")}>
-                <Button type="primary" danger>
-                  <DeleteOutlined />
-                </Button>
-              </Tooltip>
-            </Popconfirm>
-          );
-        },
+        width: "80px",
+        render: (v: any, d: PaymentsData) => (
+          <Popconfirm
+            title={t("paymentAreYouSure")}
+            onConfirm={() => handleDelete(d.id)}
+            okText={t("yes")}
+            cancelText={t("no")}
+          >
+            <Tooltip title={t("delete")}>
+              <Button type="primary" danger size="small">
+                <DeleteOutlined />
+              </Button>
+            </Tooltip>
+          </Popconfirm>
+        ),
       },
-
-      //   {
-      //     title: t("student"),
-      //     dataIndex: "student",
-      //     key: "student",
-      //     width: 100,
-      //     render: (v: number) => v ?? "-",
-      //   },
-      //   {
-      //     title: "Store",
-      //     dataIndex: "store_id",
-      //     key: "store_id",
-      //     width: 90,
-      //     render: (v: string | null) => v || "-",
-      //   },
     ],
     [t],
   );
@@ -149,8 +230,8 @@ const Payment = () => {
         loading={isLoading}
         columns={columns}
         dataSource={dataSource}
+        scroll={{ x: 1200 }}
         pagination={false}
-        scroll={{ x: 900 }}
       />
     </Card>
   );

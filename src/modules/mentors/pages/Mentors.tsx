@@ -82,8 +82,11 @@ const Mentors = () => {
       title: t("user"),
       dataIndex: "full_name",
       key: "full_name",
-      render: (value: string) => (
-        <div className="flex items-center gap-2 cursor-pointer">
+      render: (value: string, data: any) => (
+        <div
+          className="flex items-center gap-2 cursor-pointer"
+          onDoubleClick={() => handleOpenModal(data.id)}
+        >
           <span className="font-medium">{value || "-"}</span>
         </div>
       ),
@@ -170,17 +173,16 @@ const Mentors = () => {
     }
   };
 
-    const deviceOptions = [
-      { value: "android", label: t("phone") },
-      { value: "ios", label: t("ios") },
-      { value: "web", label: t("web") },
-    ];
+  const deviceOptions = [
+    { value: "android", label: t("phone") },
+    { value: "ios", label: t("ios") },
+    { value: "web", label: t("web") },
+  ];
 
   const statusOptions = [
     { value: "active", label: t("statusActive") },
     { value: "inactive", label: t("statusInactive") },
   ];
-
 
   return (
     <Card title={t("teachers")}>

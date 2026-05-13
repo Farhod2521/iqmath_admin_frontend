@@ -36,8 +36,17 @@ const ModalFaq = ({ open, onClose, onSubmit, loading, initialValues }: any) => {
     >
       <Form form={form} layout="vertical">
         <Form.Item
-          name="question"
-          label={t("faqs.modal.question")}
+          name="question_uz"
+          label={t("faqs.modal.question") + " (UZ)"}
+          rules={[
+            { required: true, message: t("faqs.modal.questionRequired") },
+          ]}
+        >
+          <Input placeholder={t("faqs.modal.questionPlaceholder")} />
+        </Form.Item>
+        <Form.Item
+          name="question_ru"
+          label={t("faqs.modal.question") + " (RU)"}
           rules={[
             { required: true, message: t("faqs.modal.questionRequired") },
           ]}
@@ -46,8 +55,16 @@ const ModalFaq = ({ open, onClose, onSubmit, loading, initialValues }: any) => {
         </Form.Item>
 
         <Form.Item
-          name="answer"
-          label={t("faqs.modal.answer")}
+          name="answer_uz"
+          label={t("faqs.modal.answer") + " (UZ)"}
+          rules={[{ required: true, message: t("faqs.modal.answerRequired") }]}
+        >
+          <TextArea rows={5} placeholder={t("faqs.modal.answerPlaceholder")} />
+        </Form.Item>
+
+        <Form.Item
+          name="answer_ru"
+          label={t("faqs.modal.answer") + " (RU)"}
           rules={[{ required: true, message: t("faqs.modal.answerRequired") }]}
         >
           <TextArea rows={5} placeholder={t("faqs.modal.answerPlaceholder")} />

@@ -60,8 +60,13 @@ const Payments = () => {
 
   const columns: ColumnsType<PaymentType> = [
     {
-      title: "ID",
-      render: (_, __, index) => index + 1,
+      title: "T/r",
+      dataIndex: "id",
+      key: "id",
+      width: "50px",
+      render: (rol: string, d: any, idx: number) => {
+        return <div>{idx + 1}</div>;
+      },
     },
     {
       title: i18n.language === "ru" ? "Ученик" : "O'quvchi",
@@ -138,6 +143,7 @@ const Payments = () => {
       dataSource={payments || []}
       columns={columns}
       pagination={false}
+      scroll={{ x: 800 }}
       bordered
       locale={{
         emptyText:

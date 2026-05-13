@@ -48,7 +48,7 @@ const RewardLog = () => {
     },
 
     {
-      title: t("student"),
+      title: t("students"),
       dataIndex: "student_name",
       key: "student_name",
       render: (value: string) => value || "---",

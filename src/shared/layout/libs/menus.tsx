@@ -37,6 +37,31 @@ export const getMenus = (t: (key: string) => string) => [
     icon: () => <BiSolidGraduation size={22} />,
   },
   {
+    key: "library",
+    label: t("library.title"),
+    icon: (isActive: boolean) => <FaDollarSign size={26} />,
+    children: [
+      {
+        key: "book-categories",
+        path: "/library/book-categories",
+        label: t("library.categories"),
+        // icon: (isActive: boolean) => <FaMoneyBillWave size={18} />,
+      },
+      {
+        key: "book-tags",
+        path: "/library/book-tags",
+        label: t("library.tags"),
+        // icon: (isActive: boolean) => <FaMoneyBillWave size={18} />,
+      },
+      {
+        key: "books",
+        path: "/library/books",
+        label: t("library.books"),
+        // icon: (isActive: boolean) => <FaMoneyBillWave size={18} />,
+      },
+    ],
+  },
+  {
     key: "prices",
     label: t("prices"),
     icon: (isActive: boolean) => <FaDollarSign size={26} />,
@@ -91,12 +116,7 @@ export const getMenus = (t: (key: string) => string) => [
     label: t("payments"),
     icon: () => <MdOutlinePayments size={22} />,
   },
-  {
-    key: "reward-log",
-    path: "/reward-log",
-    label: t("rewardLog"),
-    icon: () => <MdOutlineWorkspacePremium size={22} />,
-  },
+
   {
     key: "settings",
     label: t("appManagements"),
@@ -173,6 +193,12 @@ export const getMenus = (t: (key: string) => string) => [
         label: t("solutionStatus.title"),
       },
     ],
+  },
+  {
+    key: "reward-log",
+    path: "/reward-log",
+    label: t("rewardLog"),
+    icon: () => <MdOutlineWorkspacePremium size={22} />,
   },
   {
     key: "app-students",

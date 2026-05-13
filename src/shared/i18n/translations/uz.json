@@ -1,6 +1,7 @@
 {
   "unknown": "Noma'lum",
   "createdAt": "Yaratilgan sana",
+  "updatedAt": "O'zgargan vaqti",
   "basicInformation": "Asosiy ma'lumotlar",
   "appManagements": "Boshqaruvlar",
   "appStudents": "app_students",
@@ -75,6 +76,7 @@
   "SumScore": "To'plangan ball",
   "yes": "Ha",
   "no": "Yo'q",
+  "description": "Tavsif",
   "correctAnswers": "To'g'ri javoblar",
   "inCorrectAnswers": "Noto'g'ri javoblar",
   "alreadyPassedTest": "Siz allaqachon test topshirgansiz !!!",
@@ -140,6 +142,7 @@
   "rewardAddedSuccessfully": "Mukofot muvaffaqiyatli qo'shildi",
   "rewardError": "Mukofot qo'shishda xatolik yuz berdi",
   "adding": "Qo'shish",
+  "update": "O'zgartirish",
   "rewardHistory": "Mukofot tarixi",
   "givenRewards": "Berilgan mukofotlar",
   "noRewardsYet": "Hali mukofot berilmagan",
@@ -632,6 +635,7 @@
   "confirmPurchaseMessage": "Ushbu mahsulotni sotib olishni xohlaysizmi?",
   "purchaseWarning": "Bu amalni qaytarib bo'lmaydi!",
   "cancel": "Bekor qilish",
+  "cancelled": "Bekor qilingan",
   "register_date": "Sanasi",
   "parents": "Ota-onalar",
   "parentDashboard": "Ota-ona kabineti",
@@ -762,6 +766,8 @@
   "yearly": "Yillik",
   "selected": "Tanlangan",
   "proceedToPayment": "To'lovga o'tish",
+  "paymentGateway": "To'lov turi",
+  "paymentDate": "To'lov vaqti",
   "skipCoupon": "O'tkazib yuborish",
   "checkCoupon": "Kuponni tekshirish",
   "couponApplied": "Kupon qo'llanildi!",
@@ -1467,6 +1473,7 @@
     "index": "T/r",
     "question": "Savol",
     "answer": "Javob",
+
     "video": "Video",
     "view": "Ko‘rish",
     "action": "Amal",
@@ -1480,7 +1487,10 @@
       "question": "Savol",
       "answer": "Javob (HTML)",
       "video": "YouTube havola",
-
+      "questionUz": "Savol (UZ)",
+      "answerUz": "Javob (UZ)",
+      "questionRu": "Savol (RU)",
+      "answerRu": "Javob (RU)",
       "questionRequired": "Savolni kiriting",
       "answerRequired": "Javobni kiriting",
 
@@ -1536,9 +1546,9 @@
     "delete_confirm": "O'chirishni tasdiqlaysizmi?"
   },
   "mentorDetail": {
-    "total_time": "Umumiy vaqt",
-    "current_session": "Hozirgi sessiya",
-    "sessions_count": "Sessiyalar soni",
+    "total_time": "Jami online vaqti",
+    "current_session": "Hozirgi sessiya vaqti",
+    "sessions_count": "Jami sessiyalar soni",
     "extra_info": "Qo'shimcha ma'lumot",
     "current_online_seconds": "Hozirgi online sekund",
     "refresh": "Yangilash",
@@ -1578,5 +1588,27 @@
     "awarded": "Mukofotlangan",
     "deleted": "O‘chirishni xohlaysizmi?"
   },
-  "deleteConfirm": "O'chirishni tasdiqlaysizmi?"
+  "deleteConfirm": "O'chirishni tasdiqlaysizmi?",
+  "library": {
+    "title": "Kutubxona",
+    "categories": "Kategoriyalar",
+    "tags": "Teglar",
+    "books": "Kitoblar",
+    "common": {
+      "coverImage": "Muqova rasmi",
+      "uploadCover": "Rasm yuklash",
+      "uploadFile": "Fayl yuklash",
+      "successCreate": "Muvaffaqiyatli yaratildi",
+      "successUpdate": "Muvaffaqiyatli o'zgartirildi",
+      "successDelete": "Muvaffaqiyatli o'chirildi",
+      "editCategory": "Kategoriyani tahrirlash",
+      "addCategory": "Kategoriya yaratish",
+      "download": "Yuklab olish",
+      "file": "Fayl"
+    },
+    "validation": {
+      "required": "Majburiy maydon!",
+      "min_length": "Kamida {{count}} ta belgidan iborat bolsin"
+    }
+  }
 }

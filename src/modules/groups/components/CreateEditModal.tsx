@@ -26,7 +26,6 @@ export const CreateEditModal = ({
   const [form] = Form.useForm<MyGroupsFormData>();
   const { t } = useTranslation();
 
-
   useEffect(() => {
     if (open) {
       if (editing) {
@@ -53,7 +52,7 @@ export const CreateEditModal = ({
   ];
 
   const getStudentListFn = ({ page, size }: { page: number; size: number }) =>
-    getStudentList({ page, size, role: "student" });
+    getStudentList({ page, size, role: "student", status: "active" });
 
   const getStudentOptions = (data: any) =>
     data?.results?.map((item: any) => ({
@@ -66,7 +65,7 @@ export const CreateEditModal = ({
   const getTeacherQueryKey = (search: string) => ["teachers-list", search];
 
   const getTeacherListFn = ({ page, size }: { page: number; size: number }) =>
-    getStudentList({ page, size, role: "teacher" }); // 🔥 role o'zgardi
+    getStudentList({ page, size, role: "teacher", status: "active" }); //role o'zgardi
 
   const getTeacherOptions = (data: any) =>
     data?.results?.map((item: any) => ({
@@ -124,4 +123,4 @@ export const CreateEditModal = ({
       </Form>
     </Modal>
   );
-};;;;
+};

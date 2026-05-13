@@ -1,6 +1,7 @@
 {
   "unknown": "Неизвестный",
   "createdAt": "Дата создания",
+  "updatedAt": "Дата обновления",
   "basicInformation": "Основная информация",
   "ratings": "Рейтинги",
   "studentRating": "Рейтинг читателей",
@@ -79,6 +80,7 @@
   "educationalInstitution": "Образовательное учреждение:",
   "yes": "Да",
   "no": "Нет",
+  "description": "Описание",
   "wantToChangePassword": "Если предоставленный нами пароль вызывает у вас дискомфорт, вы можете его изменить.",
   "changePassword": "Изменить пароль",
   "confidentiality": "Конфиденциальность",
@@ -257,6 +259,7 @@
   "rewardAddedSuccessfully": "Награда успешно добавлена",
   "rewardError": "Ошибка при добавлении награды",
   "adding": "Добавление",
+  "update": "Изменять",
   "rewardHistory": "История наград",
   "givenRewards": "Выданные награды",
   "noRewardsYet": "Награды еще не выданы",
@@ -326,6 +329,8 @@
   "cancelContract": "Отменить",
   "nextCharge": "Следующее списание:",
   "paymentType": "Тип оплаты:",
+  "paymentGateway": "Тип оплаты",
+  "paymentDate": "Время оплаты",
   "mart": "Марта",
   "startTime": "Дата начала",
   "endTime": "Дата завершения",
@@ -628,6 +633,7 @@
   "confirmPurchaseMessage": "Вы уверены, что хотите купить этот товар?",
   "purchaseWarning": "Это действие нельзя отменить!",
   "register_date": "Дата",
+  "cancelled": "Отменено",
   "parents": "Родители",
   "parentDashboard": "Кабинет родителей",
   "childInfo": "Информация о ребенке",
@@ -1500,5 +1506,27 @@
     "awarded": "Начислено",
     "deleted": "Вы хотите удалить?"
   },
-  "deleteConfirm": "Вы уверены, что хотите удалить?"
+  "deleteConfirm": "Вы уверены, что хотите удалить?",
+  "library": {
+    "title": "Библиотека",
+    "categories": "Категории",
+    "tags": "Теги",
+    "books": "Книги",
+    "common": {
+      "coverImage": "Изображение обложки",
+      "uploadCover": "Загрузить изображение",
+      "uploadFile": "Загрузить файл",
+      "successCreate": "Успешно создано",
+      "successUpdate": "Успешно обновлено",
+      "successDelete": "Успешно удалено",
+      "editCategory": "Редактировать категорию",
+      "addCategory": "Создать категорию",
+      "download": "Скачать",
+      "file": "Файл"
+    },
+    "validation": {
+      "required": "Обязательное поле!",
+      "min_length": "Должно содержать не менее {{count}} символов"
+    }
+  }
 }
