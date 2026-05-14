@@ -1,11 +1,15 @@
-import { BooksData, getBooks } from "@/services";
+import { BASE_URL } from "@/libs/env";
+import { BooksData, deleteBook, getBooks } from "@/services";
 import { formatDateColumn } from "@/shared/components/tables/formatters";
+import { getStatusConfig } from "@/shared/utils/bookStatus";
+import { handleApiError } from "@/shared/utils/handleApiError";
 import {
   DeleteOutlined,
   EditOutlined,
+  PlusOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   Button,
   Card,
@@ -16,34 +20,74 @@ import {
   Table,
   Tag,
 } from "antd";
-import { t } from "i18next";
-import React from "react";
+import { ColumnsType } from "antd/es/table";
+import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { toast } from "react-toastify";
+import BookFormModal from "../components/BookFormModal";
 
 const Books = () => {
   const { t } = useTranslation();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editingBook, setEditingBook] = useState<BooksData | null>(null);
+  const queryClient = useQueryClient();
 
-  const { data, isLoading, error } = useQuery({
+  const { data, isLoading, error } = useQuery<BooksData[]>({
     queryKey: ["library-books"],
-    queryFn: getBooks,
+    queryFn: () => getBooks({}),
   });
 
-  const columns = [
+  // DELETE Mutation
+  const deleteMutation = useMutation({
+    mutationKey: ["deleteBook"],
+    mutationFn: (id: number) => deleteBook(id),
+    onSuccess: () => {
+      toast.success(t("library.common.successDelete"));
+      queryClient.invalidateQueries({ queryKey: ["library-books"] });
+    },
+    onError: (error) => {
+      handleApiError(error);
+    },
+  });
+
+  useEffect(() => {
+    if (error) handleApiError(error);
+  }, [error]);
+
+  const handleOpenModal = (book?: BooksData) => {
+    if (book) {
+      setEditingBook(book);
+    } else {
+      setEditingBook(null);
+    }
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setEditingBook(null);
+  };
+
+  const handleDelete = (id: number) => {
+    deleteMutation.mutate(id);
+  };
+
+  const columns: ColumnsType<BooksData> = [
     {
       title: t("#"),
       dataIndex: "id",
       key: "id",
       width: 60,
-      render: (_: any, record: any, index: number) => index + 1,
+      render: (_: any, __: any, index: number) => index + 1,
     },
     {
       title: t("library.common.coverImage"),
       dataIndex: "cover_image",
       key: "cover_image",
       width: 150,
-      render: (cover: string) => (
+      render: (cover_image: string) => (
         <Image
-          src={cover}
+          src={BASE_URL + cover_image}
           width={50}
           height={60}
           fallback="https://via.placeholder.com/50x60?text=No+Image"
@@ -58,7 +102,6 @@ const Books = () => {
     },
     {
       title: t("description"),
-
       dataIndex: "description",
       key: "description",
       width: 250,
@@ -109,15 +152,20 @@ const Books = () => {
       dataIndex: "file",
       key: "file",
       width: 120,
-      render: (file: string) => (
-        <Button
-          type="link"
-          onClick={() => window.open(file, "_blank")}
-          icon={<UploadOutlined />}
-        >
-          {t("library.common.download")}
-        </Button>
-      ),
+      render: (file: string, record: BooksData) => {
+        if (record.is_offline) {
+          return <Tag color="orange">{t("library.common.noFile")}</Tag>;
+        }
+        return (
+          <Button
+            type="link"
+            onClick={() => window.open(BASE_URL + file, "_blank")}
+            icon={<UploadOutlined />}
+          >
+            {t("library.common.download")}
+          </Button>
+        );
+      },
     },
     {
       title: t("price"),
@@ -126,14 +174,23 @@ const Books = () => {
       render: (price: string) => `${price} so'm`,
     },
     {
+      title: t("library.bookType"),
+      dataIndex: "is_offline",
+      key: "is_offline",
+      render: (is_offline: boolean) => (
+        <Tag color={is_offline ? "blue" : "green"}>
+          {is_offline ? t("offline") : t("online")}
+        </Tag>
+      ),
+    },
+    {
       title: t("status"),
       dataIndex: "status",
       key: "status",
-      render: (status: string) => (
-        <Tag color={status === "active" ? "green" : "red"}>
-          {status === "active" ? t("common.active") : t("common.inactive")}
-        </Tag>
-      ),
+      render: (status: string) => {
+        const { color, label } = getStatusConfig(status);
+        return <Tag color={color}>{t(label)}</Tag>;
+      },
     },
     {
       title: t("createdAt"),
@@ -158,13 +215,12 @@ const Books = () => {
           <Button
             variant="outlined"
             color="primary"
-            // onClick={() => handleOpenModal(record)}
+            onClick={() => handleOpenModal(record)}
             icon={<EditOutlined />}
           />
-
           <Popconfirm
-            title={t("delete_confirm")}
-            // onConfirm={() => handleDelete(record.id)}
+            title={t("deleteConfirm")}
+            onConfirm={() => handleDelete(record.id)}
             okText={t("yes")}
             cancelText={t("no")}
           >
@@ -174,17 +230,37 @@ const Books = () => {
       ),
     },
   ];
+
   return (
-    <Card title={t("library.books")}>
-      <Table
-        columns={columns}
-        rowKey="id"
-        dataSource={data}
-        loading={isLoading}
-        scroll={{ x: 1500 }}
-        pagination={false}
+    <>
+      <Card
+        title={t("library.books")}
+        extra={
+          <Button
+            type="primary"
+            icon={<PlusOutlined />}
+            onClick={() => handleOpenModal()}
+          >
+            {t("adding")}
+          </Button>
+        }
+      >
+        <Table
+          columns={columns}
+          rowKey="id"
+          dataSource={data}
+          loading={isLoading}
+          scroll={{ x: 1500 }}
+          pagination={false}
+        />
+      </Card>
+
+      <BookFormModal
+        open={isModalOpen}
+        onClose={handleCloseModal}
+        editingBook={editingBook}
       />
-    </Card>
+    </>
   );
 };
 

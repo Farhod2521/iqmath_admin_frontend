@@ -12,7 +12,7 @@ import {
   BiTrophy,
 } from "react-icons/bi";
 import { PiUsers } from "react-icons/pi";
-import { IoSettingsOutline } from "react-icons/io5";
+import { IoLibraryOutline, IoSettingsOutline } from "react-icons/io5";
 
 // import { SettingOutlined } from "@ant-design/icons";
 export * from "./index.d";
@@ -22,13 +22,13 @@ export const getMenus = (t: (key: string) => string) => [
     key: PermissionsCode.DASHBOARD.MENU,
     path: "/statistics",
     label: t("statistics"), // yoki "Boshqaruv paneli"
-    icon: (isActive: boolean) => <BiSolidBarChartAlt2 size={26} />,
+    icon: (isActive: boolean) => <BiSolidBarChartAlt2 size={22} />,
   },
   {
     key: "users",
     path: "/users/pupils",
     label: t("users"),
-    icon: (isActive: boolean) => <PiUsers size={26} />,
+    icon: (isActive: boolean) => <PiUsers size={22} />,
   },
   {
     key: "mentor",
@@ -39,7 +39,7 @@ export const getMenus = (t: (key: string) => string) => [
   {
     key: "library",
     label: t("library.title"),
-    icon: (isActive: boolean) => <FaDollarSign size={26} />,
+    icon: (isActive: boolean) => <IoLibraryOutline size={22} />,
     children: [
       {
         key: "book-categories",
@@ -64,7 +64,7 @@ export const getMenus = (t: (key: string) => string) => [
   {
     key: "prices",
     label: t("prices"),
-    icon: (isActive: boolean) => <FaDollarSign size={26} />,
+    icon: (isActive: boolean) => <FaDollarSign size={22} />,
     children: [
       {
         key: "subscriptionPlans",
@@ -108,7 +108,7 @@ export const getMenus = (t: (key: string) => string) => [
     key: "ratings",
     path: "/ratings",
     label: t("ratings"),
-    icon: (isActive: boolean) => <BiTrophy size={26} />,
+    icon: (isActive: boolean) => <BiTrophy size={22} />,
   },
   {
     key: "payments",
@@ -120,7 +120,7 @@ export const getMenus = (t: (key: string) => string) => [
   {
     key: "settings",
     label: t("appManagements"),
-    icon: (isActive: boolean) => <IoSettingsOutline size={26} />,
+    icon: (isActive: boolean) => <IoSettingsOutline size={22} />,
     children: [
       {
         key: "annoucements",
@@ -204,7 +204,7 @@ export const getMenus = (t: (key: string) => string) => [
     key: "app-students",
     label: t("scoreLog.title"),
     path: "/app-students/score-log",
-    icon: (isActive: boolean) => <MdOutlineManageHistory size={26} />,
+    icon: (isActive: boolean) => <MdOutlineManageHistory size={22} />,
     // children: [
     //   {
     //     key: "score-log",

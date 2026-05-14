@@ -17,7 +17,7 @@ export const postBookTags = (data: BookTagsFormData) =>
   axiosApi.post("/book/tags/", data);
 
 export const putBookTags = (id: number, data: BookTagsFormData) =>
-  axiosApi.put(`/book/tags/<${id}>/`, data);
+  axiosApi.put(`/book/tags/${id}/`, data);
 
 export const deleteBookTags = (id: number) =>
-  axiosApi.delete(`/book/tags/<${id}>/`);
+  axiosApi.delete(`/book/tags/${id}/`);
