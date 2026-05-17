@@ -1538,7 +1538,12 @@
       "enterType": "Введите тип книги",
       "publishDate": "Дата публикации",
       "enterQuantity": "Введите количество",
-      "quantity": "Количество"
+      "quantity": "Количество",
+      "audience": "Для кого",
+      "forStudents": "Для студентов",
+      "forTeachers": "Для преподавателей",
+      "forBoth": "Для студентов и преподавателей",
+      "general": "Общий"
     },
     "validation": {
       "required": "Обязательное поле!",

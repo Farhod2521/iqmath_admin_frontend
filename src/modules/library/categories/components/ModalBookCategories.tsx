@@ -24,7 +24,7 @@ const ModalBookCategories = ({
   isModalOpen,
   form,
 }: Props) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const queryClient = useQueryClient();
 
   const createMutation = useMutation({
@@ -82,9 +82,12 @@ const ModalBookCategories = ({
           is_active: true,
         }}
       >
+        <Form.Item name="is_active" label={t("status")} valuePropName="checked">
+          <Switch />
+        </Form.Item>
         <Form.Item
-          name="name"
-          label={t("title")}
+          name="name_uz"
+          label={t("title") + " (UZ)"}
           rules={[
             { required: true, message: t("library.validation.required") },
             {
@@ -96,21 +99,34 @@ const ModalBookCategories = ({
           <Input placeholder={t("title")} />
         </Form.Item>
 
-        <Form.Item name="is_active" label={t("status")} valuePropName="checked">
-          <Switch />
+        <Form.Item
+          name="name_ru"
+          label={t("title") + " (RU)"}
+          rules={[
+            { required: true, message: t("library.validation.required") },
+            {
+              min: 2,
+              message: t("library.validation.min_length", { count: 2 }),
+            },
+          ]}
+        >
+          <Input placeholder={t("title")} />
         </Form.Item>
 
-        <Form.Item>
-          <Space>
-            <Button
-              type="primary"
-              htmlType="submit"
-              loading={createMutation.isPending || updateMutation.isPending}
-            >
-              {editingCategory ? t("update") : t("create")}
-            </Button>
-            <Button onClick={closeModal}>{t("cancel")}</Button>
-          </Space>
+        <Form.Item className="mb-0">
+          <div className="flex justify-end">
+            <Space>
+              <Button
+                type="primary"
+                htmlType="submit"
+                loading={createMutation.isPending || updateMutation.isPending}
+              >
+                {editingCategory ? t("update") : t("create")}
+              </Button>
+
+              <Button onClick={closeModal}>{t("cancel")}</Button>
+            </Space>
+          </div>
         </Form.Item>
       </Form>
     </Modal>

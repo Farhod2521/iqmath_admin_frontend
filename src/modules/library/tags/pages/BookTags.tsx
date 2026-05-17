@@ -45,7 +45,8 @@ const BookTags = () => {
     if (category) {
       setEditingCategory(category);
       form.setFieldsValue({
-        name: category.name,
+        name_uz: category.name_uz,
+        name_ru: category.name_ru,
         is_active: category.is_active,
       });
     } else {
@@ -74,10 +75,17 @@ const BookTags = () => {
       render: (_: any, record: any, index: number) => index + 1,
     },
     {
-      title: t("title"),
-      dataIndex: "name",
-      key: "name",
+      title: t("title") + " (UZ)",
+      dataIndex: "name_uz",
+      key: "name_uz",
     },
+
+    {
+      title: t("title") + " (RU)",
+      dataIndex: "name_ru",
+      key: "name_ru",
+    },
+
     {
       title: t("status"),
       dataIndex: "is_active",

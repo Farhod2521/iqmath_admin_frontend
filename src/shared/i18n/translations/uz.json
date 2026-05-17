@@ -1621,7 +1621,12 @@
       "enterType": "Kitob turini kiriting",
       "publishDate": "Nashr etilgan sana",
       "enterQuantity": "Miqdorini kiriting",
-      "quantity": "Miqdor"
+      "quantity": "Miqdor",
+      "audience": "Kim uchun",
+      "forStudents": "Studentlar uchun",
+      "forTeachers": "O‘qituvchilar uchun",
+      "forBoth": "Student va o‘qituvchilar uchun",
+      "general": "Umumiy"
     },
     "validation": {
       "required": "Majburiy maydon!",

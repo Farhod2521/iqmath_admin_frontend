@@ -1,5 +1,5 @@
 import { BASE_URL } from "@/libs/env";
-import { BooksData, deleteBook, getBooks } from "@/services";
+import { BooksData, BookTagsData, deleteBook, getBooks } from "@/services";
 import { formatDateColumn } from "@/shared/components/tables/formatters";
 import { getStatusConfig } from "@/shared/utils/bookStatus";
 import { handleApiError } from "@/shared/utils/handleApiError";
@@ -27,7 +27,7 @@ import { toast } from "react-toastify";
 import BookFormModal from "../components/BookFormModal";
 
 const Books = () => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingBook, setEditingBook] = useState<BooksData | null>(null);
   const queryClient = useQueryClient();
@@ -84,7 +84,7 @@ const Books = () => {
       title: t("library.common.coverImage"),
       dataIndex: "cover_image",
       key: "cover_image",
-      width: 150,
+      width: 250,
       render: (cover_image: string) => (
         <Image
           src={BASE_URL + cover_image}
@@ -96,27 +96,54 @@ const Books = () => {
       ),
     },
     {
-      title: t("title"),
-      dataIndex: "name",
-      key: "name",
+      title: t("title") + " (UZ)",
+      dataIndex: "name_uz",
+      key: "name_uz",
+      width: 250,
+      render: (text: string) => (
+        <span className="font-semibold truncate block max-w-62.5">
+          {text ?? "---"}
+        </span>
+      ),
+    },
+    {
+      title: t("title") + " (RU)",
+      dataIndex: "name_ru",
+      key: "name_ru",
+      width: 250,
+      render: (text: string) => (
+        <span className="font-semibold truncate block max-w-62.5">
+          {text ?? "---"}
+        </span>
+      ),
     },
     {
       title: t("description"),
-      dataIndex: "description",
+      dataIndex: i18n.language === "uz" ? "description_uz" : "description_ru",
       key: "description",
       width: 250,
       render: (text: string, record: BooksData) => (
-        <div>
-          {text?.length > 100 ? `${text.substring(0, 100)}...` : text || "---"}
-          {text?.length > 100 && (
+        <div className="max-w-75">
+          <p className="max-w-75 overflow-hidden text-ellipsis whitespace-nowrap">
+            {text || "---"}
+          </p>
+
+          {text?.length > 120 && (
             <Button
               type="link"
               size="small"
+              className="p-0!"
               onClick={() => {
                 Modal.info({
                   title: record.name,
-                  content: <p>{text}</p>,
-                  width: 500,
+                  content: (
+                    <div className="max-h-100 overflow-y-auto pr-2">
+                      <p className="whitespace-pre-wrap wrap-break-word">
+                        {text}
+                      </p>
+                    </div>
+                  ),
+                  width: 600,
                 });
               }}
             >
@@ -128,19 +155,42 @@ const Books = () => {
     },
     {
       title: t("library.categories"),
-      dataIndex: ["category", "name"],
+      dataIndex: ["category", i18n.language === "uz" ? "name_uz" : "name_ru"],
       key: "category",
+      width: 250,
+    },
+    {
+      title: t("library.common.audience"),
+      key: "audience",
+      width: 220,
+      render: (_: any, record: BooksData) => {
+        const { for_student, for_teacher } = record;
+
+        if (for_student && for_teacher) {
+          return <Tag color="purple">{t("library.common.forBoth")}</Tag>;
+        }
+
+        if (for_student) {
+          return <Tag color="blue">{t("library.common.forStudents")}</Tag>;
+        }
+
+        if (for_teacher) {
+          return <Tag color="green">{t("library.common.forTeachers")}</Tag>;
+        }
+
+        return <Tag>{t("library.common.general")}</Tag>;
+      },
     },
     {
       title: t("library.tags"),
       dataIndex: "tags",
       key: "tags",
       width: 200,
-      render: (tags: { id: number; name: string }[]) => (
+      render: (tags: BookTagsData[]) => (
         <Space size={[0, 4]} wrap>
           {tags?.map((tag) => (
-            <Tag key={tag.id} color="processing">
-              {tag.name}
+            <Tag key={tag.id}>
+              {i18n.language === "uz" ? tag.name_uz : tag.name_ru}
             </Tag>
           ))}
           {(!tags || tags.length === 0) && "---"}
@@ -250,7 +300,7 @@ const Books = () => {
           rowKey="id"
           dataSource={data}
           loading={isLoading}
-          scroll={{ x: 1500 }}
+          scroll={{ x: 1900 }}
           pagination={false}
         />
       </Card>

@@ -10,7 +10,7 @@ import { MyGroupsData, StudentsType } from "../services";
 
 interface GroupColumnsProps {
   t: (key: string) => string;
-  deletePending: boolean;
+  deletingId: number | null;
   onAddStudents: (row: MyGroupsData) => void;
   onEdit: (row: MyGroupsData) => void;
   onInfo: (row: MyGroupsData) => void;
@@ -19,7 +19,7 @@ interface GroupColumnsProps {
 
 export const useGroupColumns = ({
   t,
-  deletePending,
+  deletingId,
   onAddStudents,
   onEdit,
   onInfo,
@@ -113,7 +113,7 @@ export const useGroupColumns = ({
           <Button icon={<InfoCircleOutlined />} onClick={() => onInfo(row)} />
         </Tooltip>
 
-        <Tooltip title={t("add")}>
+        <Tooltip title={t("adding")}>
           <Button
             type="primary"
             icon={<UserAddOutlined />}
@@ -121,18 +121,22 @@ export const useGroupColumns = ({
           />
         </Tooltip>
 
-        <Tooltip title={t("edit")}>
+        <Tooltip title={t("update")}>
           <Button icon={<EditOutlined />} onClick={() => onEdit(row)} />
         </Tooltip>
 
         <Popconfirm
-          title={t("delete_confirm")}
+          title={t("deleteConfirm")}
           okText={t("yes")}
           cancelText={t("no")}
           onConfirm={() => onDelete(row.id)}
         >
           <Tooltip title={t("delete")}>
-            <Button danger loading={deletePending} icon={<DeleteOutlined />} />
+            <Button
+              danger
+              loading={deletingId === row.id}
+              icon={<DeleteOutlined />}
+            />
           </Tooltip>
         </Popconfirm>
       </Space>

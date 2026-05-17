@@ -42,6 +42,12 @@ export const getMenus = (t: (key: string) => string) => [
     icon: (isActive: boolean) => <IoLibraryOutline size={22} />,
     children: [
       {
+        key: "books",
+        path: "/library/books",
+        label: t("library.books"),
+        // icon: (isActive: boolean) => <FaMoneyBillWave size={18} />,
+      },
+      {
         key: "book-categories",
         path: "/library/book-categories",
         label: t("library.categories"),
@@ -51,12 +57,6 @@ export const getMenus = (t: (key: string) => string) => [
         key: "book-tags",
         path: "/library/book-tags",
         label: t("library.tags"),
-        // icon: (isActive: boolean) => <FaMoneyBillWave size={18} />,
-      },
-      {
-        key: "books",
-        path: "/library/books",
-        label: t("library.books"),
         // icon: (isActive: boolean) => <FaMoneyBillWave size={18} />,
       },
     ],

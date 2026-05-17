@@ -37,6 +37,7 @@ const Groups = () => {
   const [editing, setEditing] = useState<MyGroupsData | null>(null);
   const [selectedGroupId, setSelectedGroupId] = useState<number | null>(null);
   const [selectedStudentIds, setSelectedStudentIds] = useState<number[]>([]);
+  const [deletingId, setDeletingId] = useState<number | null>(null);
 
   // Queries
   const { data: groups, isLoading } = useGroupsList();
@@ -90,43 +91,42 @@ const Groups = () => {
     setAddOpen(true);
   };
 
+  const handleSubmit = async (values: MyGroupsFormData) => {
+    if (mainModal === "edit" && editing?.id) {
+      const payload: Partial<MyGroupsFormData> = {};
 
-const handleSubmit = async (values: MyGroupsFormData) => {
-  if (mainModal === "edit" && editing?.id) {
-    const payload: Partial<MyGroupsFormData> = {};
+      // name
+      if (values.name !== editing.name) {
+        payload.name = values.name;
+      }
 
-    // name
-    if (values.name !== editing.name) {
-      payload.name = values.name;
+      // teacher
+      if (values.teacher_id !== editing.teacher_id) {
+        payload.teacher_id = values.teacher_id;
+      }
+
+      // students (array compare)
+      const editingStudentIds =
+        editing.students?.map((s: any) => s.id || s) || [];
+      const newStudentIds = values.students || [];
+
+      const isStudentsChanged =
+        editingStudentIds.length !== newStudentIds.length ||
+        editingStudentIds.some((id, i) => id !== newStudentIds[i]);
+
+      if (isStudentsChanged) {
+        payload.students = newStudentIds;
+      }
+
+      if (Object.keys(payload).length === 0) {
+        message.info("Hech qanday o‘zgarish yo‘q");
+        return;
+      }
+      updateMutation.mutate({ id: editing.id, payload });
+    } else if (mainModal === "create") {
+      createMutation.mutate(values);
     }
-
-    // teacher
-    if (values.teacher_id !== editing.teacher_id) {
-      payload.teacher_id = values.teacher_id;
-    }
-
-    // students (array compare)
-    const editingStudentIds =
-      editing.students?.map((s: any) => s.id || s) || [];
-    const newStudentIds = values.students || [];
-
-    const isStudentsChanged =
-      editingStudentIds.length !== newStudentIds.length ||
-      editingStudentIds.some((id, i) => id !== newStudentIds[i]);
-
-    if (isStudentsChanged) {
-      payload.students = newStudentIds;
-    }
-
-    if (Object.keys(payload).length === 0) {
-      message.info("Hech qanday o‘zgarish yo‘q");
-      return;
-    }
-    updateMutation.mutate({ id: editing.id, payload });
-  } else if (mainModal === "create") {
-    createMutation.mutate(values);
-  }
-};
+  };
 
   const handleAddSubmit = (studentIds: number[]) => {
     if (!selectedGroupId) return;
@@ -137,14 +137,24 @@ const handleSubmit = async (values: MyGroupsFormData) => {
     addStudentsMutation.mutate({ student_ids: studentIds });
   };
 
+  const handleDelete = async (id: number) => {
+    try {
+      setDeletingId(id);
+
+      await deleteMutation.mutateAsync(id);
+    } finally {
+      setDeletingId(null);
+    }
+  };
+
   // Table columns
   const columns = useGroupColumns({
     t,
-    deletePending: deleteMutation.isPending,
+    deletingId,
     onAddStudents: handleOpenAddStudents,
     onEdit: handleOpenEdit,
     onInfo: handleOpenInfo,
-    onDelete: (id) => deleteMutation.mutate(id),
+    onDelete: (id) => handleDelete(id),
   });
 
   const isSubmitting = createMutation.isPending || updateMutation.isPending;

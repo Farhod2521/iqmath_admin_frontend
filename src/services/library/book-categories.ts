@@ -1,12 +1,15 @@
 import { axiosApi } from "@/configs/api";
 
 export type BookCategoriesFormData = {
-  name: string;
+  name_uz: string;
+  name_ru: string;
   is_active: boolean;
 };
 
 export type BookCategoriesData = {
   name: string;
+  name_uz: string;
+  name_ru: string;
   is_active: boolean;
   created_at: string;
   id: number;

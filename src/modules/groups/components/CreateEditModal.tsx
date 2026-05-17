@@ -29,10 +29,14 @@ export const CreateEditModal = ({
   useEffect(() => {
     if (open) {
       if (editing) {
+        const studentIds =
+          editing.students?.map((student: any) =>
+            typeof student === "object" ? student.id : student,
+          ) || [];
         form.setFieldsValue({
           name: editing.name,
           teacher_id: editing.teacher_id,
-          students: editing.students,
+          students: studentIds,
         });
       } else {
         form.resetFields();
@@ -57,7 +61,7 @@ export const CreateEditModal = ({
   const getStudentOptions = (data: any) =>
     data?.results?.map((item: any) => ({
       label: item.full_name,
-      value: Number(item.user_id),
+      value: Number(item.id),
     })) || [];
   const getStudentTotal = (data: any) => data?.total || 0;
 
@@ -70,7 +74,7 @@ export const CreateEditModal = ({
   const getTeacherOptions = (data: any) =>
     data?.results?.map((item: any) => ({
       label: item.full_name,
-      value: Number(item.user_id),
+      value: Number(item.id),
     })) || [];
 
   const getTeacherTotal = (data: any) => data?.total || 0;

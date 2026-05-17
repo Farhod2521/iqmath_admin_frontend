@@ -5,7 +5,13 @@ import { BookCategoriesData } from "./book-categories";
 export type BooksData = {
   id: number;
   name: string;
+  name_uz: string;
+  name_ru: string;
   description: string;
+  description_uz: string;
+  description_ru: string;
+  for_student: boolean;
+  for_teacher: boolean;
   category: BookCategoriesData;
   tags: BookTagsData[];
   file: string;
