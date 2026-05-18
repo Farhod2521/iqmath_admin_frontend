@@ -29,6 +29,8 @@ export type BooksParams = {
   category?: number;
   status?: string;
   tag?: number;
+  for_student?: boolean;
+  for_teacher?: boolean;
 };
 
 export type BooksFormData = {

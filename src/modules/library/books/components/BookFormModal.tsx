@@ -223,14 +223,19 @@ const BookFormModal: React.FC<BookFormModalProps> = ({
         initialValues={{
           status: "active",
           is_offline: false,
+          for_student: false,
+          for_teacher: false,
         }}
       >
         <Item
           name="name_uz"
           label={t("title") + " (UZ)"}
           rules={[
-            { required: true, message: t("validation.required") },
-            { min: 2, message: t("validation.min_length", { count: 2 }) },
+            { required: true, message: t("library.validation.required") },
+            {
+              min: 2,
+              message: t("library.validation.min_length", { count: 2 }),
+            },
           ]}
         >
           <Input placeholder={t("library.common.enterName")} />
@@ -239,8 +244,11 @@ const BookFormModal: React.FC<BookFormModalProps> = ({
           name="name_ru"
           label={t("title") + " (RU)"}
           rules={[
-            { required: true, message: t("validation.required") },
-            { min: 2, message: t("validation.min_length", { count: 2 }) },
+            { required: true, message: t("library.validation.required") },
+            {
+              min: 2,
+              message: t("library.validation.min_length", { count: 2 }),
+            },
           ]}
         >
           <Input placeholder={t("library.common.enterName")} />
@@ -249,7 +257,9 @@ const BookFormModal: React.FC<BookFormModalProps> = ({
         <Item
           name="description_uz"
           label={t("description") + " (UZ)"}
-          rules={[{ required: true, message: t("validation.required") }]}
+          rules={[
+            { required: true, message: t("library.validation.required") },
+          ]}
         >
           <TextArea
             rows={4}
@@ -260,7 +270,9 @@ const BookFormModal: React.FC<BookFormModalProps> = ({
         <Item
           name="description_ru"
           label={t("description") + " (RU)"}
-          rules={[{ required: true, message: t("validation.required") }]}
+          rules={[
+            { required: true, message: t("library.validation.required") },
+          ]}
         >
           <TextArea
             rows={4}
@@ -289,7 +301,9 @@ const BookFormModal: React.FC<BookFormModalProps> = ({
           <Item
             name="category"
             label={t("category")}
-            rules={[{ required: true, message: t("validation.required") }]}
+            rules={[
+              { required: true, message: t("library.validation.required") },
+            ]}
           >
             <Select
               placeholder={t("library.common.selectCategory")}
@@ -343,7 +357,9 @@ const BookFormModal: React.FC<BookFormModalProps> = ({
           <Item
             name="price"
             label={t("price")}
-            rules={[{ required: true, message: t("validation.required") }]}
+            rules={[
+              { required: true, message: t("library.validation.required") },
+            ]}
           >
             <InputNumber
               style={{ width: "100%" }}
@@ -370,18 +386,7 @@ const BookFormModal: React.FC<BookFormModalProps> = ({
           </Item>
 
           {isOffline && (
-            <Item
-              name="quantity"
-              label={t("library.common.quantity")}
-              rules={[
-                { required: true, message: t("validation.required") },
-                {
-                  type: "number",
-                  min: 1,
-                  message: t("validation.min_quantity"),
-                },
-              ]}
-            >
+            <Item name="quantity" label={t("library.common.quantity")}>
               <InputNumber
                 style={{ width: "100%" }}
                 min={1}
@@ -396,7 +401,7 @@ const BookFormModal: React.FC<BookFormModalProps> = ({
               rules={[
                 {
                   required: !editingBook && !isOffline,
-                  message: t("validation.required"),
+                  message: t("library.validation.required"),
                 },
               ]}
             >

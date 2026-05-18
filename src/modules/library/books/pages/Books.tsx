@@ -31,6 +31,11 @@ const Books = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingBook, setEditingBook] = useState<BooksData | null>(null);
   const queryClient = useQueryClient();
+  const [filterData, setFilterData] = useState({
+    category: null,
+    audience: null,
+    status: null,
+  });
 
   const { data, isLoading, error } = useQuery<BooksData[]>({
     queryKey: ["library-books"],
