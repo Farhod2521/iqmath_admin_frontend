@@ -86,10 +86,6 @@ const ScoreLog = () => {
       },
     },
     {
-      title: t("student"),
-      dataIndex: "student_full_name",
-    },
-    {
       title: t("scoreLog.awardType") || "Type",
       dataIndex: "award_type",
       render: (value: string) => (
