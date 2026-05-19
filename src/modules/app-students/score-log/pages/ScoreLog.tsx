@@ -6,6 +6,7 @@ import {
   getStudentList,
   getUsers,
 } from "@/services";
+import MathText from "@/shared/components/latex/MathText";
 import SelectInfinite from "@/shared/components/selects/SelectInfinite";
 import { AwardTypeLabel } from "@/shared/utils/constants";
 import { handleApiError } from "@/shared/utils/handleApiError";
@@ -62,6 +63,27 @@ const ScoreLog = () => {
       render: (text: string, record: any, index: number) => (
         <span>{index + 1}</span>
       ),
+    },
+    {
+      title: t("student"),
+      dataIndex: "student_full_name",
+    },
+    {
+      title: t("chapter"),
+      dataIndex: ["chapter", "name_uz"],
+      render: (value: string, record: any) => record.chapter?.name_uz || "-",
+    },
+    {
+      title: t("topic"),
+      dataIndex: ["topic", "name_uz"],
+      render: (value: string, record: any) => record.topic?.name_uz || "-",
+    },
+    {
+      title: t("question"),
+      dataIndex: ["question", "question_text_uz"],
+      render: (_: any, record: any) => {
+        return <MathText content={record?.question?.question_text_uz || ""} />;
+      },
     },
     {
       title: t("student"),
@@ -175,7 +197,7 @@ const ScoreLog = () => {
         columns={columns}
         dataSource={data?.results}
         pagination={false}
-        scroll={{ x: 800 }}
+        scroll={{ x: 1200 }}
       />
     </Card>
   );

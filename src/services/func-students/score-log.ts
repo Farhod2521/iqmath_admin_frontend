@@ -1,14 +1,35 @@
 import { axiosApi } from "@/configs/api";
+import { ApiParams } from "@/types/response";
 
 export type FuncStudentScoreLogsResultsData = {
-  id: number;
-  student_id: number;
-  student_full_name: string;
-  student_identification: string;
-  question_id: number;
   award_type: string;
-  awarded_coin: boolean;
   awarded_at: string;
+  awarded_coin: boolean;
+  chapter: {
+    id: number;
+    name_ru: string;
+    name_uz: string;
+  };
+  id: number;
+  question: {
+    id: number;
+    question_text_ru: string;
+    question_text_uz: string;
+  };
+  student_full_name: string;
+  student_id: number;
+  student_identification: string;
+  subject: {
+    class_name: string;
+    id: 7;
+    name_ru: string;
+    name_uz: string;
+  };
+  topic: {
+    id: number;
+    name_ru: string;
+    name_uz: string;
+  };
 };
 
 export type FuncStudentScoreLogsData = {
