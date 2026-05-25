@@ -21,6 +21,7 @@ import MentorsRoutes from "./modules/mentors/routes";
 import AppStudentsRoutes from "./modules/app-students/routes";
 import RewardLogRoutes from "./modules/reward-log/routes";
 import LibraryRoutes from "./modules/library/routes";
+import SubscriptionsRoute from "./modules/subscriptions/routes";
 
 // Pages
 
@@ -44,6 +45,7 @@ const AppRoutes = () => {
             {GroupsRoutes}
             {PaymentsRoutes}
             {ChatsRoutes}
+            {SubscriptionsRoute}
             {RatingRoutes}
             {MentorsRoutes}
             {AppStudentsRoutes}

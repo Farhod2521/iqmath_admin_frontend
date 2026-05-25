@@ -1549,5 +1549,9 @@
       "required": "Обязательное поле!",
       "min_length": "Должно содержать не менее {{count}} символов"
     }
+  },
+  "subscriptions": {
+    "title": "Подписки",
+    "totalSubscriptions": "Всего <b>{{total}}</b> подписок"
   }
 }

@@ -1,4 +1,5 @@
 {
+  "tR": "T/r",
   "unknown": "Noma'lum",
   "createdAt": "Yaratilgan sana",
   "updatedAt": "O'zgargan vaqti",
@@ -321,7 +322,7 @@
   "continueTest": "Davom ettirish",
   "tariffPlan": "Tarif rejasi",
   "cancelContract": "Bekor qilish",
-  "nextCharge": "Keyingi to'lov sanasi:",
+  "nextCharge": "Keyingi to'lov sanasi",
   "paymentType": "To'lov turi:",
   "mart": "Mart",
   "startTime": "Boshlanish sanasi",
@@ -1632,5 +1633,10 @@
       "required": "Majburiy maydon!",
       "min_length": "Kamida {{count}} ta belgidan iborat bolsin"
     }
+  },
+  "required": "Majburiy maydon!",
+  "subscriptions": {
+    "title": "Obunalar",
+    "totalSubscriptions": "Jami <b>{{total}}</b> ta obuna"
   }
 }

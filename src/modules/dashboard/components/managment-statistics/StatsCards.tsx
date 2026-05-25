@@ -170,7 +170,7 @@ const StatsCards = ({ data, isLoading }: Props) => {
       {stats.map((stat) => (
         <div
           key={stat.key}
-          onDoubleClick={() => handleNavigateClick(stat?.filter)}
+          onClick={() => handleNavigateClick(stat?.filter)}
           className={`${stat?.filter ? "cursor-pointer" : ""} rounded-2xl border border-[#E6E8EC] bg-white px-5 py-4 min-h-29.5 shadow-[0_1px_2px_rgba(16,24,40,0.04)] transition-all duration-200 hover:shadow-[0_4px_14px_rgba(16,24,40,0.08)]`}
         >
           <div className="flex items-start gap-3">

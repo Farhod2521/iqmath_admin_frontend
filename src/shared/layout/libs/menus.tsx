@@ -1,6 +1,7 @@
 import {
   MdOutlineManageHistory,
   MdOutlinePayments,
+  MdOutlineSubscriptions,
   MdOutlineWorkspacePremium,
 } from "react-icons/md";
 import { FaDollarSign, FaUsers } from "react-icons/fa";
@@ -35,6 +36,12 @@ export const getMenus = (t: (key: string) => string) => [
     path: "/mentors",
     label: t("teachers"),
     icon: () => <BiSolidGraduation size={22} />,
+  },
+  {
+    key: "subscriptions",
+    path: "/subscriptions",
+    label: t("subscriptions.title"),
+    icon: (isActive: boolean) => <MdOutlineSubscriptions size={22} />,
   },
   {
     key: "library",
