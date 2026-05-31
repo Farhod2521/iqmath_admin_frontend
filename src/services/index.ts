@@ -6,6 +6,11 @@ export * from "./ratings";
 export * from "./func-students";
 export * from "./reward-log";
 export * from "./library";
+export * from "./book";
+export * from "./teacher";
+export * from "./with-drawal";
+export * from "./diagnost";
+export * from "./log-entries";
 
 export * from "./modules/modules";
 export * from "./settings";

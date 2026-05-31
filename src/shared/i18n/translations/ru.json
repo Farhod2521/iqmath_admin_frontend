@@ -1,4 +1,5 @@
 {
+  "count": "Количество",
   "unknown": "Неизвестный",
   "createdAt": "Дата создания",
   "updatedAt": "Дата обновления",
@@ -1553,5 +1554,18 @@
   "subscriptions": {
     "title": "Подписки",
     "totalSubscriptions": "Всего <b>{{total}}</b> подписок"
-  }
+  },
+  "book": {
+    "title": "Cписок заказа книг",
+    "customer": "Клиент"
+  },
+  "resetPasswordSuccess": "Пароль успешно обновлён",
+  "resetPasswordError": "Произошла ошибка",
+
+  "enterNewPassword": "Введите новый пароль",
+  "confirmPassword": "Подтвердите пароль",
+  "confirmNewPassword": "Повторно введите пароль",
+  "passwordRequired": "Введите пароль",
+  "passwordMinLength": "Пароль должен содержать минимум 6 символов",
+  "passwordsDoNotMatch": "Пароли не совпадают"
 }

@@ -22,6 +22,9 @@ import AppStudentsRoutes from "./modules/app-students/routes";
 import RewardLogRoutes from "./modules/reward-log/routes";
 import LibraryRoutes from "./modules/library/routes";
 import SubscriptionsRoute from "./modules/subscriptions/routes";
+import LogEntriesRoutes from "./modules/log-entries/routes";
+import WithDrawalRoutes from "./modules/with-drawal/routes";
+import OfflineOrdersRoutes from "./modules/offline-orders/routes";
 
 // Pages
 
@@ -50,6 +53,9 @@ const AppRoutes = () => {
             {MentorsRoutes}
             {AppStudentsRoutes}
             {RewardLogRoutes}
+            {LogEntriesRoutes}
+            {WithDrawalRoutes}
+            {OfflineOrdersRoutes}
             {/*  */}
           </Route>
         </Route>

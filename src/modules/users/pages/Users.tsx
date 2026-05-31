@@ -8,6 +8,8 @@ import FSearch from "@/shared/components/filters/FSearch";
 import { RoleLabel } from "@/shared/utils/constants";
 import RewardModal from "../components/RewardModal";
 import { useForm } from "antd/es/form/Form";
+import { MdLockReset } from "react-icons/md";
+import ResetPasswordModal from "../components/ResetPasswordModal";
 
 const Users = () => {
   const { t } = useTranslation();
@@ -23,6 +25,7 @@ const Users = () => {
   });
   const [isReward, setIsReward] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState<StudentData>();
+  const [isResetPassword, setIsResetPassword] = useState(false);
 
   const [filterData, setFilterData] = useState<{
     search?: string;
@@ -113,6 +116,11 @@ const Users = () => {
   const handleRewardChange = (record: StudentData) => {
     setSelectedStudent(record);
     openModal();
+  };
+
+  const handleResetPasswordChange = (record: StudentData) => {
+    setSelectedStudent(record);
+    setIsResetPassword(true);
   };
 
   const handleNavigate = (data: StudentData) => {
@@ -294,6 +302,15 @@ const Users = () => {
                 />
               </svg>
               {t("reward")}
+            </button>
+
+            <button
+              className="bg-blue-500 flex items-center gap-2 hover:bg-blue-600 whitespace-nowrap text-white px-3 py-1 rounded-lg text-sm"
+              title={t("giveReward")}
+              onClick={() => handleResetPasswordChange(record)}
+            >
+              <MdLockReset size={20} />
+              {t("resetPassword")}
             </button>
 
             {/* <button
@@ -532,6 +549,11 @@ const Users = () => {
       <RewardModal
         open={isReward}
         close={() => setIsReward(false)}
+        selectedStudent={selectedStudent}
+      />
+      <ResetPasswordModal
+        open={isResetPassword}
+        close={() => setIsResetPassword(false)}
         selectedStudent={selectedStudent}
       />
     </Card>

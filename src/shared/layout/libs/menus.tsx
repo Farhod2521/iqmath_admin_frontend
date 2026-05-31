@@ -14,6 +14,7 @@ import {
 } from "react-icons/bi";
 import { PiUsers } from "react-icons/pi";
 import { IoLibraryOutline, IoSettingsOutline } from "react-icons/io5";
+import { GiNotebook } from "react-icons/gi";
 
 // import { SettingOutlined } from "@ant-design/icons";
 export * from "./index.d";
@@ -67,6 +68,12 @@ export const getMenus = (t: (key: string) => string) => [
         // icon: (isActive: boolean) => <FaMoneyBillWave size={18} />,
       },
     ],
+  },
+  {
+    key: "offline-orders",
+    path: "/offline-orders",
+    label: t("book.title"),
+    icon: (isActive: boolean) => <GiNotebook size={22} />,
   },
   {
     key: "prices",

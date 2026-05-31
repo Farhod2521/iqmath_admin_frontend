@@ -1,5 +1,6 @@
 {
   "tR": "T/r",
+  "count": "Soni",
   "unknown": "Noma'lum",
   "createdAt": "Yaratilgan sana",
   "updatedAt": "O'zgargan vaqti",
@@ -1638,5 +1639,18 @@
   "subscriptions": {
     "title": "Obunalar",
     "totalSubscriptions": "Jami <b>{{total}}</b> ta obuna"
-  }
+  },
+  "book": {
+    "title": "Kitob buyurtmalar ro'yxati",
+    "customer": "Buyurtmachi"
+  },
+  "resetPasswordSuccess": "Parol muvaffaqiyatli yangilandi",
+  "resetPasswordError": "Xatolik yuz berdi",
+
+  "enterNewPassword": "Yangi parolni kiriting",
+  "confirmPassword": "Parolni tasdiqlang",
+  "confirmNewPassword": "Parolni qayta kiriting",
+
+  "passwordMinLength": "Kamida 6 ta belgi bo'lishi kerak",
+  "passwordsDoNotMatch": "Parollar mos emas"
 }
