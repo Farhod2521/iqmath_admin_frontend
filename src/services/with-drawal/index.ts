@@ -15,26 +15,26 @@ export type WithDrawalSettingsFormData = {
 
 export const getWithDrawalSettings = () =>
   axiosApi.get<ApiResponse<WithDrawalSettingsData>>(
-    "/superadmin/withdrawal-settings/",
+    "/management/superadmin/withdrawal-settings/",
   );
 
 export const getWithDrawalSetting = (id: number) =>
   axiosApi.get<WithDrawalSettingsData>(
-    `/superadmin/withdrawal-settings/${id}/`,
+    `/management/superadmin/withdrawal-settings/${id}/`,
   );
 
 export const postWithDrawalSetting = (data: WithDrawalSettingsFormData) =>
-  axiosApi.post(`/superadmin/withdrawal-settings/`, data);
+  axiosApi.post(`/management/superadmin/withdrawal-settings/`, data);
 
 export const putWithDrawalSetting = (
   id: number,
   data: WithDrawalSettingsFormData,
-) => axiosApi.put(`/superadmin/withdrawal-settings/${id}/`, data);
+) => axiosApi.put(`/management/superadmin/withdrawal-settings/${id}/`, data);
 
 export const patchWithDrawalSetting = (
   id: number,
   data: WithDrawalSettingsFormData,
-) => axiosApi.patch(`/superadmin/withdrawal-settings/${id}/`, data);
+) => axiosApi.patch(`/management/superadmin/withdrawal-settings/${id}/`, data);
 
 export const deleteWithDrawalSetting = (id: number) =>
-  axiosApi.delete(`/superadmin/withdrawal-settings/${id}/`);
+  axiosApi.delete(`/management/superadmin/withdrawal-settings/${id}/`);

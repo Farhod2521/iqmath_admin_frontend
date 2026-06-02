@@ -1,11 +1,11 @@
 import { axiosApi } from "@/configs/api";
 import { ApiResponse } from "@/types/response";
 
-export type LogEntries = {
-  user_id: number;
-  action_flag: number;
-  content_type: string;
-  limit: number;
+export type LogEntriesParams = {
+  user_id?: number;
+  action_flag?: number;
+  content_type?: string;
+  limit?: number;
 };
 
 export type LogEntriesData = {
@@ -31,22 +31,25 @@ export type LogEntriesFormData = {
   change_message: string;
 };
 
-export const getLogEntrieses = () =>
-  axiosApi.get<ApiResponse<LogEntriesData>>("/superadmin/log-entries/");
+export const getLogEntrieses = (params?: LogEntriesParams) =>
+  axiosApi.get<ApiResponse<LogEntriesData>>(
+    "/management/superadmin/log-entries/",
+    params,
+  );
 
 export const getLogEntries = (id: number) =>
-  axiosApi.get<LogEntriesData>(`/superadmin/log-entries/${id}/`);
+  axiosApi.get<LogEntriesData>(`/management/superadmin/log-entries/${id}/`);
 
 export const postLogEntries = (data: LogEntriesFormData) =>
-  axiosApi.post(`/superadmin/log-entries/`, data);
+  axiosApi.post(`/management/superadmin/log-entries/`, data);
 
 export const deleteLogEntries = (id: number) =>
-  axiosApi.delete(`/superadmin/log-entries/${id}/`);
+  axiosApi.delete(`/management/superadmin/log-entries/${id}/`);
 
 export const deleteLogEntrieses = (data: {
   user_id: number;
   action_flag: number;
-}) => axiosApi.delete(`/superadmin/log-entries/`, data);
+}) => axiosApi.delete(`/management/superadmin/log-entries/`, data);
 
 // action_flag = 1
 // 1 = "qo'shish"

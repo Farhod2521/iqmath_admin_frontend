@@ -1567,5 +1567,18 @@
   "confirmNewPassword": "Повторно введите пароль",
   "passwordRequired": "Введите пароль",
   "passwordMinLength": "Пароль должен содержать минимум 6 символов",
-  "passwordsDoNotMatch": "Пароли не совпадают"
+  "passwordsDoNotMatch": "Пароли не совпадают",
+  "blocked": "Заблокирован",
+  "blockUserConfirm": "Вы хотите заблокировать пользователя?",
+  "unblockUserConfirm": "Вы хотите разблокировать пользователя?",
+  "userStatusUpdated": "Статус пользователя обновлен",
+  "somethingWentWrong": "Что-то пошло не так",
+  "issueFine": "Выписать штраф",
+  "fineType": "Тип штрафа",
+  "selectFineType": "Выберите тип штрафа",
+  "fineAmount": "Сумма штрафа (сум)",
+  "logEntries": "Записи журнала",
+  "contentType": "Тип контента",
+  "changeMessage": "Изменить сообщение",
+  "objectRepr": "Oбъект репр"
 }

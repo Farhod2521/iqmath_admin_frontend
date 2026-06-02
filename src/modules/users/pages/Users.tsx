@@ -1,17 +1,45 @@
-import { getUsers, StudentData } from "@/services";
+import { deleteUser, getUsers, postUserBlock, StudentData } from "@/services";
 import type { ColumnsType, TablePaginationConfig } from "antd/es/table";
-import { Card, Col, Image, Row, Select, Table, Tag } from "antd";
+import {
+  Button,
+  Card,
+  Col,
+  Image,
+  Popconfirm,
+  Row,
+  Select,
+  Switch,
+  Table,
+  Tag,
+  Tooltip,
+} from "antd";
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import FSearch from "@/shared/components/filters/FSearch";
 import { RoleLabel } from "@/shared/utils/constants";
 import RewardModal from "../components/RewardModal";
-import { useForm } from "antd/es/form/Form";
+
 import { MdLockReset } from "react-icons/md";
 import ResetPasswordModal from "../components/ResetPasswordModal";
+import { toast } from "react-toastify";
+import { useMutation } from "@tanstack/react-query";
+import FineModal from "../components/FineModal";
+import { useOptions } from "@/shared/hooks";
+import { FaGift } from "react-icons/fa";
+import { DeleteOutlined, WarningOutlined } from "@ant-design/icons";
+import { handleApiError } from "@/shared/utils/handleApiError";
 
 const Users = () => {
+  const {
+    roleOptions,
+    statusOptions,
+    deviceOptions,
+    langOptions,
+    classOptions,
+    subjectOptions,
+  } = useOptions();
+
   const { t } = useTranslation();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
@@ -26,6 +54,8 @@ const Users = () => {
   const [isReward, setIsReward] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState<StudentData>();
   const [isResetPassword, setIsResetPassword] = useState(false);
+  const [isFine, setIsFine] = useState(false);
+  const [fineStudent, setFineStudent] = useState<StudentData>();
 
   const [filterData, setFilterData] = useState<{
     search?: string;
@@ -126,6 +156,38 @@ const Users = () => {
   const handleNavigate = (data: StudentData) => {
     navigate(`/users/pupils/${data.id}?role=${filterData.role}`);
   };
+
+  const blockMutation = useMutation({
+    mutationFn: postUserBlock,
+    onSuccess: (res: any) => {
+      toast.success(res?.message);
+      fetchData();
+    },
+    onError: () => {
+      toast.error(t("somethingWentWrong"));
+    },
+  });
+
+  const handleBlockUser = (record: StudentData) => {
+    blockMutation.mutate({
+      user_id: record.id,
+      is_blocked: !record.status, // yoki backend fieldiga qarab
+    });
+  };
+
+  const handleFine = (record: StudentData) => {
+    setFineStudent(record);
+    setIsFine(true);
+  };
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: number) => deleteUser(id),
+    onSuccess: () => {
+      fetchData();
+      toast.success(t("deletedSuccessfully") || "O‘chirildi");
+    },
+    onError: (err: any) => handleApiError(err),
+  });
 
   const columns: ColumnsType<StudentData> = useMemo(() => {
     const baseColumns: ColumnsType<StudentData> = [
@@ -276,49 +338,74 @@ const Users = () => {
             <span className="text-gray-400">-</span>
           ),
       },
+      // {
+      //   title: t("blocked"),
+      //   key: "blocked",
+      //   align: "center",
+      //   render: (_, record) => (
+      //     <Popconfirm
+      //       title={
+      //         record?.is_blocked
+      //           ? `${record.full_name} ni blokdan chiqarmoqchimisiz?`
+      //           : `${record.full_name} ni bloklamoqchimisiz?`
+      //       }
+      //       okText={t("yes")}
+      //       cancelText={t("no")}
+      //       onConfirm={() =>
+      //         blockMutation.mutate({
+      //           user_id: record.id,
+      //           is_blocked: false,
+      //         })
+      //       }
+      //     >
+      //       <Switch checked={record.is_blocked} />
+      //     </Popconfirm>
+      //   ),
+      // },
       {
         title: t("action"),
         key: "actions",
-        width: "100px",
-        // fixed: "right",
-        render: (_value, record) => (
-          <div className="flex gap-2 justify-end">
-            <button
-              className="bg-[#5D87FF] cursor-pointer hover:bg-[#4570EA] text-white px-3 py-1 rounded-lg text-sm flex items-center gap-1"
-              title={t("giveReward")}
-              onClick={() => handleRewardChange(record)}
-            >
-              <svg
-                className="w-4 h-4"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+        width: 120,
+        align: "center",
+        render: (_, record) => (
+          <div className="flex items-center justify-center gap-2">
+            <Tooltip title={t("reward")}>
+              <button
+                className="p-2 cursor-pointer rounded-lg bg-blue-100 text-blue-600 hover:bg-blue-200"
+                title={t("reward")}
+                onClick={() => handleRewardChange(record)}
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 8v13m0-13V6a2 2 0 112 2h-2zm0 0V5.5A2.5 2.5 0 109.5 8H12zm-7 4h14M5 12a2 2 0 110-4h14a2 2 0 110 4M5 12v7a2 2 0 002 2h10a2 2 0 002-2v-7"
-                />
-              </svg>
-              {t("reward")}
-            </button>
+                <FaGift size={16} />
+              </button>
+            </Tooltip>
+            <Tooltip title={t("resetPassword")}>
+              <button
+                className="p-2 cursor-pointer rounded-lg bg-indigo-100 text-indigo-600 hover:bg-indigo-200"
+                title={t("resetPassword")}
+                onClick={() => handleResetPasswordChange(record)}
+              >
+                <MdLockReset size={18} />
+              </button>
+            </Tooltip>
 
-            <button
-              className="bg-blue-500 flex items-center gap-2 hover:bg-blue-600 whitespace-nowrap text-white px-3 py-1 rounded-lg text-sm"
-              title={t("giveReward")}
-              onClick={() => handleResetPasswordChange(record)}
+            <Tooltip title="Jarima">
+              <button
+                className="p-2 cursor-pointer rounded-lg bg-red-100 text-red-600 hover:bg-red-200"
+                onClick={() => handleFine(record)}
+              >
+                <WarningOutlined />
+              </button>
+            </Tooltip>
+            <Popconfirm
+              title={t("scoreLog.deleted")}
+              okText={t("yes")}
+              cancelText={t("no")}
+              onConfirm={() => deleteMutation.mutate(record.id)}
             >
-              <MdLockReset size={20} />
-              {t("resetPassword")}
-            </button>
-
-            {/* <button
-              className="bg-blue-500 hover:bg-blue-600 whitespace-nowrap text-white px-3 py-1 rounded-lg text-sm"
-              //   onClick={() => navigate(`/users/${record.id}`)}
-            >
-              {t("loginAsStudent")}
-            </button> */}
+              <button className="p-2 cursor-pointer rounded-lg bg-red-100 text-red-600 hover:bg-red-200">
+                <DeleteOutlined />
+              </button>
+            </Popconfirm>
           </div>
         ),
       },
@@ -363,42 +450,6 @@ const Users = () => {
     }));
   };
 
-  const classOptions = [
-    { value: "5", label: t("class5") },
-    { value: "6", label: t("class6") },
-    { value: "7", label: t("class7") },
-    { value: "8", label: t("class8") },
-    { value: "9", label: t("class9") },
-    { value: "10", label: t("class10") },
-    { value: "11", label: t("class11") },
-  ];
-
-  // Fanlar ro'yxati
-  const subjectOptions = [
-    { value: "Algebra", label: t("algebra") },
-    { value: "Matematika", label: t("math") },
-    { value: "Geometriya", label: t("geometry") },
-  ];
-
-  const statusOptions = [
-    { value: "active", label: t("statusActive") },
-    { value: "inactive", label: t("statusInactive") },
-  ];
-
-  const deviceOptions = [
-    { value: "android", label: t("phone") },
-    { value: "ios", label: t("ios") },
-    { value: "web", label: t("web") },
-  ];
-
-  // Role options
-  const roleOptions = [
-    { value: "student", label: t("student") },
-    { value: "teacher", label: t("teachers") },
-    { value: "parent", label: t("parent") },
-    { value: "tutor", label: t("tutor") },
-  ];
-
   if (loading && data.length === 0) {
     return (
       <Card title={t("users")}>
@@ -408,6 +459,10 @@ const Users = () => {
       </Card>
     );
   }
+
+  const handleFineSuccess = () => {
+    fetchData(); // table refresh
+  };
 
   return (
     <Card title={t("users")}>
@@ -556,13 +611,14 @@ const Users = () => {
         close={() => setIsResetPassword(false)}
         selectedStudent={selectedStudent}
       />
+      <FineModal
+        open={isFine}
+        close={() => setIsFine(false)}
+        student={fineStudent}
+        onSuccess={handleFineSuccess}
+      />
     </Card>
   );
 };
 
 export default Users;
-
-const langOptions = [
-  { value: "uz", label: "uz" },
-  { value: "ru", label: "ru" },
-];

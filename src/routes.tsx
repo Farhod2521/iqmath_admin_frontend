@@ -25,6 +25,7 @@ import SubscriptionsRoute from "./modules/subscriptions/routes";
 import LogEntriesRoutes from "./modules/log-entries/routes";
 import WithDrawalRoutes from "./modules/with-drawal/routes";
 import OfflineOrdersRoutes from "./modules/offline-orders/routes";
+import DiagnostcRoutes from "./modules/diagnost/routes";
 
 // Pages
 
@@ -56,6 +57,7 @@ const AppRoutes = () => {
             {LogEntriesRoutes}
             {WithDrawalRoutes}
             {OfflineOrdersRoutes}
+            {DiagnostcRoutes}
             {/*  */}
           </Route>
         </Route>

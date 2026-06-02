@@ -2,8 +2,8 @@ import { axiosApi } from "@/configs/api";
 import { ApiResponse } from "@/types/response";
 
 export type DiagnostParams = {
-  student_id: number;
-  subject_id: number;
+  student_id?: number;
+  subject_id?: number;
 };
 
 export type DiagnostData = {
@@ -21,10 +21,13 @@ export type DiagnostData = {
 };
 
 export const getDiagnosts = (params: DiagnostParams) =>
-  axiosApi.get<ApiResponse<DiagnostData>>("/superadmin/diagnost/", params);
+  axiosApi.get<ApiResponse<DiagnostData>>(
+    "/func_student/superadmin/diagnost/",
+    params,
+  );
 
 export const getDiagnost = (id: number) =>
-  axiosApi.get<DiagnostData>(`/superadmin/diagnost/${id}/`);
+  axiosApi.get<DiagnostData>(`/func_student/superadmin/diagnost/${id}/`);
 
 export const deleteDiagnost = (id: number) =>
-  axiosApi.delete(`/superadmin/diagnost/${id}/`);
+  axiosApi.delete(`/func_student/superadmin/diagnost/${id}/`);

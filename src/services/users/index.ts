@@ -7,3 +7,4 @@ export * from "./online-duration";
 export * from "./reward";
 export * from "./universal-statistics";
 export * from "./password";
+export * from "./blocked";

@@ -2,6 +2,7 @@ import {
   MdOutlineManageHistory,
   MdOutlinePayments,
   MdOutlineSubscriptions,
+  MdOutlineWorkHistory,
   MdOutlineWorkspacePremium,
 } from "react-icons/md";
 import { FaDollarSign, FaUsers } from "react-icons/fa";
@@ -214,6 +215,7 @@ export const getMenus = (t: (key: string) => string) => [
     label: t("rewardLog"),
     icon: () => <MdOutlineWorkspacePremium size={22} />,
   },
+  // /log-entries
   {
     key: "app-students",
     label: t("scoreLog.title"),
@@ -227,6 +229,18 @@ export const getMenus = (t: (key: string) => string) => [
     //   },
     // ],
   },
+  {
+    key: "log-entries",
+    path: "/log-entries",
+    label: t("logEntries"),
+    icon: () => <MdOutlineWorkHistory size={22} />,
+  },
+  // {
+  //   key: "diagnostc",
+  //   path: "/with-drawal",
+  //   label: t("diagnostc"),
+  //   icon: () => <MdOutlineWorkHistory size={22} />,
+  // },
 ];
 
 // ✅ agar keys kerak bo‘lsa ham function bilan oling

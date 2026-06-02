@@ -97,7 +97,7 @@ const ScoreLog = () => {
       ),
     },
     {
-      title: "Mukofotlangan",
+      title: t("scoreLog.awarded"),
       dataIndex: "awarded_coin",
       render: (val: boolean) =>
         val ? <Tag color="blue">{t("yes")}</Tag> : <Tag>{t("no")}</Tag>,

@@ -110,3 +110,9 @@ export const getUsersApplicants = (params: UserApplicantsParams) =>
 
 export const getUsersOnline = () =>
   axiosApi.get<UserOnlineData>("/users/online");
+
+// DELETE /api/v1/auth/superadmin/delete-user/42/
+// Authorization: Bearer <superadmin_token>
+
+export const deleteUser = (id: number) =>
+  axiosApi.delete(`/auth/superadmin/delete-user/${id}/`);
