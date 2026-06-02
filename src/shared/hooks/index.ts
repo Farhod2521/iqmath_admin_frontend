@@ -4,3 +4,4 @@ export * from "./useThrottle";
 export * from "./useFilters";
 export * from "./useCountdownTimer";
 export * from "./useOptions";
+export * from "./useBreadcrumbs";

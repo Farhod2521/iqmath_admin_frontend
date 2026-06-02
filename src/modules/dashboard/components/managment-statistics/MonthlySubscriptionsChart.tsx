@@ -101,8 +101,9 @@ const MonthlySubscriptionsChart = ({ data, isLoading }: Props) => {
                   {monthName}
                 </span>
 
-                <span className="shrink-0 text-[14px] font-semibold text-[#20D5B3]">
+                <span className=" flex flex-col shrink-0 text-[14px] font-semibold text-[#20D5B3]">
                   {subscription.count} {t("piece")}
+                  <span className="text-[10px]">({subscription.year})</span>
                 </span>
               </div>
 

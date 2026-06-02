@@ -1,40 +1,43 @@
 // src/home/layout/MainLayout.tsx
-import React, { useState, useEffect, Suspense } from 'react'
-import { Layout, Result } from 'antd'
-import { Outlet, useLocation } from 'react-router-dom'
+import React, { useState, useEffect, Suspense } from "react";
+import { Layout, Result } from "antd";
+import { Outlet, useLocation } from "react-router-dom";
 
-import SiderMenu from './components/sidebar/Sidebar'
-import DrawerWrapper from './components/drawer/Drawer'
-import Loading from '../components/Loading'
-import Header from './components/header/Header'
-import { useStoreUsers } from '@/store'
+import SiderMenu from "./components/sidebar/Sidebar";
+import DrawerWrapper from "./components/drawer/Drawer";
+import Loading from "../components/Loading";
+import Header from "./components/header/Header";
+import { useStoreUsers } from "@/store";
+import BaseBreadcrumbs from "../components/BaseBreadcrumbs";
+import { useBreadcrumbs } from "../hooks";
 
-const { Content } = Layout
+const { Content } = Layout;
 
 const MainLayout: React.FC = () => {
-  const location = useLocation()
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth)
-  const { fetchUserData, userData, isLoading, errorMessage } = useStoreUsers()
+  const location = useLocation();
+  const breadcrumbs = useBreadcrumbs();
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  const { fetchUserData, userData, isLoading, errorMessage } = useStoreUsers();
 
   useEffect(() => {
-    const handleResize = () => setWindowWidth(window.innerWidth)
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-  const isMobile = windowWidth < 650
-  const hideSidebar = location.pathname.includes('response')
+  const isMobile = windowWidth < 650;
+  const hideSidebar = location.pathname.includes("response");
 
   useEffect(() => {
-    fetchUserData()
-  }, [fetchUserData])
+    fetchUserData();
+  }, [fetchUserData]);
 
   if (isLoading) {
-    return <Loading />
+    return <Loading />;
   }
 
   if (!userData) {
-    return <Result status="error" title={errorMessage} />
+    return <Result status="error" title={errorMessage} />;
   }
 
   return (
@@ -43,12 +46,15 @@ const MainLayout: React.FC = () => {
 
       <Layout>
         <Header />
+        <div className="px-4 pt-3">
+          <BaseBreadcrumbs data={breadcrumbs} />
+        </div>
         <Content
           style={{
-            height: 'calc(100vh - 54px)',
-            overflowY: 'auto',
-            background: '#f6f8fa',
-            padding: location.pathname.includes('dashboard') ? '0' : '16px'
+            height: "calc(100vh - 54px)",
+            overflowY: "auto",
+            background: "#f6f8fa",
+            padding: location.pathname.includes("dashboard") ? "0" : "16px",
           }}
         >
           <Suspense fallback={<Loading />}>
@@ -57,7 +63,7 @@ const MainLayout: React.FC = () => {
         </Content>
       </Layout>
     </Layout>
-  )
-}
+  );
+};
 
-export default MainLayout
+export default MainLayout;

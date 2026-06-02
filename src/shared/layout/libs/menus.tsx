@@ -39,12 +39,7 @@ export const getMenus = (t: (key: string) => string) => [
     label: t("teachers"),
     icon: () => <BiSolidGraduation size={22} />,
   },
-  {
-    key: "subscriptions",
-    path: "/subscriptions",
-    label: t("subscriptions.title"),
-    icon: (isActive: boolean) => <MdOutlineSubscriptions size={22} />,
-  },
+
   {
     key: "library",
     label: t("library.title"),
@@ -108,6 +103,18 @@ export const getMenus = (t: (key: string) => string) => [
     ],
   },
   {
+    key: "payments",
+    path: "/payments/payment",
+    label: t("payments"),
+    icon: () => <MdOutlinePayments size={22} />,
+  },
+  {
+    key: "subscriptions",
+    path: "/subscriptions",
+    label: t("subscriptions.title"),
+    icon: (isActive: boolean) => <MdOutlineSubscriptions size={22} />,
+  },
+  {
     key: "groups",
     path: "/groups/group",
     label: t("groups"),
@@ -124,12 +131,6 @@ export const getMenus = (t: (key: string) => string) => [
     path: "/ratings",
     label: t("ratings"),
     icon: (isActive: boolean) => <BiTrophy size={22} />,
-  },
-  {
-    key: "payments",
-    path: "/payments/payment",
-    label: t("payments"),
-    icon: () => <MdOutlinePayments size={22} />,
   },
 
   {
