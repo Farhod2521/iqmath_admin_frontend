@@ -6,13 +6,13 @@ import {
   patchWithDrawalSetting,
   postWithDrawalSetting,
   putWithDrawalSetting,
-  WithDrawalSettingsData,
+  withdrawalSettingsData,
 } from "@/services";
 
 interface WithdrawalModalProps {
   visible: boolean;
   onClose: () => void;
-  editingRecord: WithDrawalSettingsData | null;
+  editingRecord: withdrawalSettingsData | null;
 }
 
 const WithdrawalModal: React.FC<WithdrawalModalProps> = ({
@@ -41,12 +41,12 @@ const WithdrawalModal: React.FC<WithdrawalModalProps> = ({
   const createMutation = useMutation({
     mutationFn: postWithDrawalSetting,
     onSuccess: () => {
-      message.success(t("SettingCreated"));
+      message.success(t("settingCreated"));
       queryClient.invalidateQueries({ queryKey: ["data-withdrawal"] });
       handleClose();
     },
     onError: (error: any) => {
-      message.error(error?.response?.data?.error || t("CreateFailed"));
+      message.error(error?.response?.data?.error || t("createFailed"));
     },
   });
 
@@ -54,12 +54,12 @@ const WithdrawalModal: React.FC<WithdrawalModalProps> = ({
     mutationFn: ({ id, data }: { id: number; data: any }) =>
       putWithDrawalSetting(id, data),
     onSuccess: () => {
-      message.success(t("SettingUpdated"));
+      message.success(t("settingUpdated"));
       queryClient.invalidateQueries({ queryKey: ["data-withdrawal"] });
       handleClose();
     },
     onError: (error: any) => {
-      message.error(error?.response?.data?.error || t("UpdateFailed"));
+      message.error(error?.response?.data?.error || t("updateFailed"));
     },
   });
 
@@ -67,12 +67,12 @@ const WithdrawalModal: React.FC<WithdrawalModalProps> = ({
     mutationFn: ({ id, data }: { id: number; data: any }) =>
       patchWithDrawalSetting(id, data),
     onSuccess: () => {
-      message.success(t("SettingUpdated"));
+      message.success(t("settingUpdated"));
       queryClient.invalidateQueries({ queryKey: ["data-withdrawal"] });
       handleClose();
     },
     onError: (error: any) => {
-      message.error(error?.response?.data?.error || t("UpdateFailed"));
+      message.error(error?.response?.data?.error || t("updateFailed"));
     },
   });
 
@@ -81,7 +81,7 @@ const WithdrawalModal: React.FC<WithdrawalModalProps> = ({
       const values = await form.validateFields();
 
       if (values.min_amount >= values.max_amount) {
-        message.error(t("MinAmountLessThanMaxAmount"));
+        message.error(t("minAmountLessThanmaxAmount"));
         return;
       }
 
@@ -136,10 +136,12 @@ const WithdrawalModal: React.FC<WithdrawalModalProps> = ({
 
   return (
     <Modal
-      title={isEditing ? t("EditSetting") : t("AddSetting")}
+      title={isEditing ? t("editSetting") : t("addSetting")}
       open={visible}
       onCancel={handleClose}
       onOk={handleSubmit}
+      okText={t("save")}
+      cancelText={t("cancel")}
       confirmLoading={loading}
       width={500}
     >
@@ -153,10 +155,10 @@ const WithdrawalModal: React.FC<WithdrawalModalProps> = ({
       >
         <Form.Item
           name="min_amount"
-          label={t("MinAmount")}
+          label={t("minAmount")}
           rules={[
-            { required: true, message: t("PleaseEnterMinAmount") },
-            { type: "number", min: 0, message: t("MinAmountMustBePositive") },
+            { required: true, message: t("pleaseEnterminAmount") },
+            { type: "number", min: 0, message: t("minAmountMustBePositive") },
           ]}
         >
           <InputNumber
@@ -164,7 +166,7 @@ const WithdrawalModal: React.FC<WithdrawalModalProps> = ({
             min={0}
             step={1000}
             precision={2}
-            placeholder={t("EnterMinAmount")}
+            placeholder={t("EnterminAmount")}
             formatter={(value) =>
               `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }
@@ -176,16 +178,16 @@ const WithdrawalModal: React.FC<WithdrawalModalProps> = ({
 
         <Form.Item
           name="max_amount"
-          label={t("MaxAmount")}
+          label={t("maxAmount")}
           rules={[
-            { required: true, message: t("PleaseEnterMaxAmount") },
-            { type: "number", min: 0, message: t("MaxAmountMustBePositive") },
+            { required: true, message: t("pleaseEntermaxAmount") },
+            { type: "number", min: 0, message: t("maxAmountMustBePositive") },
             ({ getFieldValue }) => ({
               validator(_, value) {
                 const minAmount = getFieldValue("min_amount");
                 if (value && minAmount && value <= minAmount) {
                   return Promise.reject(
-                    new Error(t("MaxAmountGreaterThanMinAmount")),
+                    new Error(t("maxAmountGreaterThanminAmount")),
                   );
                 }
                 return Promise.resolve();
@@ -198,7 +200,7 @@ const WithdrawalModal: React.FC<WithdrawalModalProps> = ({
             min={0}
             step={1000}
             precision={2}
-            placeholder={t("EnterMaxAmount")}
+            placeholder={t("EntermaxAmount")}
             formatter={(value) =>
               `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")
             }

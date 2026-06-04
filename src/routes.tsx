@@ -26,6 +26,7 @@ import LogEntriesRoutes from "./modules/log-entries/routes";
 import WithDrawalRoutes from "./modules/with-drawal/routes";
 import OfflineOrdersRoutes from "./modules/offline-orders/routes";
 import DiagnostcRoutes from "./modules/diagnost/routes";
+import FineRoutes from "./modules/fines/routes";
 
 // Pages
 
@@ -58,6 +59,7 @@ const AppRoutes = () => {
             {WithDrawalRoutes}
             {OfflineOrdersRoutes}
             {DiagnostcRoutes}
+            {FineRoutes}
             {/*  */}
           </Route>
         </Route>

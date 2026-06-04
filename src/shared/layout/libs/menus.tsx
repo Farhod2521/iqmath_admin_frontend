@@ -1,4 +1,5 @@
 import {
+  MdOutlineAccountBalanceWallet,
   MdOutlineManageHistory,
   MdOutlinePayments,
   MdOutlineSubscriptions,
@@ -16,6 +17,7 @@ import {
 import { PiUsers } from "react-icons/pi";
 import { IoLibraryOutline, IoSettingsOutline } from "react-icons/io5";
 import { GiNotebook } from "react-icons/gi";
+import { WarningOutlined } from "@ant-design/icons";
 
 // import { SettingOutlined } from "@ant-design/icons";
 export * from "./index.d";
@@ -33,11 +35,18 @@ export const getMenus = (t: (key: string) => string) => [
     label: t("users"),
     icon: (isActive: boolean) => <PiUsers size={22} />,
   },
+
   {
     key: "mentor",
     path: "/mentors",
     label: t("teachers"),
     icon: () => <BiSolidGraduation size={22} />,
+  },
+  {
+    key: "fines",
+    path: "/fines",
+    label: t("fines"),
+    icon: (isActive: boolean) => <WarningOutlined size={22} />,
   },
 
   {
@@ -236,15 +245,15 @@ export const getMenus = (t: (key: string) => string) => [
     label: t("logEntries"),
     icon: () => <MdOutlineWorkHistory size={22} />,
   },
-  // {
-  //   key: "diagnostc",
-  //   path: "/with-drawal",
-  //   label: t("diagnostc"),
-  //   icon: () => <MdOutlineWorkHistory size={22} />,
-  // },
+  {
+    key: "with-drawal",
+    path: "/with-drawal",
+    label: t("withdrawalSettings"),
+    icon: () => <MdOutlineAccountBalanceWallet size={22} />,
+  },
 ];
 
-// ✅ agar keys kerak bo‘lsa ham function bilan oling
+// agar keys kerak bo‘lsa ham function bilan oling
 export const getMenuKeys = (t: (key: string) => string) =>
   getMenus(t)
     .map((item) => item.key)

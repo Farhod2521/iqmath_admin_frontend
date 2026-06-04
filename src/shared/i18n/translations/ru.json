@@ -1574,11 +1574,38 @@
   "userStatusUpdated": "Статус пользователя обновлен",
   "somethingWentWrong": "Что-то пошло не так",
   "issueFine": "Выписать штраф",
+  "fines": "Штраф",
   "fineType": "Тип штрафа",
   "selectFineType": "Выберите тип штрафа",
   "fineAmount": "Сумма штрафа (сум)",
   "logEntries": "Записи журнала",
   "contentType": "Тип контента",
   "changeMessage": "Изменить сообщение",
-  "objectRepr": "Oбъект репр"
+  "objectRepr": "Oбъект репр",
+
+  "withdrawalSettings": "Настройки вывода средств",
+  "minAmount": "Минимальная сумма",
+  "maxAmount": "Максимальная сумма",
+  "Actions": "Действия",
+  "Edit": "Редактировать",
+  "Delete": "Удалить",
+  "addSetting": "Добавить настройку",
+  "editSetting": "Редактировать настройку",
+  "deleteConfirmMessage": "Вы действительно хотите удалить эту настройку?",
+
+  "settingCreated": "Настройка успешно создана",
+  "settingUpdated": "Настройка успешно обновлена",
+  "createFailed": "Ошибка при создании настройки",
+  "updateFailed": "Ошибка при обновлении настройки",
+  "deleteFailed": "Ошибка при удалении настройки",
+
+  "pleaseEnterminAmount": "Пожалуйста, введите минимальную сумму",
+  "pleaseEntermaxAmount": "Пожалуйста, введите максимальную сумму",
+  "minAmountMustBePositive": "Минимальная сумма должна быть положительной",
+  "maxAmountMustBePositive": "Максимальная сумма должна быть положительной",
+  "maxAmountGreaterThanminAmount": "Максимальная сумма должна быть больше минимальной",
+  "minAmountLessThanmaxAmount": "Минимальная сумма должна быть меньше максимальной",
+
+  "deliveryStatus": "Cтатус доставки",
+  "updateOrderStatus": "Обновить статус заказа"
 }

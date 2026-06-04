@@ -3,6 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { Card, Select, Space, Table, Tag } from "antd";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
+import ModalOfflineOrders from "../components/ModalOfflineOrders";
+import { deliveryOptions } from "../utils/options";
 
 const OfflineOrders = () => {
   const { t } = useTranslation();
@@ -10,11 +12,18 @@ const OfflineOrders = () => {
   const [filterData, setFilterData] = useState({
     status: undefined,
   });
+  const [open, setOpen] = useState(false);
+  const [selected, setSelected] = useState<any>(null);
 
   const { data, isLoading, error } = useQuery({
     queryKey: ["data-offline-orders", filterData.status],
     queryFn: () => getBookOfflineOrders(filterData),
   });
+
+  const handleRowClick = (record: any) => {
+    setSelected(record);
+    setOpen(true);
+  };
 
   const statusMap = {
     [STATUS_DELIVERY.NEW]: {
@@ -94,7 +103,7 @@ const OfflineOrders = () => {
         <Select
           placeholder="Status qiymatlari"
           className="w-50!"
-          options={options}
+          options={deliveryOptions}
           allowClear
           value={filterData.status}
           onChange={(value) =>
@@ -111,32 +120,19 @@ const OfflineOrders = () => {
         loading={isLoading}
         columns={columns}
         scroll={{ x: 1400 }}
+        pagination={false}
+        onRow={(record) => ({
+          onClick: () => handleRowClick(record),
+          style: { cursor: "pointer" },
+        })}
+      />
+      <ModalOfflineOrders
+        open={open}
+        onClose={() => setOpen(false)}
+        selected={selected}
       />
     </Card>
   );
 };
 
 export default OfflineOrders;
-
-const options = [
-  {
-    value: STATUS_DELIVERY.NEW,
-    label: "Yangi",
-  },
-  {
-    label: "Admin ko'rdi",
-    value: STATUS_DELIVERY.SEEN,
-  },
-  {
-    label: "Tayyorlanmoqda",
-    value: STATUS_DELIVERY.PREPARING,
-  },
-  {
-    label: "Yetkazilmoqda",
-    value: STATUS_DELIVERY.DELIVERING,
-  },
-  {
-    label: "Yetkazildi",
-    value: STATUS_DELIVERY.DELIVERED,
-  },
-];

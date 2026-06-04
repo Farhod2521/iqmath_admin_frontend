@@ -388,7 +388,7 @@ const Users = () => {
               </button>
             </Tooltip>
 
-            <Tooltip title="Jarima">
+            <Tooltip title={t("issueFine")}>
               <button
                 className="p-2 cursor-pointer rounded-lg bg-red-100 text-red-600 hover:bg-red-200"
                 onClick={() => handleFine(record)}

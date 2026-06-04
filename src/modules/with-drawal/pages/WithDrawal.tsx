@@ -6,8 +6,8 @@ import { useTranslation } from "react-i18next";
 
 import {
   deleteWithDrawalSetting,
-  getWithDrawalSettings,
-  WithDrawalSettingsData,
+  getwithdrawalSettings,
+  withdrawalSettingsData,
 } from "@/services";
 import WithdrawalModal from "../components/WithdrawalModal";
 
@@ -16,11 +16,11 @@ const WithDrawal = () => {
   const queryClient = useQueryClient();
   const [modalVisible, setModalVisible] = useState(false);
   const [editingRecord, setEditingRecord] =
-    useState<WithDrawalSettingsData | null>(null);
+    useState<withdrawalSettingsData | null>(null);
 
   const { data, isLoading } = useQuery({
     queryKey: ["data-withdrawal"],
-    queryFn: getWithDrawalSettings,
+    queryFn: getwithdrawalSettings,
   });
 
   const deleteMutation = useMutation({
@@ -32,7 +32,7 @@ const WithDrawal = () => {
       queryClient.invalidateQueries({ queryKey: ["data-withdrawal"] });
     },
     onError: (error: any) => {
-      message.error(error?.response?.data?.error || t("DeleteFailed"));
+      message.error(error?.response?.data?.error || t("deleteFailed"));
     },
   });
 
@@ -40,7 +40,7 @@ const WithDrawal = () => {
     deleteMutation.mutate(id);
   };
 
-  const handleEdit = (record: WithDrawalSettingsData) => {
+  const handleEdit = (record: withdrawalSettingsData) => {
     setEditingRecord(record);
     setModalVisible(true);
   };
@@ -57,32 +57,32 @@ const WithDrawal = () => {
 
   const columns = [
     {
-      title: t("ID"),
+      title: t("tR"),
       dataIndex: "id",
       key: "id",
       width: 80,
     },
     {
-      title: t("MinAmount"),
+      title: t("minAmount"),
       dataIndex: "min_amount",
       key: "min_amount",
       render: (value: number) => `${value.toLocaleString()} so'm`,
     },
     {
-      title: t("MaxAmount"),
+      title: t("maxAmount"),
       dataIndex: "max_amount",
       key: "max_amount",
       render: (value: number) => `${value.toLocaleString()} so'm`,
     },
     {
-      title: t("UpdatedAt"),
+      title: t("updatedAt"),
       dataIndex: "updated_at",
       key: "updated_at",
     },
     {
       title: t("actions"),
       key: "actions",
-      render: (_: any, record: WithDrawalSettingsData) => (
+      render: (_: any, record: withdrawalSettingsData) => (
         <Space>
           <Button
             type="primary"
@@ -108,7 +108,7 @@ const WithDrawal = () => {
   return (
     <>
       <Card
-        title={t("WithdrawalSettings")}
+        title={t("withdrawalSettings")}
         extra={
           <Button type="primary" icon={<PlusOutlined />} onClick={handleAdd}>
             {t("adding")}
@@ -124,11 +124,11 @@ const WithDrawal = () => {
         />
       </Card>
 
-      {/* <WithdrawalModal
+      <WithdrawalModal
         visible={modalVisible}
         onClose={handleModalClose}
         editingRecord={editingRecord}
-      /> */}
+      />
     </>
   );
 };
