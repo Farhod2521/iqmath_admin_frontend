@@ -6,6 +6,7 @@ export type LogEntriesParams = {
   action_flag?: number;
   content_type?: string;
   limit?: number;
+  page: number;
 };
 
 export type LogEntriesData = {

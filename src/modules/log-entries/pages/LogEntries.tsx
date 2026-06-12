@@ -18,7 +18,7 @@ const LogEntries = () => {
   const queryClient = useQueryClient();
   const [pagination, setPagination] = useState({
     current: 1,
-    pageSize: 1000,
+    pageSize: 10,
     total: 0,
   });
   const [filters, setFilters] = useState({
@@ -29,7 +29,12 @@ const LogEntries = () => {
 
   const { data, isLoading } = useQuery({
     queryKey: ["data-log-entries", filters],
-    queryFn: () => getLogEntrieses({ limit: pagination.pageSize, ...filters }),
+    queryFn: () =>
+      getLogEntrieses({
+        page: pagination.current,
+        limit: pagination.pageSize,
+        ...filters,
+      }),
   });
 
   const columns = [
@@ -145,21 +150,21 @@ const LogEntries = () => {
         columns={columns}
         dataSource={data?.results}
         onChange={handleTableChange}
-        // pagination={{
-        //   current: pagination.current,
-        //   pageSize: pagination.pageSize,
-        //   total: data?.count,
-        //   pageSizeOptions: [10, 20, 30, 50, 70, 100],
-        //   showSizeChanger: true,
-        //   locale: { items_per_page: "" },
-        //   showTotal: (total) => (
-        //     <Tag className="pagination_tag">
-        //       Jami: <b>{total}</b>
-        //     </Tag>
-        //   ),
-        // }}
+        pagination={{
+          current: pagination.current,
+          pageSize: pagination.pageSize,
+          total: data?.count,
+          pageSizeOptions: [10, 20, 30, 50, 70, 100],
+          showSizeChanger: true,
+          locale: { items_per_page: "" },
+          showTotal: (total) => (
+            <Tag className="pagination_tag">
+              Jami: <b>{total}</b>
+            </Tag>
+          ),
+        }}
         scroll={{ x: 1200 }}
-        pagination={false}
+        // pagination={false}
       />
     </Card>
   );

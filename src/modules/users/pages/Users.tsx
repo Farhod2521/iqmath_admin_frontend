@@ -42,7 +42,7 @@ const Users = () => {
 
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<StudentData[]>([]);
@@ -57,23 +57,31 @@ const Users = () => {
   const [isFine, setIsFine] = useState(false);
   const [fineStudent, setFineStudent] = useState<StudentData>();
 
-  const [filterData, setFilterData] = useState<{
-    search?: string;
-    status?: string;
-    role?: string;
-    class_num?: number;
-    subject_name?: string;
-    lang?: string;
-    device?: string;
-  }>({
-    search: undefined,
-    role: "student",
-    status: "active",
-    class_num: undefined,
-    subject_name: undefined,
-    lang: "uz",
-    device: undefined,
-  });
+  const getInitialFilter = () => {
+    const roleParam = searchParams.get("role");
+    const statusParam = searchParams.get("status");
+    const searchParam = searchParams.get("search");
+
+    return {
+      search: searchParam || undefined,
+      role:
+        roleParam &&
+        ["student", "teacher", "parent", "tutor"].includes(roleParam)
+          ? roleParam
+          : "student", // default student
+      status:
+        statusParam && ["active", "inactive"].includes(statusParam)
+          ? statusParam
+          : "active",
+      class_num: undefined,
+      subject_name: undefined,
+      lang: "uz",
+      device: undefined,
+    };
+  };
+
+  // STATE ni URL dan initialize qilish
+  const [filterData, setFilterData] = useState(getInitialFilter);
 
   useEffect(() => {
     const roleParam = searchParams.get("role");
@@ -135,6 +143,9 @@ const Users = () => {
               ? 1
               : prev.current,
         }));
+      })
+      .catch((error) => {
+        handleApiError(error);
       })
       .finally(() => setLoading(false));
   }, [filterData, pagination.current, pagination.pageSize]);
@@ -388,14 +399,16 @@ const Users = () => {
               </button>
             </Tooltip>
 
-            <Tooltip title={t("issueFine")}>
-              <button
-                className="p-2 cursor-pointer rounded-lg bg-red-100 text-red-600 hover:bg-red-200"
-                onClick={() => handleFine(record)}
-              >
-                <WarningOutlined />
-              </button>
-            </Tooltip>
+            {filterData.role === "student" && (
+              <Tooltip title={t("issueFine")}>
+                <button
+                  className="p-2 cursor-pointer rounded-lg bg-red-100 text-red-600 hover:bg-red-200"
+                  onClick={() => handleFine(record)}
+                >
+                  <WarningOutlined />
+                </button>
+              </Tooltip>
+            )}
             <Popconfirm
               title={t("scoreLog.deleted")}
               okText={t("yes")}

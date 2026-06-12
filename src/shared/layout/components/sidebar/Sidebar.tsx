@@ -12,13 +12,14 @@ const SiderMenu = () => {
   const { collapsed, toggleCollapsed } = useThemeStore();
   //  const theme = useAppSelector(selectTheme)
   const hasRegionAndDistrict = !!(userData?.region && userData?.districts);
+
   const sidebarHeight = hasRegionAndDistrict
-    ? "h-[calc(-305px+100vh)]"
-    : "h-[calc(-105px+100vh)]";
+    ? "h-[calc(100vh-305px)]" // 305px - header + profile + footer
+    : "h-[calc(100vh-105px)]"; // 105px - header + footer
 
   return (
     <Sider
-      className="sidebar relative"
+      className="sidebar relative flex flex-col"
       width={280}
       onCollapse={toggleCollapsed}
       trigger={null}

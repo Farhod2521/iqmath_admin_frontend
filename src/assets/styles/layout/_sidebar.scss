@@ -4,10 +4,12 @@
   transition-duration: 0.3s;
   overflow-x: hidden;
   scrollbar-width: thin;
+  height: 100vh; /* Sider to'liq balandlikda */
 
   .sidebar_blok {
     overflow-y: auto;
     overflow-x: hidden;
+    flex: 1; /* Qolgan bo'sh joyni egallaydi */
     display: flex;
     flex-direction: column;
     justify-content: space-between;

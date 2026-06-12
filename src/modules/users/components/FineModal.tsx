@@ -18,12 +18,16 @@ const FineModal = ({ open, close, student, onSuccess }: Props) => {
   const { t } = useTranslation();
   const [form] = Form.useForm();
 
+  const handleClose = () => {
+    form.resetFields();
+    close();
+  };
+
   const fineMutation = useMutation({
     mutationFn: postTeacherFine,
     onSuccess: (res: any) => {
       toast.success(res?.message);
-      form.resetFields();
-      close();
+      handleClose();
       onSuccess?.();
     },
     onError: () => {
@@ -34,7 +38,7 @@ const FineModal = ({ open, close, student, onSuccess }: Props) => {
   return (
     <Modal
       open={open}
-      onCancel={close}
+      onCancel={handleClose}
       okText={t("save")}
       cancelText={t("cancel")}
       onOk={() => form.submit()}
