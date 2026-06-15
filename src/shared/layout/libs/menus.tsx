@@ -46,7 +46,13 @@ export const getMenus = (t: (key: string) => string) => [
     key: "fines",
     path: "/fines",
     label: t("fines"),
-    icon: (isActive: boolean) => <WarningOutlined size={22} />,
+    icon: () => (
+      <WarningOutlined
+        style={{
+          width: "20px",
+        }}
+      />
+    ),
   },
 
   {
@@ -219,6 +225,24 @@ export const getMenus = (t: (key: string) => string) => [
       },
     ],
   },
+
+  {
+    key: "app-students-history",
+    label: t("appManagementsHistory"),
+    icon: (isActive: boolean) => <MdOutlineManageHistory size={22} />,
+    children: [
+      {
+        key: "app-students",
+        label: t("scoreLog.title"),
+        path: "/app-students/score-log",
+      },
+      {
+        key: "conversion-history",
+        label: t("conversionHistory"),
+        path: "/app-students/conversion-history",
+      },
+    ],
+  },
   {
     key: "reward-log",
     path: "/reward-log",
@@ -226,19 +250,12 @@ export const getMenus = (t: (key: string) => string) => [
     icon: () => <MdOutlineWorkspacePremium size={22} />,
   },
   // /log-entries
-  {
-    key: "app-students",
-    label: t("scoreLog.title"),
-    path: "/app-students/score-log",
-    icon: (isActive: boolean) => <MdOutlineManageHistory size={22} />,
-    // children: [
-    //   {
-    //     key: "score-log",
-    //     path: "/app-students/score-log",
-    //     label: t("scoreLog.title"),
-    //   },
-    // ],
-  },
+  // {
+  //   key: "app-students",
+  //   label: t("scoreLog.title"),
+  //   path: "/app-students/score-log",
+  //   icon: (isActive: boolean) => <MdOutlineManageHistory size={22} />,
+  // },
   {
     key: "log-entries",
     path: "/log-entries",

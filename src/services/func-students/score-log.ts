@@ -34,14 +34,19 @@ export type FuncStudentScoreLogsResultsData = {
 
 export type FuncStudentScoreLogsData = {
   count: number;
+  // next: string;
+  // previous: string;
   results: FuncStudentScoreLogsResultsData[];
 };
 
 export type FuncStudentScoreLogsParams = {
+  search?: string;
   student_id?: number;
   award_type?: string;
   date_from?: string;
   date_to?: string;
+  page?: number;
+  limit?: number;
 };
 
 export const getFuncStudentScoreLogs = (params: FuncStudentScoreLogsParams) =>

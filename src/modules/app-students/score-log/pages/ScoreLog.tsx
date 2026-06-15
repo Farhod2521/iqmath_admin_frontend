@@ -6,13 +6,23 @@ import {
   getStudentList,
   getUsers,
 } from "@/services";
+import FSearch from "@/shared/components/filters/FSearch";
 import MathText from "@/shared/components/latex/MathText";
 import SelectInfinite from "@/shared/components/selects/SelectInfinite";
 import { AwardTypeLabel } from "@/shared/utils/constants";
 import { handleApiError } from "@/shared/utils/handleApiError";
 import { DeleteOutlined } from "@ant-design/icons";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Button, Card, DatePicker, Popconfirm, Select, Table, Tag } from "antd";
+import {
+  Button,
+  Card,
+  DatePicker,
+  Popconfirm,
+  Select,
+  Table,
+  TablePaginationConfig,
+  Tag,
+} from "antd";
 import dayjs from "dayjs";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
@@ -24,15 +34,31 @@ const ScoreLog = () => {
   const { t } = useTranslation();
   const queryClient = useQueryClient();
   const [filterData, setFilterData] = useState<FuncStudentScoreLogsParams>({
+    search: undefined,
     student_id: undefined,
     award_type: undefined,
     date_from: undefined,
     date_to: undefined,
   });
+  const [pagination, setPagination] = useState({
+    current: 1,
+    pageSize: 20,
+    total: 20,
+  });
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ["score-log-key", filterData],
-    queryFn: () => getFuncStudentScoreLogs({ ...filterData }),
+    queryKey: [
+      "score-log-key",
+      filterData,
+      pagination.current,
+      pagination.pageSize,
+    ],
+    queryFn: () =>
+      getFuncStudentScoreLogs({
+        page: pagination.current,
+        limit: pagination.pageSize,
+        ...filterData,
+      }),
   });
 
   useEffect(() => {
@@ -41,11 +67,26 @@ const ScoreLog = () => {
     }
   }, [error]);
 
+  useEffect(() => {
+    if (data?.count) {
+      setPagination((prev) => ({
+        ...prev,
+        total: data?.count,
+        current:
+          data?.count > 0 && data?.results?.length === 0 ? 1 : prev?.current,
+      }));
+    }
+  }, [data?.results]);
+
   const deleteMutation = useMutation({
     mutationFn: (id: number) => deleteFuncStudentScoreLog(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["score-log-key"] });
       toast.success(t("deletedSuccessfully") || "O‘chirildi");
+      // Agar joriy sahifada ma'lumot qolmagan bo'lsa, oldingi sahifaga o'tish
+      if (data?.results?.length === 1 && pagination.current > 1) {
+        setPagination((prev) => ({ ...prev, current: prev.current - 1 }));
+      }
     },
     onError: (err: any) => handleApiError(err),
   });
@@ -60,9 +101,10 @@ const ScoreLog = () => {
       title: t("scoreLog.tR"),
       dataIndex: "id",
       width: 10,
-      render: (text: string, record: any, index: number) => (
-        <span>{index + 1}</span>
-      ),
+      render: (rol: string, d: any, idx: number) => {
+        const { current, pageSize } = pagination;
+        return <div>{(current - 1) * pageSize + idx + 1}</div>;
+      },
     },
     {
       title: t("student"),
@@ -123,9 +165,28 @@ const ScoreLog = () => {
     },
   ];
 
+  // To'g'ri holat:
+  const handleTableChange = (paginationConfig: TablePaginationConfig) => {
+    setPagination((prev) => ({
+      ...prev,
+      current: paginationConfig.current || 1,
+      pageSize: paginationConfig.pageSize || 10,
+    }));
+  };
+
   return (
     <Card title={t("scoreLog.title")}>
       <div className="flex items-center gap-2 mb-5">
+        <FSearch
+          onSearchInput={(value) =>
+            setFilterData((prev) => ({
+              ...prev,
+              search: value,
+            }))
+          }
+          className="w-50!"
+          placeholder="Qidiruv..."
+        />
         <SelectInfinite
           className="w-full"
           size="middle"
@@ -188,11 +249,26 @@ const ScoreLog = () => {
         />
       </div>
       <Table
+        size="small"
         rowKey="id"
         loading={isLoading}
         columns={columns}
         dataSource={data?.results}
-        pagination={false}
+        onChange={handleTableChange}
+        pagination={{
+          ...pagination,
+          pageSizeOptions: [10, 20, 30, 50, 70, 100],
+          showSizeChanger: true,
+          locale: { items_per_page: "" },
+          showTotal: (total, range) => (
+            <span className="pagination_tatal">
+              <b>
+                {range[0]} – {range[1]}
+              </b>{" "}
+              {t("until")} <b>{total}</b> {t("total")}
+            </span>
+          ),
+        }}
         scroll={{ x: 1200 }}
       />
     </Card>
