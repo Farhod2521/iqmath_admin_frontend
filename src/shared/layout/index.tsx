@@ -51,10 +51,10 @@ const MainLayout: React.FC = () => {
         </div>
         <Content
           style={{
-            height: "calc(100vh-105px)",
+            height: "calc(100vh - 105px)",
             overflowY: "auto",
             background: "#f6f8fa",
-            padding: location.pathname.includes("dashboard") ? "0" : "16px",
+            padding: location.pathname.includes("dashboard") ? "0" : "12px",
           }}
         >
           <Suspense fallback={<Loading />}>

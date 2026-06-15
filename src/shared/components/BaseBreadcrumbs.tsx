@@ -13,7 +13,7 @@ const BaseBreadcrumbs: React.FC<Props> = ({ data }) => {
   if (!data.length) return null;
 
   return (
-    <div className="mb-4">
+    <div className="mb-2">
       <nav className="flex items-center text-sm text-gray-500">
         {data.map((item, idx) => (
           <React.Fragment key={idx}>
