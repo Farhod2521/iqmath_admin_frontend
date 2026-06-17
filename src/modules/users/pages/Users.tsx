@@ -49,7 +49,7 @@ const Users = () => {
   const [pagination, setPagination] = useState({
     current: 1,
     pageSize: 10,
-    total: 0,
+    total: 10,
   });
   const [isReward, setIsReward] = useState(false);
   const [selectedStudent, setSelectedStudent] = useState<StudentData>();
@@ -137,18 +137,26 @@ const Users = () => {
 
         setPagination((prev) => ({
           ...prev,
-          total: res?.total || 0,
+          total: res?.total,
           current:
-            res?.total > 0 && (res?.results?.length || 0) === 0
-              ? 1
-              : prev.current,
+            res?.total > 0 && res?.results?.length === 0 ? 1 : prev?.current,
         }));
       })
       .catch((error) => {
         handleApiError(error);
       })
       .finally(() => setLoading(false));
-  }, [filterData, pagination.current, pagination.pageSize]);
+  }, [
+    pagination.current,
+    pagination.pageSize,
+    filterData.class_num,
+    filterData.device,
+    filterData.lang,
+    filterData.role,
+    filterData.search,
+    filterData.status,
+    filterData.subject_name,
+  ]);
 
   useEffect(() => {
     fetchData();
@@ -451,17 +459,19 @@ const Users = () => {
     key: K,
     value: (typeof filterData)[K],
   ) => {
-    setPagination((prev) => ({
-      ...prev,
-      current: 1,
-    }));
-
     setFilterData((prev) => ({
       ...prev,
       [key]:
         value === "" || value === "all" || value === null ? undefined : value,
     }));
   };
+
+  const handleSearch = useCallback(
+    (value: string) => {
+      handleFilterChange("search", value || undefined);
+    },
+    [handleFilterChange],
+  );
 
   if (loading && data.length === 0) {
     return (
@@ -482,9 +492,7 @@ const Users = () => {
       <Row gutter={[12, 12]} className="mb-4">
         <Col xs={24} sm={12} md={8} lg={3}>
           <FSearch
-            onSearchInput={(value) =>
-              handleFilterChange("search", value || undefined)
-            }
+            onSearchInput={handleSearch}
             style={{ width: "100%" }}
             placeholder={t("searchs")}
           />

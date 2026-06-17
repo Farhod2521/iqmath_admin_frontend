@@ -64,7 +64,15 @@ const Mentors = () => {
       })
       .catch((err) => handleApiError(err))
       .finally(() => setIsLoading(false));
-  }, [pagination.current, pagination.pageSize, filterData]);
+  }, [
+    pagination.current,
+    pagination.pageSize,
+    filterData.search,
+    filterData.role,
+    filterData.status,
+    filterData.lang,
+    filterData.device,
+  ]);
 
   useEffect(() => {
     fetchData();
@@ -184,16 +192,22 @@ const Mentors = () => {
     { value: "inactive", label: t("statusInactive") },
   ];
 
+  const updateFilter = useCallback((key: string, value: any) => {
+    setPagination((prev) => ({
+      ...prev,
+      current: 1,
+    }));
+
+    setFilterData((prev) => ({
+      ...prev,
+      [key]: value || undefined,
+    }));
+  }, []);
   return (
     <Card title={t("teachers")}>
       <div className="flex items-center gap-2 mb-4">
         <FSearch
-          onSearchInput={(value) =>
-            setFilterData((prev) => ({
-              ...prev,
-              search: value,
-            }))
-          }
+          onSearchInput={(value) => updateFilter("search", value)}
           className="w-50!"
           placeholder="Qidiruv..."
         />
@@ -204,26 +218,16 @@ const Mentors = () => {
           placeholder={t("status")}
           value={filterData.status}
           options={statusOptions}
-          onChange={(value) =>
-            setFilterData((prev) => ({
-              ...prev,
-              status: value,
-            }))
-          }
+          onChange={(value) => updateFilter("status", value)}
         />
         <Select
           allowClear
           className="w-full"
-          placeholder="Til"
+          placeholder={t("registeredLanguage")}
           style={{ width: "150px" }}
           value={filterData.lang}
           options={langOptions}
-          onChange={(value) =>
-            setFilterData((prev) => ({
-              ...prev,
-              lang: value,
-            }))
-          }
+          onChange={(value) => updateFilter("lang", value)}
         />
         <Select
           allowClear
@@ -232,12 +236,7 @@ const Mentors = () => {
           style={{ width: "150px" }}
           value={filterData.device}
           options={deviceOptions}
-          onChange={(value) =>
-            setFilterData((prev) => ({
-              ...prev,
-              device: value,
-            }))
-          }
+          onChange={(value) => updateFilter("device", value)}
         />
       </div>
       <Table

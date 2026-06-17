@@ -24,7 +24,7 @@ import {
   Tag,
 } from "antd";
 import dayjs from "dayjs";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
 
@@ -174,16 +174,22 @@ const ScoreLog = () => {
     }));
   };
 
+  const handleSearch = useCallback((value: string) => {
+    setPagination((prev) => ({
+      ...prev,
+      current: 1,
+    }));
+    setFilterData((prev) => ({
+      ...prev,
+      search: value,
+    }));
+  }, []);
+
   return (
     <Card title={t("scoreLog.title")}>
       <div className="flex items-center gap-2 mb-5">
         <FSearch
-          onSearchInput={(value) =>
-            setFilterData((prev) => ({
-              ...prev,
-              search: value,
-            }))
-          }
+          onSearchInput={handleSearch}
           className="w-50!"
           placeholder="Qidiruv..."
         />
