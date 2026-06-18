@@ -29,7 +29,7 @@ const ResetPasswordModal = ({ open, close, selectedStudent }: Props) => {
 
   const handleSubmit = (values: { new_password: string }) => {
     mutation.mutate({
-      user_id: selectedStudent.id,
+      user_id: selectedStudent.user_id,
       new_password: values.new_password,
     });
   };

@@ -1,8 +1,6 @@
 import { postTeacherReward } from "@/services";
 import { handleApiError } from "@/shared/utils/handleApiError";
 import { Form, Modal, Input, Button } from "antd";
-import { useForm } from "antd/es/form/Form";
-import { parseInt } from "lodash";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-toastify";
@@ -174,7 +172,7 @@ const RewardModal = ({ close, open, selectedStudent }: Props) => {
           <Button
             type="primary"
             htmlType="submit"
-            className="flex-1 !bg-[#5D87FF] hover:!bg-[#4570EA]"
+            className="flex-1 bg-[#5D87FF]! hover:bg-[#4570EA]!"
           >
             {isLoading ? (
               <>
