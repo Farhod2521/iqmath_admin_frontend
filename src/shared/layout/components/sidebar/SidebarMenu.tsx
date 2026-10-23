@@ -24,7 +24,7 @@ const SidebarMenu = ({ collapsed }: Props) => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const transformMenuData = useMenuTransformer(navigate);
+  const transformMenuData = useMenuTransformer(navigate, collapsed);
 
   const [baseMenus, setBaseMenus] = useState<MenuItem[]>(menus);
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);

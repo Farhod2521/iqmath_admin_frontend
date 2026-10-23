@@ -4,8 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Brand = ({ color = false }: { color?: boolean }) => {
-  const { collapsed, toggleCollapsed } = useThemeStore();
+const Brand = ({ color = false, full = false }: { color?: boolean; full?: boolean }) => {
+  const { collapsed } = useThemeStore();
 
   return (
     <div className={"  "}>
@@ -19,7 +19,7 @@ const Brand = ({ color = false }: { color?: boolean }) => {
             className={color ? "brightness-0 invert" : ""}
           />
         </span>
-        {collapsed ? null : (
+        {collapsed && !full ? null : (
           <h1
             className={` font-normal text-[32px] font-bicubik ${color ? "text-white" : "text-gray-800"}  font-myriad  `}
           >

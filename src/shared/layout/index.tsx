@@ -7,7 +7,7 @@ import SiderMenu from "./components/sidebar/Sidebar";
 import DrawerWrapper from "./components/drawer/Drawer";
 import Loading from "../components/Loading";
 import Header from "./components/header/Header";
-import { useStoreUsers } from "@/store";
+import { useStoreUsers, useThemeStore } from "@/store";
 import BaseBreadcrumbs from "../components/BaseBreadcrumbs";
 import { useBreadcrumbs } from "../hooks";
 
@@ -26,6 +26,11 @@ const MainLayout: React.FC = () => {
   }, []);
 
   const isMobile = windowWidth < 650;
+  const setCollapsed = useThemeStore((state) => state.setCollapsed);
+
+  useEffect(() => {
+    if (isMobile) setCollapsed(false);
+  }, [isMobile, setCollapsed]);
   const hideSidebar = location.pathname.includes("response");
 
   useEffect(() => {

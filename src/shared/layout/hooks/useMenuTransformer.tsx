@@ -2,10 +2,12 @@ import { MenuProps, Tooltip } from "antd";
 import { NavLink } from "react-router-dom";
 import { MenuItem } from "@/shared/layout/libs";
 import { PermissionsCode } from "@/shared/utils/menuPermissions";
-import { useThemeStore } from "@/store";
 
-export const useMenuTransformer = (navigate: (path: string) => void) => {
-  const { collapsed } = useThemeStore();
+// collapsed — faqat ikonka ko'rinishi (desktop sidebar yig'ilganda); telefondagi drawer'da doim false
+export const useMenuTransformer = (
+  navigate: (path: string) => void,
+  collapsed = false,
+) => {
 
   const renderLabel = (label: string) => {
     if (collapsed) {

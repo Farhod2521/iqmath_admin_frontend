@@ -1,7 +1,7 @@
 import logoMini from "@/assets/svg/logo-mini.svg";
 import Brand from "@/shared/components/brand";
 import { useThemeStore } from "@/store";
-import { AiOutlineMenuUnfold } from "react-icons/ai";
+import { AiOutlineMenuFold } from "react-icons/ai";
 import { MdMenuOpen } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 
@@ -16,14 +16,15 @@ function DrawerProfile() {
         onClick={() => navigate("/")}
       >
         <div className="flex items-center justify-center">
-          <Brand />
+          <Brand full />
         </div>
       </div>
       <div
         className="flex items-center justify-center cursor-pointer"
         onClick={toggleCollapsed}
+        aria-label="Close menu"
       >
-        <AiOutlineMenuUnfold size={20} color="#6e8bb8" />
+        <AiOutlineMenuFold size={20} color="#6e8bb8" />
       </div>
     </div>
   );

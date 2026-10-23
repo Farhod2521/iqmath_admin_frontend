@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Layout, Drawer } from "antd";
 import SidebarMenu from "../sidebar/SidebarMenu";
 import DrawerProfile from "./DrawerProfile";
@@ -6,6 +8,12 @@ function DrawerWrapper() {
   const collapsed = useThemeStore((state) => state.collapsed);
   const theme = useThemeStore((state) => state.currentTheme);
   const setCollapsed = useThemeStore((state) => state.setCollapsed);
+  const { pathname } = useLocation();
+
+  // Telefonda menyudan sahifa tanlanganda drawer yopiladi
+  useEffect(() => {
+    setCollapsed(false);
+  }, [pathname, setCollapsed]);
   // const collapsed = useAppSelector(selectCollapsed)
   // const dispatch = useAppDispatch()
   // const theme = useAppSelector(selectTheme)
@@ -14,7 +22,7 @@ function DrawerWrapper() {
     <Drawer
       placement="left"
       // width="80%"
-      width={300}
+      width="min(300px, 85vw)"
       open={collapsed}
       onClose={() => setCollapsed(!collapsed)}
       closable={false}
@@ -29,7 +37,9 @@ function DrawerWrapper() {
         }`}
       >
         <DrawerProfile />
-        <SidebarMenu collapsed={collapsed} />
+        <div className="px-3 pt-2">
+          <SidebarMenu collapsed={false} />
+        </div>
       </Layout.Sider>
     </Drawer>
   );
