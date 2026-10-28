@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from "react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Alert, Card, Empty, Segmented, Skeleton, Tag } from "antd";
@@ -9,7 +9,6 @@ import {
   getAISolutionConfig,
   getAISolutionTree,
   type AILang,
-  type AITreeSubject,
   type AITreeTopic,
 } from "@/services";
 import { handleApiError } from "@/shared/utils/handleApiError";
@@ -19,7 +18,6 @@ import SubjectCard from "../components/SubjectCard";
 const AISolutions = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const [params, setParams] = useSearchParams();
   const lang = (params.get("lang") === "ru" ? "ru" : "uz") as AILang;
   const classId = Number(params.get("class")) || undefined;
@@ -61,22 +59,6 @@ const AISolutions = () => {
     if (newTab) window.open(url, "_blank");
     else navigate(url);
   };
-
-  // Navbatdan savol yechildi — daraxtdagi mavzu sanog'i darhol oshadi
-  const markSolved = (topicId: number) =>
-    queryClient.setQueryData<AITreeSubject[]>(["ai-solutions-tree", classId, lang], (old) =>
-      old?.map((subject) => ({
-        ...subject,
-        chapters: subject.chapters.map((chapter) => ({
-          ...chapter,
-          topics: chapter.topics.map((topic) =>
-            topic.id === topicId
-              ? { ...topic, solved_count: Math.min(topic.solved_count + 1, topic.question_count) }
-              : topic,
-          ),
-        })),
-      })),
-    );
 
   const classOptions = useMemo(
     () =>
@@ -153,7 +135,6 @@ const AISolutions = () => {
             lang={lang}
             configured={Boolean(config?.configured)}
             onOpenTopic={openTopic}
-            onSolved={markSolved}
           />
         ))}
     </div>

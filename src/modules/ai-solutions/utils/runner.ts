@@ -1,4 +1,10 @@
-import { solveQuestionWithAI, translateQuestionWithAI, type AILang, type AIQuestion } from "@/services";
+import {
+  digitizeQuestionWithAI,
+  solveQuestionWithAI,
+  translateQuestionWithAI,
+  type AILang,
+  type AIQuestion,
+} from "@/services";
 
 const ATTEMPTS = 3;
 
@@ -25,20 +31,25 @@ export const errorMessage = (error: any, fallback: string) =>
   error?.response?.data?.detail || error?.message || fallback;
 
 /**
- * Savolni to'liq tayyorlaydi: o'zbekcha yechim (yo'q bo'lsa yoki force) va uning ruscha tarjimasi.
- * Natija — `viewLang` tilidagi savol ko'rinishi.
+ * Savolni to'liq tayyorlaydi: matndagi rasm-formulalar LaTeX ga (bo'lsa), o'zbekcha yechim
+ * (yo'q bo'lsa yoki force) va uning ruscha tarjimasi. Natija — `viewLang` tilidagi savol ko'rinishi.
  */
 export const processQuestion = async (
   id: number,
   viewLang: AILang,
-  { force = false, hasUz = false, hasRu = false, shouldStop }: {
+  { force = false, hasUz = false, hasRu = false, hasImages = false, shouldStop }: {
     force?: boolean;
     hasUz?: boolean;
     hasRu?: boolean;
+    hasImages?: boolean;
     shouldStop?: () => boolean;
   } = {},
 ): Promise<AIQuestion | undefined> => {
   let result: AIQuestion | undefined;
+  // Misol rasm bo'lib saqlangan — avval bazada formulaga aylantiriladi, keyin yechiladi
+  if (hasImages && (force || !hasUz)) {
+    result = await withRetry(() => digitizeQuestionWithAI(id, viewLang), shouldStop);
+  }
   if (force || !hasUz) {
     result = await withRetry(() => solveQuestionWithAI(id, viewLang, force), shouldStop);
   }

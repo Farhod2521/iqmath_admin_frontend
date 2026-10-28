@@ -1,29 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { Button, Card, Collapse, Progress, Spin, Tag } from "antd";
 import { LuArrowRight, LuBookOpen, LuCircleStop, LuSparkles } from "react-icons/lu";
-import {
-  getAISolutionSubjectQueue,
-  type AILang,
-  type AIQueueItem,
-  type AITreeSubject,
-  type AITreeTopic,
-} from "@/services";
-import { errorMessage, processQuestion } from "../utils/runner";
-
-// Bir vaqtda AI ga yuboriladigan savollar soni
-const CONCURRENCY = 2;
-
-type RunState = {
-  running: boolean;
-  total: number;
-  done: number;
-  failed: number;
-  lastError: string;
-  active: AIQueueItem[];
-};
-
-const IDLE: RunState = { running: false, total: 0, done: 0, failed: 0, lastError: "", active: [] };
+import type { AILang, AITreeSubject, AITreeTopic } from "@/services";
+import { startBookRun, stopBookRun, useBookRun } from "../utils/bookRun";
 
 type Props = {
   subject: AITreeSubject;
@@ -31,62 +11,20 @@ type Props = {
   configured: boolean;
   /** newTab — kitob yechilayotganda mavzu yangi oynada ochiladi */
   onOpenTopic: (topic: AITreeTopic, newTab?: boolean) => void;
-  /** Savol shu tilda yechildi — daraxtdagi sanoqni oshirish uchun */
-  onSolved: (topicId: number) => void;
 };
 
 /** Fan (kitob) kartochkasi: boblar va mavzular, hamda butun kitobni boshidan oxirigacha AI bilan yechish */
-const SubjectCard = ({ subject, lang, configured, onOpenTopic, onSolved }: Props) => {
+const SubjectCard = ({ subject, lang, configured, onOpenTopic }: Props) => {
   const { t } = useTranslation();
-  const [run, setRun] = useState<RunState>(IDLE);
-  const stopRef = useRef(false);
-
-  // Sahifadan chiqib ketilsa navbat to'xtaydi
-  useEffect(() => () => void (stopRef.current = true), []);
+  const queryClient = useQueryClient();
+  // Jarayon global saqlanadi — boshqa sinfga o'tib qaytilsa ham progress ko'rinib turadi
+  const run = useBookRun(subject.id);
 
   const chapters = subject.chapters.filter((chapter) => chapter.topics.length);
   const total = chapters.reduce((sum, c) => sum + c.topics.reduce((s, tp) => s + tp.question_count, 0), 0);
   const solved = chapters.reduce((sum, c) => sum + c.topics.reduce((s, tp) => s + tp.solved_count, 0), 0);
 
-  const start = async () => {
-    stopRef.current = false;
-    setRun({ ...IDLE, running: true });
-    let queue: AIQueueItem[];
-    try {
-      // Kitob tartibida: bob → mavzu → daraja; o'zbekcha va ruscha yechimi tayyorlari o'tkazib yuboriladi
-      queue = (await getAISolutionSubjectQueue(subject.id)).filter((item) => !item.uz || !item.ru);
-    } catch (error) {
-      setRun({ ...IDLE, lastError: errorMessage(error, t("aiSolutions.failed")) });
-      return;
-    }
-    setRun((r) => ({ ...r, total: queue.length }));
-
-    const worker = async () => {
-      while (queue.length && !stopRef.current) {
-        const item = queue.shift() as AIQueueItem;
-        setRun((r) => ({ ...r, active: [...r.active, item] }));
-        let ok = true;
-        let message = "";
-        try {
-          await processQuestion(item.id, lang, { hasUz: item.uz, hasRu: item.ru, shouldStop: () => stopRef.current });
-          if (!(lang === "uz" ? item.uz : item.ru)) onSolved(item.topic_id);
-        } catch (error) {
-          // 3 marta urinib ham bo'lmadi — keyingi savolga o'tiladi, bu savol keyingi ishga tushirishda qayta olinadi
-          ok = false;
-          message = errorMessage(error, t("aiSolutions.failed"));
-        }
-        setRun((r) => ({
-          ...r,
-          done: r.done + 1,
-          failed: r.failed + (ok ? 0 : 1),
-          lastError: ok ? r.lastError : message,
-          active: r.active.filter((a) => a.id !== item.id),
-        }));
-      }
-    };
-    await Promise.all(Array.from({ length: CONCURRENCY }, worker));
-    setRun((r) => ({ ...r, running: false, active: [] }));
-  };
+  const start = () => startBookRun(subject.id, lang, queryClient, t("aiSolutions.failed"));
 
   const activeChapters = new Set(run.active.map((a) => a.chapter_id));
   const activeTopics = new Set(run.active.map((a) => a.topic_id));
@@ -110,7 +48,7 @@ const SubjectCard = ({ subject, lang, configured, onOpenTopic, onSolved }: Props
       }
       extra={
         run.running ? (
-          <Button danger icon={<LuCircleStop />} onClick={() => (stopRef.current = true)}>
+          <Button danger icon={<LuCircleStop />} onClick={() => stopBookRun(subject.id)}>
             {t("aiSolutions.stop")}
           </Button>
         ) : (

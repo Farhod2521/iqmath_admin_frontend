@@ -34,6 +34,8 @@ export type AIQuestion = {
   id: number;
   level: number;
   type: "text" | "choice" | "image_choice" | "composite";
+  /** Matnda hali formulaga aylantirilmagan base64 rasm bor */
+  has_images: boolean;
   text: string;
   text_answer: string;
   choices: { letter: string; text: string; image_url: string | null; is_correct: boolean }[];
@@ -71,7 +73,15 @@ export const getAISolutionTree = (class_id: number, lang: AILang) =>
 export const getAISolutionTopic = (id: number | string, lang: AILang) =>
   axiosApi.get<AITopicDetail>(`/management/ai-solutions/topics/${id}/`, { lang });
 
-export type AIQueueItem = { id: number; topic_id: number; chapter_id: number; uz: boolean; ru: boolean };
+export type AIQueueItem = {
+  id: number;
+  topic_id: number;
+  chapter_id: number;
+  uz: boolean;
+  ru: boolean;
+  /** Matnida base64 rasm bor — yechishdan oldin formulaga aylantiriladi */
+  images: boolean;
+};
 
 export const getAISolutionSubjectQueue = (subjectId: number) =>
   axiosApi.get<AIQueueItem[]>(`/management/ai-solutions/subjects/${subjectId}/queue/`);
@@ -79,6 +89,10 @@ export const getAISolutionSubjectQueue = (subjectId: number) =>
 /** Savolni o'zbekcha yechadi; javob — `lang` tilidagi ko'rinish */
 export const solveQuestionWithAI = (id: number, lang: AILang, force = false) =>
   axiosApi.post<AIQuestion>(`/management/ai-solutions/questions/${id}/solve/`, { lang, force });
+
+/** Matndagi base64 rasm-formulalarni AI bilan LaTeX ga aylantirib bazaga yozadi */
+export const digitizeQuestionWithAI = (id: number, lang: AILang) =>
+  axiosApi.post<AIQuestion>(`/management/ai-solutions/questions/${id}/digitize/`, { lang });
 
 /** O'zbekcha yechimni rus tiliga o'giradi */
 export const translateQuestionWithAI = (id: number, lang: AILang, force = false) =>

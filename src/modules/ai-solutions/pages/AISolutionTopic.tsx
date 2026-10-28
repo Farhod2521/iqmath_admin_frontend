@@ -201,6 +201,7 @@ const AISolutionTopic = () => {
         force,
         hasUz: has,
         hasRu: lang === "ru" && has,
+        hasImages: question.has_images,
         shouldStop: () => stopRef.current,
       });
       if (updated) putQuestion(updated);
