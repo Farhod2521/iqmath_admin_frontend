@@ -1722,6 +1722,9 @@
     "notSolved": "Hali yechilmagan",
     "solveOne": "Yechish",
     "resolveOne": "Qayta yechish",
-    "correct": "To‘g‘ri javob"
+    "correct": "To‘g‘ri javob",
+    "startBook": "AI yechishni boshlash",
+    "preparing": "Savollar tayyorlanmoqda",
+    "retryHint": "qolganlarini yechish uchun tugmani yana bosing"
   }
 }

@@ -8,13 +8,13 @@ import { LuArrowLeft, LuCircleStop, LuRefreshCw, LuSparkles } from "react-icons/
 import {
   getAISolutionConfig,
   getAISolutionTopic,
-  solveQuestionWithAI,
   type AILang,
   type AIQuestion,
   type AITopicDetail,
 } from "@/services";
 import { handleApiError } from "@/shared/utils/handleApiError";
 import HandwrittenSolution, { type SolutionMode } from "../components/HandwrittenSolution";
+import { errorMessage, processQuestion } from "../utils/runner";
 
 // Formulalar savol matnida \( \) va $$ ichida keladi
 const MATHJAX_CONFIG = {
@@ -195,11 +195,18 @@ const AISolutionTopic = () => {
       return next;
     });
     try {
-      putQuestion(await solveQuestionWithAI(question.id, lang, force));
+      // Ko'rinayotgan tildagi yechim bor bo'lsa: ruscha bor — demak o'zbekchasi ham bor
+      const has = Boolean(question.solution);
+      const updated = await processQuestion(question.id, lang, {
+        force,
+        hasUz: has,
+        hasRu: lang === "ru" && has,
+        shouldStop: () => stopRef.current,
+      });
+      if (updated) putQuestion(updated);
       return true;
     } catch (err: any) {
-      const message = err?.response?.data?.detail || err?.message || t("aiSolutions.failed");
-      setErrors((e) => ({ ...e, [question.id]: message }));
+      setErrors((e) => ({ ...e, [question.id]: errorMessage(err, t("aiSolutions.failed")) }));
       return false;
     } finally {
       setBusy((b) => ({ ...b, [question.id]: false }));

@@ -657,6 +657,9 @@
     "notSolved": "Not solved yet",
     "solveOne": "Solve",
     "resolveOne": "Re-solve",
-    "correct": "Correct answer"
+    "correct": "Correct answer",
+    "startBook": "Start AI solving",
+    "preparing": "Preparing questions",
+    "retryHint": "press the button again to solve the rest"
   }
 }

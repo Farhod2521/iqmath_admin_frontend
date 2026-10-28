@@ -1,6 +1,7 @@
 import { MathJax } from "better-react-mathjax";
 import type { ReactNode } from "react";
 import type { AISolutionData, AISolutionPart } from "@/services";
+import SolutionFigure from "./SolutionFigure";
 
 export type SolutionMode = "short" | "detailed";
 
@@ -114,9 +115,15 @@ const ShortPart = ({ part, labels, answerText }: PartProps) => {
 
 const DetailedPart = ({ part, labels, answerText }: PartProps) => (
   <div className="space-y-5">
-    {part.given.length || part.find ? (
-      <div className="w-fit min-w-[220px] max-w-full pr-6">
-        <GivenBlock part={part} labels={labels} />
+    {/* Tepada: chapda "Berilgan / Topish", o'ngda chizma (kerakli misollarda) */}
+    {part.given.length || part.find || part.detailed.figure ? (
+      <div className="flex flex-wrap items-start justify-between gap-6">
+        {part.given.length || part.find ? (
+          <div className="w-fit min-w-[220px] max-w-full pr-6">
+            <GivenBlock part={part} labels={labels} />
+          </div>
+        ) : null}
+        {part.detailed.figure ? <SolutionFigure figure={part.detailed.figure} /> : null}
       </div>
     ) : null}
     <div className="space-y-4">

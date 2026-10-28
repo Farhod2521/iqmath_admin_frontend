@@ -1,22 +1,25 @@
 import { useEffect, useMemo } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { Alert, Button, Card, Collapse, Empty, Progress, Segmented, Skeleton, Tag } from "antd";
-import { LuArrowRight, LuBookOpen, LuSparkles } from "react-icons/lu";
+import { Alert, Card, Empty, Segmented, Skeleton, Tag } from "antd";
+import { LuSparkles } from "react-icons/lu";
 import {
   getAISolutionClasses,
   getAISolutionConfig,
   getAISolutionTree,
   type AILang,
+  type AITreeSubject,
   type AITreeTopic,
 } from "@/services";
 import { handleApiError } from "@/shared/utils/handleApiError";
+import SubjectCard from "../components/SubjectCard";
 
 /** Admin: "AI yechimlar" — sinf → fan → bob → mavzu, har mavzuda yechilganlar soni */
 const AISolutions = () => {
   const { t } = useTranslation();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
   const [params, setParams] = useSearchParams();
   const lang = (params.get("lang") === "ru" ? "ru" : "uz") as AILang;
   const classId = Number(params.get("class")) || undefined;
@@ -52,7 +55,28 @@ const AISolutions = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [classId, classes]);
 
-  const openTopic = (topic: AITreeTopic) => navigate(`/ai-solutions/topics/${topic.id}?lang=${lang}`);
+  // Kitob yechilayotgan bo'lsa mavzu yangi oynada ochiladi — navbat to'xtab qolmasin
+  const openTopic = (topic: AITreeTopic, newTab = false) => {
+    const url = `/ai-solutions/topics/${topic.id}?lang=${lang}`;
+    if (newTab) window.open(url, "_blank");
+    else navigate(url);
+  };
+
+  // Navbatdan savol yechildi — daraxtdagi mavzu sanog'i darhol oshadi
+  const markSolved = (topicId: number) =>
+    queryClient.setQueryData<AITreeSubject[]>(["ai-solutions-tree", classId, lang], (old) =>
+      old?.map((subject) => ({
+        ...subject,
+        chapters: subject.chapters.map((chapter) => ({
+          ...chapter,
+          topics: chapter.topics.map((topic) =>
+            topic.id === topicId
+              ? { ...topic, solved_count: Math.min(topic.solved_count + 1, topic.question_count) }
+              : topic,
+          ),
+        })),
+      })),
+    );
 
   const classOptions = useMemo(
     () =>
@@ -123,77 +147,14 @@ const AISolutions = () => {
       {(tree || [])
         .filter((subject) => subject.chapters.some((c) => c.topics.length))
         .map((subject) => (
-          <Card
+          <SubjectCard
             key={subject.id}
-            className="!rounded-2xl"
-            title={
-              <span className="flex items-center gap-2">
-                <LuBookOpen className="text-[#5D87FF]" />
-                {subject.name}
-                {!subject.active ? <Tag className="!ml-1">{t("aiSolutions.inactive")}</Tag> : null}
-              </span>
-            }
-          >
-            <Collapse
-              ghost
-              items={subject.chapters
-                .filter((chapter) => chapter.topics.length)
-                .map((chapter) => {
-                  const total = chapter.topics.reduce((sum, tp) => sum + tp.question_count, 0);
-                  const solved = chapter.topics.reduce((sum, tp) => sum + tp.solved_count, 0);
-                  return {
-                    key: chapter.id,
-                    label: (
-                      <div className="flex flex-wrap items-center justify-between gap-2 pr-2">
-                        <span className="font-semibold text-[#0F172A]">{chapter.name}</span>
-                        <span className="text-[13px] text-[#64748B]">
-                          {solved}/{total} {t("aiSolutions.solved")}
-                        </span>
-                      </div>
-                    ),
-                    children: (
-                      <div className="divide-y divide-[#EEF2F7]">
-                        {chapter.topics.map((topic) => {
-                          const percent = topic.question_count
-                            ? Math.round((topic.solved_count * 100) / topic.question_count)
-                            : 0;
-                          return (
-                            <div
-                              key={topic.id}
-                              className="flex flex-col gap-2 py-3 sm:flex-row sm:items-center sm:justify-between"
-                            >
-                              <div className="min-w-0 flex-1">
-                                <div className="truncate font-medium text-[#1E293B]">{topic.name}</div>
-                                <div className="text-[13px] text-[#64748B]">
-                                  {topic.question_count} {t("aiSolutions.questions")} · {topic.solved_count}{" "}
-                                  {t("aiSolutions.solved")}
-                                </div>
-                              </div>
-                              <div className="flex items-center gap-4">
-                                <Progress
-                                  percent={percent}
-                                  size={[140, 8]}
-                                  className="!m-0"
-                                  strokeColor={{ from: "#5D87FF", to: "#7C3AED" }}
-                                />
-                                <Button
-                                  type={percent === 100 ? "default" : "primary"}
-                                  disabled={!topic.question_count}
-                                  onClick={() => openTopic(topic)}
-                                >
-                                  {t("aiSolutions.open")}
-                                  <LuArrowRight />
-                                </Button>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    ),
-                  };
-                })}
-            />
-          </Card>
+            subject={subject}
+            lang={lang}
+            configured={Boolean(config?.configured)}
+            onOpenTopic={openTopic}
+            onSolved={markSolved}
+          />
         ))}
     </div>
   );

@@ -4,12 +4,24 @@ export type AILang = "uz" | "ru";
 
 export type AISolutionStep = { title: string; text: string; math: string[] };
 
+export type AIGraphFigure = {
+  type: "graph";
+  x: [number, number];
+  y: [number, number];
+  functions: { expr: string; label: string }[];
+  points: { x: number; y: number; label: string }[];
+};
+
+export type AISvgFigure = { type: "svg"; svg: string };
+
+export type AIFigure = AIGraphFigure | AISvgFigure;
+
 export type AISolutionPart = {
   label: string;
   given: string[];
   find: string;
   short: { formula: string; steps: string[]; answer: string };
-  detailed: { steps: AISolutionStep[]; answer: string };
+  detailed: { figure?: AIFigure | null; steps: AISolutionStep[]; answer: string };
 };
 
 export type AISolutionData = {
@@ -59,5 +71,15 @@ export const getAISolutionTree = (class_id: number, lang: AILang) =>
 export const getAISolutionTopic = (id: number | string, lang: AILang) =>
   axiosApi.get<AITopicDetail>(`/management/ai-solutions/topics/${id}/`, { lang });
 
+export type AIQueueItem = { id: number; topic_id: number; chapter_id: number; uz: boolean; ru: boolean };
+
+export const getAISolutionSubjectQueue = (subjectId: number) =>
+  axiosApi.get<AIQueueItem[]>(`/management/ai-solutions/subjects/${subjectId}/queue/`);
+
+/** Savolni o'zbekcha yechadi; javob — `lang` tilidagi ko'rinish */
 export const solveQuestionWithAI = (id: number, lang: AILang, force = false) =>
   axiosApi.post<AIQuestion>(`/management/ai-solutions/questions/${id}/solve/`, { lang, force });
+
+/** O'zbekcha yechimni rus tiliga o'giradi */
+export const translateQuestionWithAI = (id: number, lang: AILang, force = false) =>
+  axiosApi.post<AIQuestion>(`/management/ai-solutions/questions/${id}/translate/`, { lang, force });
