@@ -27,6 +27,7 @@ import WithDrawalRoutes from "./modules/with-drawal/routes";
 import OfflineOrdersRoutes from "./modules/offline-orders/routes";
 import DiagnostcRoutes from "./modules/diagnost/routes";
 import FineRoutes from "./modules/fines/routes";
+import AISolutionsRoutes from "./modules/ai-solutions/routes";
 
 // Pages
 
@@ -60,6 +61,7 @@ const AppRoutes = () => {
             {OfflineOrdersRoutes}
             {DiagnostcRoutes}
             {FineRoutes}
+            {AISolutionsRoutes}
             {/*  */}
           </Route>
         </Route>

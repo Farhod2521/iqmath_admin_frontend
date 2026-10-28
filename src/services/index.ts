@@ -22,3 +22,4 @@ export * from "./excel";
 export * from "./offers";
 export * from "./governor";
 export * from "./location";
+export * from "./ai-solutions/ai-solutions";

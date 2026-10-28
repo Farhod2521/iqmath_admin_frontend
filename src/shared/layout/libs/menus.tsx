@@ -18,6 +18,7 @@ import { PiUsers } from "react-icons/pi";
 import { IoLibraryOutline, IoSettingsOutline } from "react-icons/io5";
 import { GiNotebook } from "react-icons/gi";
 import { WarningOutlined } from "@ant-design/icons";
+import { LuSparkles } from "react-icons/lu";
 
 // import { SettingOutlined } from "@ant-design/icons";
 export * from "./index.d";
@@ -53,6 +54,13 @@ export const getMenus = (t: (key: string) => string) => [
         }}
       />
     ),
+  },
+
+  {
+    key: "ai-solutions",
+    path: "/ai-solutions",
+    label: t("aiSolutions.title"),
+    icon: () => <LuSparkles size={21} />,
   },
 
   {

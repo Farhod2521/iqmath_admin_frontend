@@ -1612,5 +1612,36 @@
   "minAmountLessThanmaxAmount": "Минимальная сумма должна быть меньше максимальной",
 
   "deliveryStatus": "Cтатус доставки",
-  "updateOrderStatus": "Обновить статус заказа"
+  "updateOrderStatus": "Обновить статус заказа",
+  "aiSolutions": {
+    "title": "AI-решения",
+    "subtitle": "Выберите класс и тему — AI решит каждый пример кратко и подробно, как в тетради.",
+    "notConfigured": "В файле .env на сервере не заданы AI_URL, AI_KEY и AI_MODEL — решение не работает.",
+    "model": "Модель",
+    "selectClass": "Выберите класс",
+    "classSuffix": "-класс",
+    "noTopics": "В этом классе нет тем",
+    "noQuestions": "В этой теме нет вопросов",
+    "inactive": "Неактивен",
+    "questions": "вопросов",
+    "question": "вопрос",
+    "solved": "решено",
+    "level": "уровень",
+    "open": "Открыть",
+    "back": "Все темы",
+    "solveAll": "Решить с AI",
+    "resolveAll": "Перерешать все",
+    "resolveConfirm": "Все решения темы будут заново написаны AI. Продолжить?",
+    "stop": "Остановить",
+    "solving": "Решается",
+    "progressDone": "Готово",
+    "errors": "ошибок",
+    "failed": "Не удалось решить",
+    "short": "Кратко",
+    "detailed": "Подробно",
+    "notSolved": "Ещё не решено",
+    "solveOne": "Решить",
+    "resolveOne": "Перерешать",
+    "correct": "Правильный ответ"
+  }
 }
