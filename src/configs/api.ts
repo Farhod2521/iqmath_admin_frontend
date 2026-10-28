@@ -7,6 +7,7 @@ import type {
   InternalAxiosRequestConfig,
 } from "axios";
 import {
+  getAuthData,
   getTokenAccessToken,
   getTokenRefreshToken,
   removeAuthData,
@@ -87,8 +88,14 @@ class AxiosConfig {
                 refresh: refreshToken,
               },
             );
-            const { accessToken } = response.data;
-            saveAuthData(response.data);
+            // Backend (SimpleJWT) faqat {"access": "..."} qaytaradi (rotatsiya yoqilsa "refresh" ham).
+            // Login ma'lumoti (refresh_token, role ...) saqlanib qolishi uchun faqat tokenlar yangilanadi.
+            const accessToken: string = response.data.access;
+            saveAuthData({
+              ...getAuthData(),
+              access_token: accessToken,
+              ...(response.data.refresh ? { refresh_token: response.data.refresh } : {}),
+            });
             this.processQueue(null, accessToken);
 
             originalRequest.headers["Authorization"] = "Bearer " + accessToken;
